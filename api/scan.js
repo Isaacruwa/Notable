@@ -1,9 +1,9 @@
 // /api/scan — Vercel serverless function (Node.js runtime)
 //
-// Real pipeline: Serper.dev (search + news) -> Claude (entity resolution,
+// Real pipeline: Serper.dev (search + news) -> Gemini (entity resolution,
 // dedup detection, scoring) -> normalized response for the frontend.
 //
-// If SERPER_API_KEY or ANTHROPIC_API_KEY aren't set, or if the real
+// If SERPER_API_KEY or GEMINI_API_KEY aren't set, or if the real
 // pipeline errors for any reason, this automatically falls back to a
 // deterministic mock so the live site never breaks mid-scan.
 
@@ -73,7 +73,7 @@ module.exports = async function handler(req, res) {
   }
 
   const trimmedQuery = query.trim().slice(0, 120);
-  const hasKeys = process.env.SERPER_API_KEY && process.env.ANTHROPIC_API_KEY;
+  const hasKeys = process.env.SERPER_API_KEY && process.env.GEMINI_API_KEY;
 
   if (!hasKeys) {
     return res.status(200).json(mockScan(trimmedQuery));
