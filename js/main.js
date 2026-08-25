@@ -92,6 +92,8 @@ async function runScan(query) {
     const data = await res.json();
     renderResult(data);
 
+    // Also reflect the real score in the live scan-sequence reticle,
+    // so the demo above and the real result feel like one system.
     document.querySelector('.reticle .score').innerHTML =
       data.overallScore + '<sub>/100</sub>';
     const mentionEl = document.querySelector('.mention-counter .n');
@@ -115,6 +117,14 @@ function renderResult(data) {
   document.getElementById('rbMentions').textContent = data.mentionsFound;
   document.getElementById('rbIndependent').textContent = data.independentMentions;
   document.getElementById('rbConfidence').textContent = data.matchConfidence + '%';
+
+  const engineEl = document.getElementById('rbEngine');
+  if (engineEl) {
+    if (data.engine === 'live') engineEl.textContent = '● LIVE SCAN';
+    else if (data.engine === 'mock-fallback') engineEl.textContent = '● MOCK (live pipeline errored, check keys)';
+    else engineEl.textContent = '● MOCK (add API keys to go live)';
+  }
+
   resultBanner.classList.add('show');
 }
 
