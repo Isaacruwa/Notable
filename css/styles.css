@@ -77,7 +77,7 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 @media (max-width:760px){.navlinks{display:none;}}
 
 /* ---------- HERO ---------- */
-.hero{padding:76px 0 56px; text-align:center; position:relative;}
+.hero{padding:56px 0 40px; text-align:center; position:relative;}
 .hero h1{
   font-family:var(--display); font-weight:700; letter-spacing:-0.03em;
   font-size:clamp(34px, 6vw, 62px); line-height:1.06; margin:18px auto 18px; max-width:820px;
@@ -128,21 +128,25 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .result-banner .rb-stats b{color:var(--text); font-weight:600;}
 
 /* ---------- SCAN SEQUENCE SECTION ---------- */
-.scanseq{padding:80px 0 100px; position:relative;}
-.scanseq-head{text-align:center; max-width:600px; margin:0 auto 48px;}
+.scanseq{padding:44px 0 32px; position:relative;}
+.scanseq-head{text-align:center; max-width:600px; margin:0 auto 24px;}
 .scanseq-head h2{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.6vw,36px); letter-spacing:-0.02em; margin-top:14px;}
 .scanseq-head p{color:var(--text-dim); margin-top:12px; font-size:15.5px;}
 
 .rig{
-  position:relative; border-radius:24px; overflow:hidden;
-  aspect-ratio:16/9; max-width:820px; margin:0 auto; min-height:300px;
+  position:relative; border-radius:20px; overflow:hidden;
+  width:min(340px, 90vw); aspect-ratio:16/9; margin:0 auto;
   background:
     linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
     radial-gradient(ellipse 700px 400px at 50% 40%, rgba(0,242,254,0.07), transparent 65%),
     #0B0B0F;
-  background-size:34px 34px, 34px 34px, 100% 100%, 100%;
+  background-size:20px 20px, 20px 20px, 100% 100%, 100%;
   border:1px solid var(--line);
+}
+.rig-inner{
+  position:absolute; top:50%; left:50%; width:900px; height:506.25px;
+  transform:translate(-50%,-50%) scale(0.378); transform-origin:center;
 }
 .rig::before{
   content:''; position:absolute; inset:0; pointer-events:none;
@@ -252,8 +256,8 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .tier-est{background:rgba(79,172,254,0.14); color:var(--violet);}
 
 /* ---------- SCORE COMPONENTS ---------- */
-.section{padding:70px 0;}
-.section-head{text-align:center; max-width:640px; margin:0 auto 46px;}
+.section{padding:44px 0;}
+.section-head{text-align:center; max-width:640px; margin:0 auto 28px;}
 .section-head h2{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.4vw,34px); letter-spacing:-0.02em; margin-top:14px;}
 .section-head p{color:var(--text-dim); margin-top:12px; font-size:15.5px;}
 
@@ -342,7 +346,7 @@ footer .frow{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12
 footer .frow a:hover{color:var(--text-dim);}
 
 /* ---------- QUESTION → LOCKED ANSWER CARDS ---------- */
-.qcard{padding:22px; margin-bottom:16px;}
+.qcard{padding:20px; margin-bottom:12px;}
 .grid-metrics .qcard{margin-bottom:0;}
 .qcard.featured{border-color:rgba(0,242,254,0.35); box-shadow:0 0 30px rgba(0,242,254,0.08);}
 .qtext{font-family:var(--display); font-weight:700; font-size:16px; margin-bottom:6px; line-height:1.35;}
@@ -367,14 +371,14 @@ footer .frow a:hover{color:var(--text-dim);}
 }
 
 /* ---------- REPORT PREVIEW ---------- */
-.report-preview{padding:36px 28px; text-align:center; position:relative; overflow:hidden;}
+.report-preview{padding:26px 22px; text-align:center; position:relative; overflow:hidden; margin-bottom:12px;}
 .report-preview::before{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:radial-gradient(ellipse 520px 300px at 50% 0%, rgba(0,242,254,0.09), transparent 70%);
 }
-.rp-title{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; color:var(--cyan); margin-bottom:8px;}
-.rp-sub{font-family:var(--display); font-weight:700; font-size:22px; margin-bottom:26px;}
-.rp-rows{display:flex; flex-direction:column; gap:2px; max-width:360px; margin:0 auto 28px; text-align:left;}
+.rp-title{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; color:var(--cyan); margin-bottom:6px;}
+.rp-sub{font-family:var(--display); font-weight:700; font-size:20px; margin-bottom:18px;}
+.rp-rows{display:flex; flex-direction:column; gap:0; max-width:360px; margin:0 auto 18px; text-align:left;}
 .rp-row{display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-dim); padding:10px 0; border-bottom:1px solid var(--line);}
 .rp-row:last-child{border-bottom:none;}
 .rp-blur{filter:blur(4px); color:var(--text-faint); letter-spacing:3px; user-select:none;}
@@ -400,12 +404,12 @@ footer .frow a:hover{color:var(--text-dim);}
 .rb-why-lock{font-family:var(--mono); font-size:11px; color:var(--gold); text-decoration:none; white-space:nowrap;}
 .rb-why-lock:hover{text-decoration:underline;}
 
-.found-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:28px;}
+.found-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:18px;}
 .found-stat{padding:16px; text-align:center;}
 .found-stat .n{font-family:var(--display); font-weight:700; font-size:26px; color:var(--cyan);}
 .found-stat .l{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; color:var(--text-faint); text-transform:uppercase; margin-top:4px;}
 
-.qcard.hero-question{text-align:center; padding:36px 26px; margin-bottom:28px;}
+.qcard.hero-question{text-align:center; padding:26px 22px; margin-bottom:18px;}
 .qcard.hero-question .qtag{
   display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:var(--gold);
   background:rgba(255,200,87,0.1); border:1px solid rgba(255,200,87,0.3); padding:4px 10px;
