@@ -1,6 +1,6 @@
 // ---------- Radar ticks around the ring ----------
 (function buildTicks() {
-  const rig = document.querySelector('.rig');
+  const rig = document.querySelector('.rig-inner');
   if (!rig) return;
   const n = 36;
   for (let i = 0; i < n; i++) {
