@@ -152,17 +152,13 @@ function renderResult(data) {
 
   resultBanner.classList.add('show');
 
-  // ---- Score breakdown (real numbers, still visually locked where gated) ----
-  const c = data.components || {};
-  setBar('mcMediaBar', 'mcMediaVal', c.mediaPresence ?? 0);
-  setBar('mcSourceBar', 'mcSourceVal', c.sourceQuality ?? 0);
-  setBar('mcDiversityBar', 'mcDiversityVal', c.coverageDiversity ?? 0);
-  // Locked ones: bar width is real, score text stays hidden behind the lock overlay
-  const rb = document.getElementById('mcRecencyBar'); if (rb) rb.style.width = (c.recency ?? 0) + '%';
-  const ob = document.getElementById('mcOriginalityBar'); if (ob) ob.style.width = (c.originality ?? 0) + '%';
-  const cb = document.getElementById('mcConsistencyBar'); if (cb) cb.style.width = (c.entityConsistency ?? 0) + '%';
-  const metricsLabel = document.getElementById('metricsLabel');
-  if (metricsLabel) metricsLabel.textContent = "HOW IT'S CALCULATED · " + data.query.toUpperCase();
+  // ---- "Notable found X" line ----
+  const dupCount = data.locked?.duplicateMentions ?? 0;
+  const classifiedCount = (data.sources && data.sources.length) || null;
+  const fm = document.getElementById('foundMentions'); if (fm) fm.textContent = data.mentionsFound;
+  const fi = document.getElementById('foundIndependent'); if (fi) fi.textContent = data.independentMentions;
+  const fd = document.getElementById('foundDup'); if (fd) fd.textContent = dupCount;
+  const fc = document.getElementById('foundClassified'); if (fc) fc.textContent = classifiedCount ?? '—';
 
   // ---- Findings section ----
   document.getElementById('fMentions').textContent = data.mentionsFound;
@@ -174,15 +170,17 @@ function renderResult(data) {
   const findingsLabel = document.getElementById('findingsLabel');
   if (findingsLabel) findingsLabel.textContent = 'YOUR FREE RESULT · ' + data.query.toUpperCase();
 
-  // Locked list: real duplicate count, and a real (but still vague) gap teaser
-  const dupCount = data.locked?.duplicateMentions ?? 0;
-  const lockDup = document.getElementById('lockDup');
-  if (lockDup) lockDup.textContent = dupCount + ' FOUND';
+  // ---- "What about the other X?" ----
+  const qOther = document.getElementById('qOther');
+  if (qOther) qOther.textContent = Math.max(0, data.mentionsFound - data.independentMentions);
 
-  const lockGap = document.getElementById('lockGap');
-  if (lockGap) {
+  // ---- "What's holding me back?" real teaser (title only, reasoning stays locked) ----
+  const qGapTeaser = document.getElementById('qGapTeaser');
+  if (qGapTeaser) {
     const topGap = (data.topGaps && data.topGaps[0]) ? data.topGaps[0].title : null;
-    lockGap.textContent = topGap ? `🔒 Biggest gap: ${topGap}` : '🔒 Your strongest authority gap';
+    qGapTeaser.textContent = topGap
+      ? `Notable flagged: "${topGap}."`
+      : 'Notable identified at least one authority gap.';
   }
 
   // ---- Share card ----
