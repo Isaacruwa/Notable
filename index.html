@@ -61,6 +61,10 @@
         <span>MATCH CONFIDENCE <b id="rbConfidence"></b></span>
       </div>
       <a href="#share" class="rb-share-link">Share my score →</a>
+      <div class="rb-why">
+        <span class="rb-why-q">❓ Why did I get this score?</span>
+        <a href="#metrics" class="rb-why-lock">🔒 See what's driving it →</a>
+      </div>
     </div>
 
     <div class="trust-strip">
@@ -118,14 +122,18 @@
       <p>The Complete Report tells you why.</p>
     </div>
 
-    <div class="found-line glass" id="foundLine">
-      Notable analyzed <b id="foundMentions">37</b> web mentions · <b id="foundIndependent">11</b> independent sources · <b id="foundDup">7</b> duplicate/syndicated · <b id="foundClassified">—</b> sources classified
+    <div class="found-stats">
+      <div class="found-stat glass"><div class="n" id="foundMentions">37</div><div class="l">Web Mentions</div></div>
+      <div class="found-stat glass"><div class="n" id="foundIndependent">11</div><div class="l">Independent</div></div>
+      <div class="found-stat glass"><div class="n" id="foundDup">7</div><div class="l">Duplicate / Syndicated</div></div>
+      <div class="found-stat glass"><div class="n" id="foundClassified">—</div><div class="l">Sources Classified</div></div>
     </div>
 
-    <div class="qcard glass featured">
+    <div class="qcard glass hero-question">
+      <div class="qtag">Start here</div>
       <div class="qtext">Why did I get this score?</div>
       <div class="qsub">Notable analyzed multiple authority signals — media presence, source quality, coverage diversity, recency, originality, and entity consistency — to calculate this number.</div>
-      <a class="qlock" href="#pricing">🔒 See what's driving your score →</a>
+      <a class="qlock" href="#pricing">🔒 See What's Behind My Score →</a>
     </div>
 
     <div class="finding-main glass">
@@ -141,34 +149,40 @@
     <div class="qcard glass">
       <div class="qtext">What about the other <span id="qOther">26</span>?</div>
       <div class="qsub">Not every mention contributes equally to authority.</div>
-      <a class="qlock" href="#pricing">🔒 See which mentions are duplicated, syndicated, or weak →</a>
+      <a class="qlock" href="#pricing">🔒 See Which Mentions Are Weak →</a>
+    </div>
+
+    <div class="qcard glass">
+      <div class="qtext">Which sources are actually strengthening my authority?</div>
+      <div class="qsub" id="qSourceTeaser">Notable classified your sources by editorial weight and impact.</div>
+      <a class="qlock" href="#pricing">🔒 See Source Impact →</a>
     </div>
 
     <div class="grid-metrics">
       <div class="qcard glass small">
         <div class="qtext">How strong is my media presence?</div>
-        <a class="qlock" href="#pricing">🔒 Full analysis</a>
+        <a class="qlock" href="#pricing">🔒 Analyze My Media Presence →</a>
       </div>
       <div class="qcard glass small">
         <div class="qtext">How trustworthy are my sources?</div>
-        <a class="qlock" href="#pricing">🔒 Source quality analysis</a>
+        <a class="qlock" href="#pricing">🔒 Analyze My Source Quality →</a>
       </div>
       <div class="qcard glass small">
         <div class="qtext">Is my coverage actually diverse?</div>
-        <a class="qlock" href="#pricing">🔒 Coverage diversity analysis</a>
+        <a class="qlock" href="#pricing">🔒 Analyze My Coverage →</a>
       </div>
       <div class="qcard glass small">
         <div class="qtext">What's holding me back?</div>
         <div class="qsub" id="qGapTeaser">Notable identified at least one authority gap.</div>
-        <a class="qlock" href="#pricing">🔒 Reveal my biggest gap</a>
+        <a class="qlock" href="#pricing">🔒 Find What's Holding Me Back →</a>
       </div>
       <div class="qcard glass small">
         <div class="qtext">Am I more notable than my competitors?</div>
-        <a class="qlock" href="#pricing">🔒 Compare my authority</a>
+        <a class="qlock" href="#pricing">🔒 See My Competitive Position →</a>
       </div>
       <div class="qcard glass small">
         <div class="qtext">What should I do next?</div>
-        <a class="qlock" href="#pricing">🔒 Get my authority roadmap</a>
+        <a class="qlock" href="#pricing">🔒 Get My Authority Roadmap →</a>
       </div>
     </div>
   </div>
@@ -177,6 +191,7 @@
 <section class="section" style="padding-top:0;">
   <div class="wrap">
     <div class="report-preview glass">
+      <div class="rp-eyebrow">Get Every Answer</div>
       <div class="rp-title">COMPLETE NOTABLE REPORT</div>
       <div class="rp-sub">See what's behind your score.</div>
       <div class="rp-rows">
