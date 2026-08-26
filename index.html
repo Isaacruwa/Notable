@@ -60,6 +60,7 @@
         <span>INDEPENDENT <b id="rbIndependent"></b></span>
         <span>MATCH CONFIDENCE <b id="rbConfidence"></b></span>
       </div>
+      <a href="#share" class="rb-share-link">Share my score →</a>
     </div>
 
     <div class="trust-strip">
@@ -112,77 +113,81 @@
 <section class="section" id="metrics">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow" id="metricsLabel">HOW IT'S CALCULATED · SAMPLE</span>
-      <h2>Don't count mentions. Understand authority.</h2>
-      <p>100 weak mentions don't beat 5 excellent ones. Every score is built from six observable signals.</p>
+      <span class="eyebrow" id="findingsLabel">YOUR FREE RESULT · SAMPLE</span>
+      <h2>Your score tells you where you stand.</h2>
+      <p>The Complete Report tells you why.</p>
     </div>
+
+    <div class="found-line glass" id="foundLine">
+      Notable analyzed <b id="foundMentions">37</b> web mentions · <b id="foundIndependent">11</b> independent sources · <b id="foundDup">7</b> duplicate/syndicated · <b id="foundClassified">—</b> sources classified
+    </div>
+
+    <div class="qcard glass featured">
+      <div class="qtext">Why did I get this score?</div>
+      <div class="qsub">Notable analyzed multiple authority signals — media presence, source quality, coverage diversity, recency, originality, and entity consistency — to calculate this number.</div>
+      <a class="qlock" href="#pricing">🔒 See what's driving your score →</a>
+    </div>
+
+    <div class="finding-main glass">
+      <div class="bignum"><span id="fMentions">37</span> <span>online mentions</span></div>
+      <p>But only <span id="fIndependent">11</span> appear to be meaningful, independent coverage.</p>
+      <div class="divider"></div>
+      <div class="kv"><span>Strongest publication</span><b id="fPublication">Ledgerline Business</b></div>
+      <div class="kv"><span>Estimated coverage tier</span><b id="fTier">Established</b></div>
+      <div class="kv"><span>Independent coverage</span><b id="fRatio">11 / 37</b></div>
+      <div class="kv"><span>Match confidence</span><b id="fConfidence">—</b></div>
+    </div>
+
+    <div class="qcard glass">
+      <div class="qtext">What about the other <span id="qOther">26</span>?</div>
+      <div class="qsub">Not every mention contributes equally to authority.</div>
+      <a class="qlock" href="#pricing">🔒 See which mentions are duplicated, syndicated, or weak →</a>
+    </div>
+
     <div class="grid-metrics">
-      <div class="metric-card glass">
-        <div class="mtitle">Media Presence</div>
-        <div class="mdesc">How much legitimate third-party coverage exists.</div>
-        <div class="mbarbg"><div class="mbarfg" id="mcMediaBar" style="width:71%"></div></div>
-        <div class="mval"><span>SCORE</span><span id="mcMediaVal">71/100</span></div>
+      <div class="qcard glass small">
+        <div class="qtext">How strong is my media presence?</div>
+        <a class="qlock" href="#pricing">🔒 Full analysis</a>
       </div>
-      <div class="metric-card glass">
-        <div class="mtitle">Source Quality</div>
-        <div class="mdesc">How authoritative the discovered sources are.</div>
-        <div class="mbarbg"><div class="mbarfg" id="mcSourceBar" style="width:64%"></div></div>
-        <div class="mval"><span>SCORE</span><span id="mcSourceVal">64/100</span></div>
+      <div class="qcard glass small">
+        <div class="qtext">How trustworthy are my sources?</div>
+        <a class="qlock" href="#pricing">🔒 Source quality analysis</a>
       </div>
-      <div class="metric-card glass">
-        <div class="mtitle">Coverage Diversity</div>
-        <div class="mdesc">Independent publications and categories, not one echo.</div>
-        <div class="mbarbg"><div class="mbarfg" id="mcDiversityBar" style="width:52%"></div></div>
-        <div class="mval"><span>SCORE</span><span id="mcDiversityVal">52/100</span></div>
+      <div class="qcard glass small">
+        <div class="qtext">Is my coverage actually diverse?</div>
+        <a class="qlock" href="#pricing">🔒 Coverage diversity analysis</a>
       </div>
-      <div class="metric-card glass locked">
-        <div class="mtitle">Recency</div>
-        <div class="mdesc">How current your strongest coverage is.</div>
-        <div class="mbarbg"><div class="mbarfg" id="mcRecencyBar" style="width:40%"></div></div>
-        <div class="mval"><span>SCORE</span><span>—</span></div>
+      <div class="qcard glass small">
+        <div class="qtext">What's holding me back?</div>
+        <div class="qsub" id="qGapTeaser">Notable identified at least one authority gap.</div>
+        <a class="qlock" href="#pricing">🔒 Reveal my biggest gap</a>
       </div>
-      <div class="metric-card glass locked">
-        <div class="mtitle">Originality</div>
-        <div class="mdesc">Independent articles vs. duplicated or syndicated copy.</div>
-        <div class="mbarbg"><div class="mbarfg" id="mcOriginalityBar" style="width:58%"></div></div>
-        <div class="mval"><span>SCORE</span><span>—</span></div>
+      <div class="qcard glass small">
+        <div class="qtext">Am I more notable than my competitors?</div>
+        <a class="qlock" href="#pricing">🔒 Compare my authority</a>
       </div>
-      <div class="metric-card glass locked">
-        <div class="mtitle">Entity Consistency</div>
-        <div class="mdesc">Whether sources agree on who or what you are.</div>
-        <div class="mbarbg"><div class="mbarfg" id="mcConsistencyBar" style="width:80%"></div></div>
-        <div class="mval"><span>SCORE</span><span>—</span></div>
+      <div class="qcard glass small">
+        <div class="qtext">What should I do next?</div>
+        <a class="qlock" href="#pricing">🔒 Get my authority roadmap</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="findings">
+<section class="section" style="padding-top:0;">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow" id="findingsLabel">YOUR FREE RESULT · SAMPLE</span>
-      <h2>We found more than a number.</h2>
-      <p>The free scan is enough to be genuinely useful — and enough to make you want the rest.</p>
-    </div>
-
-    <div class="findings-grid">
-      <div class="finding-main glass">
-        <div class="bignum"><span id="fMentions">37</span> <span>online mentions</span></div>
-        <p>But only <span id="fIndependent">11</span> appear to be meaningful, independent coverage — the rest are duplicates, syndication, or low-relevance results.</p>
-        <div class="divider"></div>
-        <div class="kv"><span>Strongest publication</span><b id="fPublication">Ledgerline Business</b></div>
-        <div class="kv"><span>Estimated coverage tier</span><b id="fTier">Established</b></div>
-        <div class="kv"><span>Independent coverage</span><b id="fRatio">11 / 37</b></div>
-        <div class="kv"><span>Match confidence</span><b id="fConfidence">—</b></div>
+    <div class="report-preview glass">
+      <div class="rp-title">COMPLETE NOTABLE REPORT</div>
+      <div class="rp-sub">See what's behind your score.</div>
+      <div class="rp-rows">
+        <div class="rp-row"><span>Authority Analysis</span><span class="rp-blur">██████████</span></div>
+        <div class="rp-row"><span>Source Quality</span><span class="rp-blur">██████████</span></div>
+        <div class="rp-row"><span>Biggest Authority Gap</span><span class="rp-blur">██████████</span></div>
+        <div class="rp-row"><span>Competitor Position</span><span class="rp-blur">██████████</span></div>
+        <div class="rp-row"><span>Recommended Actions</span><span class="rp-blur">██████████</span></div>
       </div>
-
-      <div class="locklist glass">
-        <div class="lockrow"><span class="l">🔒 Duplicate / syndicated mentions</span><span class="badge-lock" id="lockDup">7 FOUND</span></div>
-        <div class="lockrow"><span class="l" id="lockGap">🔒 Your strongest authority gap</span><span class="badge-lock">LOCKED</span></div>
-        <div class="lockrow"><span class="l">🔒 Competitor comparison (3)</span><span class="badge-lock">LOCKED</span></div>
-        <div class="lockrow"><span class="l">🔒 Full source-quality breakdown</span><span class="badge-lock">LOCKED</span></div>
-        <div class="lockrow"><span class="l">🔒 Complete Notability Report (PDF)</span><span class="badge-lock">LOCKED</span></div>
-      </div>
+      <div class="rp-price">$24</div>
+      <a class="rp-cta" href="#pricing">Reveal My Analysis →</a>
     </div>
   </div>
 </section>
@@ -220,10 +225,12 @@
       <h2>Start free. Go deep when you're curious.</h2>
       <p>One-time reports, ongoing monitoring, or a full agency workspace.</p>
     </div>
+    <p class="ladder-line">Free scan: know your score. Complete Report: understand your score. Monitor: track your score. Agency: manage your clients' scores.</p>
     <div class="pricing-grid">
       <div class="price-card glass">
         <span class="ptag">Free</span>
         <div class="pname">Scan</div>
+        <div class="pladder">Know your score.</div>
         <div class="pprice">$0</div>
         <ul>
           <li>Overall Notability Score</li>
@@ -236,6 +243,7 @@
       <div class="price-card glass hl">
         <span class="ptag">One-time</span>
         <div class="pname">Complete Report</div>
+        <div class="pladder">Understand your score.</div>
         <div class="pprice">$24</div>
         <ul>
           <li>Full media inventory &amp; evidence</li>
@@ -248,6 +256,7 @@
       <div class="price-card glass">
         <span class="ptag">Monthly</span>
         <div class="pname">Monitor</div>
+        <div class="pladder">Track your score.</div>
         <div class="pprice">$12<small>/mo</small></div>
         <ul>
           <li>New mentions &amp; score changes</li>
@@ -259,6 +268,7 @@
       <div class="price-card glass">
         <span class="ptag">Teams</span>
         <div class="pname">Agency</div>
+        <div class="pladder">Manage your clients' scores.</div>
         <div class="pprice">$79<small>/mo</small></div>
         <ul>
           <li>Multiple client entities</li>
