@@ -389,3 +389,29 @@ footer .frow a:hover{color:var(--text-dim);}
 }
 
 .pladder{font-size:12px; color:var(--text-faint); font-style:italic; margin-top:-10px;}
+
+/* ---------- SELF-SELLING PATCH: hero why-hook, stat chips, hero question ---------- */
+.rb-why{
+  margin-top:14px; padding-top:14px; border-top:1px dashed var(--line-hi);
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+}
+.rb-why-q{font-family:var(--display); font-weight:600; font-size:13px; color:var(--text);}
+.rb-why-lock{font-family:var(--mono); font-size:11px; color:var(--gold); text-decoration:none; white-space:nowrap;}
+.rb-why-lock:hover{text-decoration:underline;}
+
+.found-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:28px;}
+.found-stat{padding:16px; text-align:center;}
+.found-stat .n{font-family:var(--display); font-weight:700; font-size:26px; color:var(--cyan);}
+.found-stat .l{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; color:var(--text-faint); text-transform:uppercase; margin-top:4px;}
+
+.qcard.hero-question{text-align:center; padding:36px 26px; margin-bottom:28px;}
+.qcard.hero-question .qtag{
+  display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:var(--gold);
+  background:rgba(255,200,87,0.1); border:1px solid rgba(255,200,87,0.3); padding:4px 10px;
+  border-radius:6px; margin-bottom:14px; text-transform:uppercase;
+}
+.qcard.hero-question .qtext{font-size:25px; margin-bottom:10px;}
+.qcard.hero-question .qsub{max-width:460px; margin-left:auto; margin-right:auto;}
+.qcard.hero-question .qlock{font-size:13.5px; padding:12px 24px;}
+
+.rp-eyebrow{font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:var(--text-faint); margin-bottom:8px; text-transform:uppercase;}
