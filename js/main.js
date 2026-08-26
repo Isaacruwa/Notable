@@ -174,6 +174,16 @@ function renderResult(data) {
   const qOther = document.getElementById('qOther');
   if (qOther) qOther.textContent = Math.max(0, data.mentionsFound - data.independentMentions);
 
+  // ---- "Which sources are strengthening my authority?" real teaser ----
+  const qSourceTeaser = document.getElementById('qSourceTeaser');
+  if (qSourceTeaser) {
+    if (classifiedCount) {
+      qSourceTeaser.textContent = `Notable classified ${classifiedCount} individual sources by editorial weight and impact.`;
+    } else {
+      qSourceTeaser.textContent = `Notable classified your ${data.independentMentions} independent sources by editorial weight and impact.`;
+    }
+  }
+
   // ---- "What's holding me back?" real teaser (title only, reasoning stays locked) ----
   const qGapTeaser = document.getElementById('qGapTeaser');
   if (qGapTeaser) {
