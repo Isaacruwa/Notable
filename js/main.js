@@ -110,7 +110,19 @@ async function runScan(query) {
   }
 }
 
+function slugify(str) {
+  return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'entity';
+}
+
+function setBar(barId, valId, value) {
+  const bar = document.getElementById(barId);
+  const val = document.getElementById(valId);
+  if (bar) bar.style.width = value + '%';
+  if (val) val.textContent = value + '/100';
+}
+
 function renderResult(data) {
+  // ---- Top result banner ----
   document.getElementById('rbName').textContent = data.query;
   document.getElementById('rbScore').textContent = data.overallScore;
   document.getElementById('rbTier').textContent = data.tier.toUpperCase();
@@ -120,12 +132,67 @@ function renderResult(data) {
 
   const engineEl = document.getElementById('rbEngine');
   if (engineEl) {
-    if (data.engine === 'live') engineEl.textContent = '● LIVE SCAN';
-    else if (data.engine === 'mock-fallback') engineEl.textContent = '● MOCK (live pipeline errored, check keys)';
-    else engineEl.textContent = '● MOCK (add API keys to go live)';
+    if (data.engine === 'live') {
+      engineEl.textContent = '● LIVE SCAN — REAL DATA';
+      engineEl.style.background = 'rgba(0,242,254,0.14)';
+      engineEl.style.color = '#00F2FE';
+      engineEl.style.border = '1px solid rgba(0,242,254,0.4)';
+    } else if (data.engine === 'mock-fallback') {
+      engineEl.textContent = '● MOCK — LIVE PIPELINE ERRORED, CHECK KEYS';
+      engineEl.style.background = 'rgba(255,92,122,0.14)';
+      engineEl.style.color = '#FF5C7A';
+      engineEl.style.border = '1px solid rgba(255,92,122,0.4)';
+    } else {
+      engineEl.textContent = '● MOCK — ADD API KEYS TO GO LIVE';
+      engineEl.style.background = 'rgba(255,200,87,0.14)';
+      engineEl.style.color = '#FFC857';
+      engineEl.style.border = '1px solid rgba(255,200,87,0.4)';
+    }
   }
 
   resultBanner.classList.add('show');
+
+  // ---- Score breakdown (real numbers, still visually locked where gated) ----
+  const c = data.components || {};
+  setBar('mcMediaBar', 'mcMediaVal', c.mediaPresence ?? 0);
+  setBar('mcSourceBar', 'mcSourceVal', c.sourceQuality ?? 0);
+  setBar('mcDiversityBar', 'mcDiversityVal', c.coverageDiversity ?? 0);
+  // Locked ones: bar width is real, score text stays hidden behind the lock overlay
+  const rb = document.getElementById('mcRecencyBar'); if (rb) rb.style.width = (c.recency ?? 0) + '%';
+  const ob = document.getElementById('mcOriginalityBar'); if (ob) ob.style.width = (c.originality ?? 0) + '%';
+  const cb = document.getElementById('mcConsistencyBar'); if (cb) cb.style.width = (c.entityConsistency ?? 0) + '%';
+  const metricsLabel = document.getElementById('metricsLabel');
+  if (metricsLabel) metricsLabel.textContent = "HOW IT'S CALCULATED · " + data.query.toUpperCase();
+
+  // ---- Findings section ----
+  document.getElementById('fMentions').textContent = data.mentionsFound;
+  document.getElementById('fIndependent').textContent = data.independentMentions;
+  document.getElementById('fPublication').textContent = data.strongestPublication || 'Not conclusively identified';
+  document.getElementById('fTier').textContent = data.tier;
+  document.getElementById('fRatio').textContent = `${data.independentMentions} / ${data.mentionsFound}`;
+  document.getElementById('fConfidence').textContent = data.matchConfidence + '%';
+  const findingsLabel = document.getElementById('findingsLabel');
+  if (findingsLabel) findingsLabel.textContent = 'YOUR FREE RESULT · ' + data.query.toUpperCase();
+
+  // Locked list: real duplicate count, and a real (but still vague) gap teaser
+  const dupCount = data.locked?.duplicateMentions ?? 0;
+  const lockDup = document.getElementById('lockDup');
+  if (lockDup) lockDup.textContent = dupCount + ' FOUND';
+
+  const lockGap = document.getElementById('lockGap');
+  if (lockGap) {
+    const topGap = (data.topGaps && data.topGaps[0]) ? data.topGaps[0].title : null;
+    lockGap.textContent = topGap ? `🔒 Biggest gap: ${topGap}` : '🔒 Your strongest authority gap';
+  }
+
+  // ---- Share card ----
+  document.getElementById('shareName').textContent = data.query;
+  document.getElementById('shareHandle').textContent = 'notable.app/' + slugify(data.query);
+  document.getElementById('shareScore').textContent = data.overallScore;
+  document.getElementById('shareTierLine').textContent =
+    `${data.tier.toUpperCase()} · ${data.mentionsFound} MENTIONS INDEXED`;
+  const shareLabel = document.getElementById('shareLabel');
+  if (shareLabel) shareLabel.textContent = 'BUILT TO SHARE';
 }
 
 if (scanForm) {
