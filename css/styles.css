@@ -420,3 +420,13 @@ footer .frow a:hover{color:var(--text-dim);}
 .qcard.hero-question .qlock{font-size:13.5px; padding:12px 24px;}
 
 .rp-eyebrow{font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:var(--text-faint); margin-bottom:8px; text-transform:uppercase;}
+
+.audience-loop{
+  margin:26px auto 0; text-align:center; font-family:var(--mono); font-size:13px;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint);
+}
+.audience-loop .word{
+  display:inline-block; min-width:130px; color:var(--cyan); font-weight:600;
+  transition:opacity .35s ease, transform .35s ease; opacity:1; transform:translateY(0);
+}
+.audience-loop .word.fade{opacity:0; transform:translateY(6px);}
