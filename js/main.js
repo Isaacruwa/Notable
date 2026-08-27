@@ -65,6 +65,22 @@ function animateReticleScore(target) {
 }
 animateReticleScore(88); // ambient demo value on page load
 
+// ---------- Audience word loop ----------
+(function audienceLoop() {
+  const el = document.getElementById('audienceWord');
+  if (!el) return;
+  const words = ['Influencers', 'Brands', 'Businesses', 'Creators', 'Founders', 'Companies', 'Organizations', 'Public Figures'];
+  let i = 0;
+  setInterval(() => {
+    el.classList.add('fade');
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      el.textContent = words[i];
+      el.classList.remove('fade');
+    }, 350);
+  }, 1800);
+})();
+
 // ---------- Live scan: wire the hero form to /api/scan ----------
 const scanForm = document.getElementById('scanForm');
 const scanInput = document.getElementById('scanInput');
