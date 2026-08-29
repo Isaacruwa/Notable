@@ -194,9 +194,9 @@ function renderResult(data) {
   const qSourceTeaser = document.getElementById('qSourceTeaser');
   if (qSourceTeaser) {
     if (classifiedCount) {
-      qSourceTeaser.textContent = `Notable classified ${classifiedCount} individual sources by editorial weight and impact.`;
+      qSourceTeaser.textContent = `Kiver classified ${classifiedCount} individual sources by editorial weight and impact.`;
     } else {
-      qSourceTeaser.textContent = `Notable classified your ${data.independentMentions} independent sources by editorial weight and impact.`;
+      qSourceTeaser.textContent = `Kiver classified your ${data.independentMentions} independent sources by editorial weight and impact.`;
     }
   }
 
@@ -205,13 +205,13 @@ function renderResult(data) {
   if (qGapTeaser) {
     const topGap = (data.topGaps && data.topGaps[0]) ? data.topGaps[0].title : null;
     qGapTeaser.textContent = topGap
-      ? `Notable flagged: "${topGap}."`
-      : 'Notable identified at least one authority gap.';
+      ? `Kiver flagged: "${topGap}."`
+      : 'Kiver identified at least one authority gap.';
   }
 
   // ---- Share card ----
   document.getElementById('shareName').textContent = data.query;
-  document.getElementById('shareHandle').textContent = 'notable.app/' + slugify(data.query);
+  document.getElementById('shareHandle').textContent = 'getkiver.com/' + slugify(data.query);
   document.getElementById('shareScore').textContent = data.overallScore;
   document.getElementById('shareTierLine').textContent =
     `${data.tier.toUpperCase()} · ${data.mentionsFound} MENTIONS INDEXED`;
