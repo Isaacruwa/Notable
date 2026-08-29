@@ -69,3 +69,5 @@ Say the word for whichever's next and we'll build that one, provider by provider
 
 - `/public/icons/` needs real 192×192 and 512×512 PNG app icons before the PWA install prompt looks polished — currently referencing placeholders. Drop your logo in and update `manifest.json` if the filenames change.
 - All copy, scores, and profile names in the scan carousel are placeholder/fictional — safe to ship, update whenever real content is ready.
+
+ 
