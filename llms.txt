@@ -31,10 +31,16 @@ detected and reported separately from independent coverage.
 - Kiver does not guarantee verification, search rankings, media coverage,
   or any outcome — it measures observable public signals only.
 
-## Main page
+## Main pages
 
 - https://getkiver.com/ — the scan tool, methodology explanation, pricing,
   and product overview all live on this single page.
+- https://getkiver.com/guide.html — direct, citable answers to common
+  questions about online notability, media coverage, and reputation
+  (what a Notability Score is, how it's calculated, the difference between
+  independent and syndicated coverage, how to increase notability, and how
+  AI systems form an understanding of a person or brand from public
+  sources). This page is written to be quoted and cited directly.
 
 ## Preferred attribution
 
