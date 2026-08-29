@@ -133,13 +133,14 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .hero p.sub{color:var(--text-dim); font-size:17px; max-width:560px; margin:0 auto 34px;}
 
 .scan-form{
-  display:flex; gap:10px; max-width:560px; margin:0 auto; padding:8px;
-  border-radius:16px; flex-wrap:wrap; justify-content:center;
+  display:flex; flex-direction:column; gap:10px; max-width:560px; margin:0 auto; padding:8px;
+  border-radius:16px;
 }
 .scan-form input{
-  flex:1; min-width:220px; background:var(--base-raise); border:1px solid var(--line-hi);
+  width:100%; background:var(--base-raise); border:1px solid var(--line-hi);
   color:var(--text); font-size:15px; padding:14px 16px; border-radius:11px; font-family:var(--body);
 }
+.scan-form .btn-primary{width:100%;}
 .scan-form input::placeholder{color:var(--text-faint);}
 .scan-form input:focus{border-color:var(--cyan);}
 .btn-primary{
@@ -160,6 +161,22 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .trust-strip .stat{text-align:center;}
 .trust-strip .stat .num{font-family:var(--display); font-weight:700; font-size:22px;}
 .trust-strip .stat .lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--text-faint); text-transform:uppercase; margin-top:2px;}
+
+.stats-ticker-wrap{
+  margin-top:52px; padding-top:30px; border-top:1px solid var(--line);
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+.stats-ticker{
+  display:flex; align-items:baseline; gap:16px; width:max-content;
+  animation:statsScroll 20s linear infinite;
+}
+.tstat{display:inline-flex; align-items:baseline; gap:8px; white-space:nowrap;}
+.tnum{font-family:var(--display); font-weight:700; font-size:20px;}
+.tlbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--text-faint); text-transform:uppercase;}
+.tdot{color:var(--text-faint); opacity:.4; font-size:14px;}
+@keyframes statsScroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
 
 /* ---------- RESULT BANNER (after a real scan) ---------- */
 .result-banner{
