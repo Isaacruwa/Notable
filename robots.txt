@@ -1,0 +1,90 @@
+# Kiver (getkiver.com) — robots.txt
+#
+# Policy: open by default. We want Kiver to be discoverable by every major
+# search engine and every major AI/LLM system — both the crawlers that build
+# training data and the crawlers that power live AI search answers/citations.
+# Only the backend API route is excluded, since it returns JSON, not content
+# meant to be indexed or cited.
+
+# ---- Traditional search engines ----
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# ---- Social link-preview crawlers ----
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+# ---- AI training crawlers ----
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# ---- AI live-search / citation crawlers ----
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ---- Default: allow everything else too ----
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://getkiver.com/sitemap.xml

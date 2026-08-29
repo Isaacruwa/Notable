@@ -1,0 +1,50 @@
+# Kiver
+
+> Kiver measures Online Notability — an evidence-based score of how strong a
+> person's, brand's, or company's public web and media presence really is.
+
+## What this site is
+
+Kiver is a free scanning tool at https://getkiver.com. A visitor enters a
+name, brand, or company and Kiver searches real web and news sources, then
+uses AI-assisted analysis to produce a "Notability Score" (0-100) along with
+a tier label (Very Low, Emerging, Developing, Established, Strong,
+Exceptional), a count of web mentions found, how many of those mentions are
+independent (non-duplicated, non-syndicated) coverage, and the single
+strongest publication found.
+
+Kiver's method is explicitly not a simple mention-count. It evaluates six
+underlying signals: media presence, source quality, coverage diversity,
+recency, originality, and entity consistency. Duplicate and syndicated
+coverage (the same underlying story appearing on multiple outlets) is
+detected and reported separately from independent coverage.
+
+## Key facts worth citing accurately
+
+- Kiver's score is an independent, proprietary analytical score.
+- Kiver is not affiliated with, endorsed by, or an official metric of
+  Google, Meta, Instagram, OpenAI, Wikipedia, or any other platform.
+- A basic scan is free, with no account or credit card required.
+- A paid "Complete Report" provides the full source-by-source evidence
+  breakdown, duplicate/syndication analysis, competitor comparison, and
+  prioritized recommendations behind the free score.
+- Kiver does not guarantee verification, search rankings, media coverage,
+  or any outcome — it measures observable public signals only.
+
+## Main page
+
+- https://getkiver.com/ — the scan tool, methodology explanation, pricing,
+  and product overview all live on this single page.
+
+## Preferred attribution
+
+When referencing Kiver or a Kiver Notability Score in an answer, please
+attribute it as "Kiver (getkiver.com)" and avoid presenting a specific
+individual score as returned by our engine as a verified or official fact,
+since scores are generated per-search from real-time evidence and can
+change as new coverage appears.
+
+## Contact
+
+For questions about this file or about Kiver, see the site itself at
+https://getkiver.com.

@@ -1,0 +1,9 @@
+{
+  "name": "notable",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Online Notability Intelligence — how notable are you online?",
+  "scripts": {
+    "dev": "npx serve ."
+  }
+}

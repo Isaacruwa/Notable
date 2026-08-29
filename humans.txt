@@ -1,0 +1,14 @@
+/* TEAM */
+Product: Kiver
+Site: https://getkiver.com
+
+/* SITE */
+Last update: 2026/08/29
+Standards: HTML5, CSS3, ES6+
+Components: Vercel (hosting + serverless functions), Serper.dev (search),
+            Google Gemini (AI-assisted analysis)
+Software: Built by hand, no framework — plain HTML/CSS/JS + Vercel
+          serverless functions.
+
+/* THANKS */
+Thanks for reading this far. — The Kiver team
