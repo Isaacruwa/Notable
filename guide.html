@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.setAttribute("data-theme", localStorage.getItem("kiver-theme") || "dark");</script>
+<script>(function(){try{var s=localStorage.getItem("kiver-theme");var d=s||((window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light");document.documentElement.setAttribute("data-theme",d);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Online Notability Guide: 10 Common Questions Answered — Kiver</title>
@@ -137,6 +137,8 @@
 </head>
 <body>
 
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle light or dark mode"></button>
+
 <nav>
   <div class="wrap">
     <div class="logo"><span class="mark"></span>Kiver</div>
@@ -146,10 +148,7 @@
       <a href="/#pricing">Pricing</a>
       <a href="/guide.html">Guide</a>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button id="themeToggle" class="theme-toggle" aria-label="Toggle light or dark mode">☀️</button>
-      <a class="navcta" href="/#top">Check My Notability</a>
-    </div>
+    <a class="navcta" href="/#top">Check My Notability</a>
   </div>
 </nav>
 
