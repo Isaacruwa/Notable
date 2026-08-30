@@ -5,5 +5,8 @@
   "description": "Online Notability Intelligence — how notable are you online?",
   "scripts": {
     "dev": "npx serve ."
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.5"
   }
 }
