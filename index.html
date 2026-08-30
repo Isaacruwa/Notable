@@ -63,7 +63,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -112,7 +112,7 @@
       <a href="#share" class="rb-share-link">Share my score →</a>
       <div class="rb-why">
         <span class="rb-why-q">❓ Why did I get this score?</span>
-        <a href="#metrics" class="rb-why-lock">🔒 See what's driving it →</a>
+        <a href="#metrics" class="rb-why-lock">See the full breakdown →</a>
       </div>
     </div>
 
@@ -198,17 +198,24 @@
       <div class="found-stat glass"><div class="n" id="foundClassified">—</div><div class="l">Sources Classified</div></div>
     </div>
 
-    <div class="qcard glass hero-question">
-      <div class="qtag">Start here</div>
+    <div class="qcard glass hero-question" id="whyScoreCard">
+      <div class="qtag">Free · Full Analysis</div>
       <div class="qtext">Why did I get this score?</div>
-      <div class="qsub">Kiver analyzed multiple authority signals — media presence, source quality, coverage diversity, recency, originality, and entity consistency — to calculate this number.</div>
-      <a class="qlock" href="#pricing">🔒 See What's Behind My Score →</a>
+      <p class="qsub" id="whyScoreSummary">Kiver analyzed six authority signals to calculate this number — here's exactly how each one scored.</p>
+      <div class="why-breakdown">
+        <div class="why-row"><span>Media Presence</span><div class="why-bar-bg"><div class="why-bar-fg" id="whyMediaBar" style="width:0%"></div></div><b id="whyMediaVal">—</b></div>
+        <div class="why-row"><span>Source Quality</span><div class="why-bar-bg"><div class="why-bar-fg" id="whySourceBar" style="width:0%"></div></div><b id="whySourceVal">—</b></div>
+        <div class="why-row"><span>Coverage Diversity</span><div class="why-bar-bg"><div class="why-bar-fg" id="whyDiversityBar" style="width:0%"></div></div><b id="whyDiversityVal">—</b></div>
+        <div class="why-row"><span>Recency</span><div class="why-bar-bg"><div class="why-bar-fg" id="whyRecencyBar" style="width:0%"></div></div><b id="whyRecencyVal">—</b></div>
+        <div class="why-row"><span>Originality</span><div class="why-bar-bg"><div class="why-bar-fg" id="whyOriginalityBar" style="width:0%"></div></div><b id="whyOriginalityVal">—</b></div>
+        <div class="why-row"><span>Entity Consistency</span><div class="why-bar-bg"><div class="why-bar-fg" id="whyConsistencyBar" style="width:0%"></div></div><b id="whyConsistencyVal">—</b></div>
+      </div>
     </div>
 
     <div class="qcard glass">
       <div class="qtext">Which sources are actually strengthening my authority?</div>
       <div class="qsub" id="qSourceTeaser">Kiver classified your sources by editorial weight and impact.</div>
-      <a class="qlock" href="#pricing">🔒 See Source Impact →</a>
+      <a class="qlock" href="#completeReportCard">See Source Impact →</a>
     </div>
 
     <div class="finding-main glass">
@@ -224,17 +231,17 @@
     <div class="qcard glass">
       <div class="qtext">What about the other <span id="qOther">26</span>?</div>
       <div class="qsub">Not every mention contributes equally to authority.</div>
-      <a class="qlock" href="#pricing">🔒 See Which Mentions Are Weak →</a>
+      <a class="qlock" href="#completeReportCard">See Which Mentions Are Weak →</a>
     </div>
 
     <div class="grid-metrics">
       <div class="qcard glass small">
         <div class="qtext">How strong is my media presence?</div>
-        <a class="qlock" href="#pricing">🔒 Analyze My Media Presence →</a>
+        <a class="qlock" href="#completeReportCard">Analyze My Media Presence →</a>
       </div>
       <div class="qcard glass small">
         <div class="qtext">How trustworthy are my sources?</div>
-        <a class="qlock" href="#pricing">🔒 Analyze My Source Quality →</a>
+        <a class="qlock" href="#completeReportCard">Analyze My Source Quality →</a>
       </div>
     </div>
 
@@ -250,23 +257,17 @@
         <div class="rp-row"><span>Recommended Actions</span><span class="rp-blur">██████████</span></div>
       </div>
       <div class="rp-price">$24</div>
-      <a class="rp-cta" href="#pricing">Reveal My Analysis →</a>
+      <a class="rp-cta" href="#completeReportCard">Reveal My Analysis →</a>
     </div>
 
-    <div class="grid-metrics">
-      <div class="qcard glass small">
-        <div class="qtext">Is my coverage actually diverse?</div>
-        <a class="qlock" href="#pricing">🔒 Analyze My Coverage →</a>
-      </div>
-      <div class="qcard glass small">
-        <div class="qtext">What's holding me back?</div>
-        <div class="qsub" id="qGapTeaser">Kiver identified at least one authority gap.</div>
-        <a class="qlock" href="#pricing">🔒 Find What's Holding Me Back →</a>
-      </div>
-      <div class="qcard glass small">
-        <div class="qtext">Am I more notable than my competitors?</div>
-        <a class="qlock" href="#pricing">🔒 See My Competitive Position →</a>
-      </div>
+    <div class="qcard glass merged-q">
+      <div class="qtext">Is my coverage diverse — and what's holding me back?</div>
+      <ul class="merged-list">
+        <li><b>Coverage diversity</b> — how many independent categories and publication types you're actually covered by, not just how many articles exist.</li>
+        <li><b>Biggest gap</b> — <span id="qGapTeaser">Kiver identified at least one authority gap.</span></li>
+        <li><b>Competitive position</b> — how you compare against up to 3 competitors you choose.</li>
+      </ul>
+      <a class="qlock" href="#completeReportCard">See My Full Breakdown →</a>
     </div>
 
     <div class="sharecard glass" style="max-width:460px;margin:0 auto 16px;padding:30px;position:relative;overflow:hidden;">
@@ -291,7 +292,7 @@
 
     <div class="qcard glass" style="max-width:460px;margin:0 auto;">
       <div class="qtext">What should I do next?</div>
-      <a class="qlock" href="#pricing">🔒 Get My Authority Roadmap →</a>
+      <a class="qlock" href="#completeReportCard">Get My Authority Roadmap →</a>
     </div>
   </div>
 </section>
@@ -318,7 +319,7 @@
         </ul>
         <div class="pbtn" onclick="document.getElementById('scanInput').focus(); document.getElementById('top').scrollIntoView({behavior:'smooth'});">Run free scan</div>
       </div>
-      <div class="price-card glass hl">
+      <div class="price-card glass hl" id="completeReportCard">
         <span class="ptag">One-time</span>
         <div class="pname">Complete Report</div>
         <div class="pladder">Understand your score.</div>
