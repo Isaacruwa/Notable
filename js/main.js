@@ -211,13 +211,89 @@ function renderResult(data) {
 
   // ---- Share card ----
   document.getElementById('shareName').textContent = data.query;
-  document.getElementById('shareHandle').textContent = 'getkiver.com/' + slugify(data.query);
   document.getElementById('shareScore').textContent = data.overallScore;
   document.getElementById('shareTierLine').textContent =
     `${data.tier.toUpperCase()} · ${data.mentionsFound} MENTIONS INDEXED`;
   const shareLabel = document.getElementById('shareLabel');
   if (shareLabel) shareLabel.textContent = 'BUILT TO SHARE';
+
+  const shareHandleEl = document.getElementById('shareHandle');
+  if (data.shareSlug) {
+    currentShareUrl = buildShareUrl(data.shareSlug);
+    if (shareHandleEl) shareHandleEl.textContent = currentShareUrl.replace(/^https?:\/\//, '');
+  } else {
+    // No share link this time (e.g. database briefly unavailable) — be
+    // honest about it rather than showing a fake, non-functional path.
+    currentShareUrl = null;
+    if (shareHandleEl) shareHandleEl.textContent = 'Share link unavailable right now';
+  }
 }
+
+// ---------- Share link handling ----------
+let currentShareUrl = null;
+
+function buildShareUrl(slug) {
+  return `${window.location.origin}/?s=${slug}`;
+}
+
+const copyLinkBtn = document.getElementById('copyLinkBtn');
+if (copyLinkBtn) {
+  copyLinkBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!currentShareUrl) return;
+    try {
+      await navigator.clipboard.writeText(currentShareUrl);
+      const original = copyLinkBtn.textContent;
+      copyLinkBtn.textContent = 'COPIED!';
+      setTimeout(() => { copyLinkBtn.textContent = original; }, 1500);
+    } catch (err) {
+      // Clipboard API unavailable — fall back to just navigating there
+      window.prompt('Copy this link:', currentShareUrl);
+    }
+  });
+}
+
+const shareBtn = document.getElementById('shareBtn');
+if (shareBtn) {
+  shareBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!currentShareUrl) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'My Kiver Notability Score', url: currentShareUrl });
+      } catch (err) {
+        /* user cancelled the share sheet — no action needed */
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(currentShareUrl);
+        window.alert('Link copied: ' + currentShareUrl);
+      } catch (err) {
+        window.prompt('Copy this link:', currentShareUrl);
+      }
+    }
+  });
+}
+
+// ---------- Load a shared scan from the URL, if present (?s=slug) ----------
+(function loadSharedScanFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('s');
+  if (!slug) return;
+
+  fetch('/api/scan?slug=' + encodeURIComponent(slug))
+    .then((res) => {
+      if (!res.ok) throw new Error('Saved scan not found');
+      return res.json();
+    })
+    .then((data) => {
+      renderResult(data);
+      document.getElementById('scan').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    })
+    .catch(() => {
+      // Bad or expired link — fail quietly, the normal free-scan page still works fine
+    });
+})();
 
 if (scanForm) {
   scanForm.addEventListener('submit', (e) => {
