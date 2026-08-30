@@ -499,15 +499,18 @@ footer .frow a:hover{color:var(--text-dim);}
 .merged-list li b{color:var(--text); font-weight:600;}
 
 /* ---------- DECORATIVE SOCIAL PROOF ROW ---------- */
-.proof-row{display:flex; justify-content:center; align-items:center; margin:24px 0 0; pointer-events:none;}
+.proof-row{display:flex; justify-content:flex-start; align-items:center; margin:24px 0 0; pointer-events:none;}
 .proof-avatar{
   position:relative; width:42px; height:42px; border-radius:50%;
   border:2px solid #fff; box-shadow:0 3px 10px rgba(0,0,0,0.28);
   display:flex; align-items:center; justify-content:center;
-  margin-left:-13px; flex:none;
+  margin-left:-13px; flex:none; overflow:visible;
+  background:var(--card-hi);
 }
 .proof-avatar:first-child{margin-left:0;}
-.proof-avatar .proof-icon{width:52%; height:52%; fill:rgba(255,255,255,0.94);}
+.proof-photo{width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;}
+.proof-brand{display:flex;}
+.proof-mono{font-family:var(--display); font-weight:800; font-size:16px; color:#fff;}
 .proof-badge{
   position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50%;
   background:#3B82F6; border:1.8px solid #fff;
@@ -516,6 +519,7 @@ footer .frow a:hover{color:var(--text-dim);}
 .proof-badge svg{width:62%; height:62%;}
 @media (max-width:480px){
   .proof-avatar{width:32px; height:32px; margin-left:-10px;}
+  .proof-mono{font-size:12px;}
   .proof-badge{width:13px; height:13px; top:-1.5px; right:-1.5px;}
 }
 
