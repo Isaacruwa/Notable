@@ -168,6 +168,37 @@ function renderResult(data) {
 
   resultBanner.classList.add('show');
 
+  // ---- "Why did I get this score?" — fully free, real breakdown ----
+  const c = data.components || {};
+  const dims = [
+    { key: 'mediaPresence', label: 'media presence', bar: 'whyMediaBar', val: 'whyMediaVal' },
+    { key: 'sourceQuality', label: 'source quality', bar: 'whySourceBar', val: 'whySourceVal' },
+    { key: 'coverageDiversity', label: 'coverage diversity', bar: 'whyDiversityBar', val: 'whyDiversityVal' },
+    { key: 'recency', label: 'recency', bar: 'whyRecencyBar', val: 'whyRecencyVal' },
+    { key: 'originality', label: 'originality', bar: 'whyOriginalityBar', val: 'whyOriginalityVal' },
+    { key: 'entityConsistency', label: 'entity consistency', bar: 'whyConsistencyBar', val: 'whyConsistencyVal' }
+  ];
+  dims.forEach((d) => {
+    const score = c[d.key] ?? 0;
+    const barEl = document.getElementById(d.bar);
+    const valEl = document.getElementById(d.val);
+    if (barEl) barEl.style.width = score + '%';
+    if (valEl) valEl.textContent = score;
+  });
+
+  const summaryEl = document.getElementById('whyScoreSummary');
+  if (summaryEl) {
+    const sorted = dims
+      .map((d) => ({ label: d.label, score: c[d.key] ?? 0 }))
+      .sort((a, b) => b.score - a.score);
+    const strongest = sorted[0];
+    const secondStrongest = sorted[1];
+    const weakest = sorted[sorted.length - 1];
+    summaryEl.textContent =
+      `Your score is driven mainly by ${strongest.label} (${strongest.score}) and ${secondStrongest.label} ` +
+      `(${secondStrongest.score}), while ${weakest.label} (${weakest.score}) is holding you back the most.`;
+  }
+
   // ---- "Notable found X" line ----
   const dupCount = data.locked?.duplicateMentions ?? 0;
   const classifiedCount = (data.sources && data.sources.length) || null;
