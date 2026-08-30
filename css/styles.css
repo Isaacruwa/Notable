@@ -112,11 +112,11 @@ nav{
   border-bottom:1px solid var(--line);
 }
 nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
-.logo{font-family:var(--display); font-weight:700; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px;}
+.logo{font-family:var(--display); font-weight:700; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; color:#fff;}
 .logo .mark{width:20px; height:20px; border-radius:6px; background:var(--grad-cv); position:relative; flex:none;}
 .logo .mark::after{content:''; position:absolute; inset:5px; border-radius:3px; background:var(--base);}
-.navlinks{display:flex; gap:28px; font-size:14px; color:var(--text-dim);}
-.navlinks a:hover{color:var(--text);}
+.navlinks{display:flex; gap:28px; font-size:14px; color:rgba(244,244,247,0.72);}
+.navlinks a:hover{color:#fff;}
 .navcta{
   font-family:var(--body); font-weight:600; font-size:13.5px; color:#04141A;
   background:var(--grad-cv); padding:9px 18px; border-radius:999px;
@@ -497,6 +497,27 @@ footer .frow a:hover{color:var(--text-dim);}
 .merged-list{list-style:none; padding:0; margin:0 0 16px; display:flex; flex-direction:column; gap:10px;}
 .merged-list li{font-size:13.5px; color:var(--text-dim); line-height:1.6;}
 .merged-list li b{color:var(--text); font-weight:600;}
+
+/* ---------- DECORATIVE SOCIAL PROOF ROW ---------- */
+.proof-row{display:flex; justify-content:center; align-items:center; margin:24px 0 0; pointer-events:none;}
+.proof-avatar{
+  position:relative; width:42px; height:42px; border-radius:50%;
+  border:2px solid #fff; box-shadow:0 3px 10px rgba(0,0,0,0.28);
+  display:flex; align-items:center; justify-content:center;
+  margin-left:-13px; flex:none;
+}
+.proof-avatar:first-child{margin-left:0;}
+.proof-avatar .proof-icon{width:52%; height:52%; fill:rgba(255,255,255,0.94);}
+.proof-badge{
+  position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50%;
+  background:#3B82F6; border:1.8px solid #fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.proof-badge svg{width:62%; height:62%;}
+@media (max-width:480px){
+  .proof-avatar{width:32px; height:32px; margin-left:-10px;}
+  .proof-badge{width:13px; height:13px; top:-1.5px; right:-1.5px;}
+}
 
 .audience-loop{
   margin:26px auto 0; text-align:center; font-family:var(--mono); font-size:13px;
