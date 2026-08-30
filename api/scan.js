@@ -1,15 +1,21 @@
 // /api/scan — Vercel serverless function (Node.js runtime)
 //
-// Real pipeline: Serper.dev (search + news) -> Claude (entity resolution,
+// Real pipeline: Serper.dev (search + news) -> Gemini (entity resolution,
 // dedup detection, scoring) -> normalized response for the frontend.
+// Every result (real or mock) is saved to Postgres so it survives a refresh
+// and can be reopened later via a permanent, shareable link
+// (?s=<slug> on the homepage).
 //
-// If SERPER_API_KEY or GEMINI_API_KEY aren't set, or if the real
-// pipeline errors for any reason, this automatically falls back to a
-// deterministic mock so the live site never breaks mid-scan.
+// If SERPER_API_KEY or GEMINI_API_KEY aren't set, or if the real pipeline
+// errors for any reason, this automatically falls back to a deterministic
+// mock so the live site never breaks mid-scan. Likewise, if the database
+// is unreachable, the scan still returns normally — it just won't get a
+// share link that time.
 
 const { gatherEvidence } = require('../lib/search');
 const { scoreEntity } = require('../lib/claude');
 const { mockScan } = require('../lib/mock');
+const { saveScan, getScanBySlug } = require('../lib/db');
 
 function tierFor(n) {
   if (n >= 90) return 'Exceptional';
@@ -20,7 +26,7 @@ function tierFor(n) {
   return 'Very Low';
 }
 
-// Maps Claude's raw analysis into the stable contract the frontend expects,
+// Maps Gemini's raw analysis into the stable contract the frontend expects,
 // plus a few extra fields (sources, topGaps, notes) for future report UI.
 function normalizeResult(query, analysis) {
   return {
@@ -68,6 +74,22 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // ---- Shared-link lookup: GET /api/scan?slug=xxxx ----
+  // Returns a previously saved scan exactly as it was, instead of running
+  // a new one. This is what makes "Share my score" links actually work.
+  if (req.method === 'GET' && req.query?.slug) {
+    try {
+      const saved = await getScanBySlug(String(req.query.slug));
+      if (!saved) {
+        return res.status(404).json({ error: 'No saved scan found for this link.' });
+      }
+      return res.status(200).json(saved);
+    } catch (err) {
+      console.error('Scan lookup failed:', err.message);
+      return res.status(500).json({ error: 'Could not load that saved scan right now.' });
+    }
+  }
+
   const query = (req.method === 'POST' ? req.body?.query : req.query?.query) || '';
 
   if (!query || typeof query !== 'string' || query.trim().length < 2) {
@@ -77,18 +99,29 @@ module.exports = async function handler(req, res) {
   const trimmedQuery = query.trim().slice(0, 120);
   const hasKeys = process.env.SERPER_API_KEY && process.env.GEMINI_API_KEY;
 
+  let result;
   if (!hasKeys) {
-    return res.status(200).json(mockScan(trimmedQuery));
+    result = mockScan(trimmedQuery);
+  } else {
+    try {
+      const evidence = await gatherEvidence(trimmedQuery);
+      const analysis = await scoreEntity(trimmedQuery, evidence);
+      result = normalizeResult(trimmedQuery, analysis);
+    } catch (err) {
+      console.error('Live scan pipeline failed, falling back to mock:', err.message);
+      result = mockScan(trimmedQuery);
+      result.engine = 'mock-fallback';
+    }
   }
 
+  // Persist the result so it survives a refresh and can be shared as a
+  // permanent link. A database problem never blocks the scan itself —
+  // it just means this particular result won't have a share link.
   try {
-    const evidence = await gatherEvidence(trimmedQuery);
-    const analysis = await scoreEntity(trimmedQuery, evidence);
-    return res.status(200).json(normalizeResult(trimmedQuery, analysis));
+    result.shareSlug = await saveScan(trimmedQuery, result);
   } catch (err) {
-    console.error('Live scan pipeline failed, falling back to mock:', err.message);
-    const fallback = mockScan(trimmedQuery);
-    fallback.engine = 'mock-fallback';
-    return res.status(200).json(fallback);
+    console.error('Saving scan to database failed (scan still returned normally):', err.message);
   }
+
+  return res.status(200).json(result);
 };
