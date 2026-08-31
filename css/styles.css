@@ -498,6 +498,31 @@ footer .frow a:hover{color:var(--text-dim);}
 .merged-list li{font-size:13.5px; color:var(--text-dim); line-height:1.6;}
 .merged-list li b{color:var(--text); font-weight:600;}
 
+/* ---------- BRANDED CHECKOUT LOADING OVERLAY ---------- */
+.kiver-checkout-loader{
+  position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center;
+  background:rgba(8,8,11,0.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  padding:20px;
+}
+.kiver-checkout-loader.show{display:flex;}
+.kcl-card{
+  background:var(--card); border:1px solid var(--line); border-radius:22px;
+  padding:40px 34px; text-align:center; max-width:300px; width:100%;
+  box-shadow:0 24px 60px rgba(0,0,0,0.45);
+}
+.kcl-icon{
+  width:60px; height:60px; border-radius:16px; background:var(--grad-cv);
+  display:flex; align-items:center; justify-content:center; margin:0 auto 20px;
+  animation:kclPulse 1.7s ease-in-out infinite;
+}
+.kcl-icon svg{width:28px; height:28px;}
+@keyframes kclPulse{
+  0%, 100%{transform:scale(1); box-shadow:0 0 0 0 rgba(139,92,246,0.35);}
+  50%{transform:scale(1.05); box-shadow:0 0 0 14px rgba(139,92,246,0);}
+}
+.kcl-title{font-family:var(--display); font-weight:700; font-size:17px; color:var(--text); margin-bottom:6px;}
+.kcl-sub{font-family:var(--body); font-size:13px; color:var(--text-dim); line-height:1.5;}
+
 /* ---------- DECORATIVE SOCIAL PROOF ROW ---------- */
 .proof-row{display:flex; justify-content:flex-start; align-items:center; margin:24px 0 0; pointer-events:none;}
 .proof-avatar{
