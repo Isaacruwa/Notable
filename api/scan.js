@@ -15,7 +15,7 @@
 const { gatherEvidence } = require('../lib/search');
 const { scoreEntity } = require('../lib/claude');
 const { mockScan } = require('../lib/mock');
-const { saveScan, getScanBySlug } = require('../lib/db');
+const { saveScan, getScanBySlug, isSlugPaid } = require('../lib/db');
 
 function tierFor(n) {
   if (n >= 90) return 'Exceptional';
@@ -83,7 +83,8 @@ module.exports = async function handler(req, res) {
       if (!saved) {
         return res.status(404).json({ error: 'No saved scan found for this link.' });
       }
-      return res.status(200).json(saved);
+      const paid = await isSlugPaid(String(req.query.slug)).catch(() => false);
+      return res.status(200).json({ ...saved, paid });
     } catch (err) {
       console.error('Scan lookup failed:', err.message);
       return res.status(500).json({ error: 'Could not load that saved scan right now.' });
