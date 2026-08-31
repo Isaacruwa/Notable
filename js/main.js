@@ -251,20 +251,109 @@ function renderResult(data) {
   const shareHandleEl = document.getElementById('shareHandle');
   if (data.shareSlug) {
     currentShareUrl = buildShareUrl(data.shareSlug);
+    currentSlug = data.shareSlug;
     if (shareHandleEl) shareHandleEl.textContent = currentShareUrl.replace(/^https?:\/\//, '');
   } else {
     // No share link this time (e.g. database briefly unavailable) — be
     // honest about it rather than showing a fake, non-functional path.
     currentShareUrl = null;
+    currentSlug = null;
     if (shareHandleEl) shareHandleEl.textContent = 'Share link unavailable right now';
   }
 }
 
 // ---------- Share link handling ----------
 let currentShareUrl = null;
+let currentSlug = null;
 
 function buildShareUrl(slug) {
   return `${window.location.origin}/?s=${slug}`;
+}
+
+// ---------- Paddle checkout ----------
+const PADDLE_CLIENT_TOKEN = 'live_4a6440123292f3a72d772e6222c';
+const PRICE_REPORT = 'pri_01m16ynt1hngcfdyr3vq4ffggs';
+const PRICE_MONITOR = 'pri_01m16yrx8wanxqyamww939ja2r';
+const PRICE_AGENCY = 'pri_01m16yxwy2kmjzc0qcnvn2cm92';
+
+if (window.Paddle) {
+  Paddle.Environment.set('production');
+  Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN });
+}
+
+// After a successful Complete Report purchase, the webhook that actually
+// confirms payment arrives asynchronously — usually within a second or two,
+// but not instantly. We poll briefly for that confirmation rather than
+// trusting the checkout popup closing as proof of payment, then open the
+// real PDF once it's genuinely unlocked.
+function pollForPaidReport(slug, attempt) {
+  attempt = attempt || 0;
+  if (attempt >= 10) {
+    window.alert(
+      "Payment received! Your report is finishing up — this can take a few extra seconds. " +
+      "Reopen this page's link in a moment and click \u201cGet the full report\u201d again."
+    );
+    return;
+  }
+  fetch('/api/scan?slug=' + encodeURIComponent(slug))
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (data && data.paid) {
+        window.open('/api/report?slug=' + encodeURIComponent(slug), '_blank');
+      } else {
+        setTimeout(() => pollForPaidReport(slug, attempt + 1), 1200);
+      }
+    })
+    .catch(() => setTimeout(() => pollForPaidReport(slug, attempt + 1), 1200));
+}
+
+function openCheckout(priceId, customData, onComplete) {
+  if (!window.Paddle) {
+    window.alert('Checkout is still loading — try again in a moment.');
+    return;
+  }
+  Paddle.Checkout.open({
+    items: [{ priceId, quantity: 1 }],
+    customData: customData || undefined,
+    settings: { displayMode: 'overlay' },
+    eventCallback: function (evt) {
+      if (evt.name === 'checkout.completed' && typeof onComplete === 'function') {
+        onComplete();
+      }
+    }
+  });
+}
+
+const buyReportBtn = document.getElementById('buyReportBtn');
+if (buyReportBtn) {
+  buyReportBtn.addEventListener('click', () => {
+    if (!currentSlug) {
+      document.getElementById('scanInput').focus();
+      document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    openCheckout(PRICE_REPORT, { slug: currentSlug, product: 'report' }, () => {
+      pollForPaidReport(currentSlug, 0);
+    });
+  });
+}
+
+const startMonitorBtn = document.getElementById('startMonitorBtn');
+if (startMonitorBtn) {
+  startMonitorBtn.addEventListener('click', () => {
+    openCheckout(PRICE_MONITOR, { product: 'monitor', slug: currentSlug || undefined }, () => {
+      window.alert("You're subscribed! Monitoring alerts will be set up shortly.");
+    });
+  });
+}
+
+const startAgencyBtn = document.getElementById('startAgencyBtn');
+if (startAgencyBtn) {
+  startAgencyBtn.addEventListener('click', () => {
+    openCheckout(PRICE_AGENCY, { product: 'agency' }, () => {
+      window.alert("You're subscribed to the Agency plan! We'll be in touch to get your workspace set up.");
+    });
+  });
 }
 
 const copyLinkBtn = document.getElementById('copyLinkBtn');
