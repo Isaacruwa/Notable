@@ -282,6 +282,25 @@ if (window.Paddle) {
 }
 
 // After a successful Complete Report purchase, the webhook that actually
+
+const checkoutLoader = document.getElementById('checkoutLoader');
+let checkoutLoaderTimeout = null;
+
+function showCheckoutLoader() {
+  if (!checkoutLoader) return;
+  checkoutLoader.classList.add('show');
+  clearTimeout(checkoutLoaderTimeout);
+  // Safety net: if Paddle never fires a "loaded" event for some reason
+  // (slow network, blocked script, etc.), don't leave the user staring at
+  // our overlay forever — hide it after a few seconds regardless.
+  checkoutLoaderTimeout = setTimeout(hideCheckoutLoader, 6000);
+}
+
+function hideCheckoutLoader() {
+  if (!checkoutLoader) return;
+  checkoutLoader.classList.remove('show');
+  clearTimeout(checkoutLoaderTimeout);
+}
 // confirms payment arrives asynchronously — usually within a second or two,
 // but not instantly. We poll briefly for that confirmation rather than
 // trusting the checkout popup closing as proof of payment, then open the
@@ -312,12 +331,17 @@ function openCheckout(priceId, customData, onComplete) {
     window.alert('Checkout is still loading — try again in a moment.');
     return;
   }
+  showCheckoutLoader();
   Paddle.Checkout.open({
     items: [{ priceId, quantity: 1 }],
     customData: customData || undefined,
     settings: { displayMode: 'overlay' },
     eventCallback: function (evt) {
-      if (evt.name === 'checkout.completed' && typeof onComplete === 'function') {
+      if (evt.name === 'checkout.loaded') {
+        hideCheckoutLoader();
+      } else if (evt.name === 'checkout.error' || evt.name === 'checkout.closed') {
+        hideCheckoutLoader();
+      } else if (evt.name === 'checkout.completed' && typeof onComplete === 'function') {
         onComplete();
       }
     }
