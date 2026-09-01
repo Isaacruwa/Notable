@@ -151,6 +151,11 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 }
 .btn-primary:hover{box-shadow:0 6px 30px rgba(139,92,246,0.35); transform:translateY(-1px);}
 .btn-primary:disabled{opacity:0.6; cursor:progress; transform:none; box-shadow:none;}
+.btn-spinner{
+  display:inline-block; vertical-align:-2px; margin-right:7px;
+  animation:spinTriangle 0.9s linear infinite;
+}
+@keyframes spinTriangle{to{transform:rotate(360deg);}}
 .hero .fineprint{margin-top:14px; font-size:12.5px; color:var(--text-faint); font-family:var(--mono); letter-spacing:.02em;}
 .hero .form-error{margin-top:12px; font-size:13px; color:var(--danger); font-family:var(--mono);}
 
