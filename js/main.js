@@ -278,19 +278,35 @@ const PRICE_AGENCY = 'pri_01m16yxwy2kmjzc0qcnvn2cm92';
 
 if (window.Paddle) {
   Paddle.Environment.set('production');
-  Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN });
+  // Inline checkout requires displayMode/frameTarget to be set here, inside
+  // Initialize() — NOT inside Checkout.open(). frameTarget must be a bare
+  // class name (no leading "."), matching the class on the container div
+  // Paddle renders the checkout form into.
+  Paddle.Initialize({
+    token: PADDLE_CLIENT_TOKEN,
+    checkout: {
+      settings: {
+        displayMode: 'inline',
+        frameTarget: 'checkoutContainer',
+        frameInitialHeight: '450',
+        frameStyle: 'width: 100%; background-color: transparent; border: none;'
+      }
+    }
+  });
 }
 
 // After a successful Complete Report purchase, the webhook that actually
 
+const checkoutModal = document.getElementById('checkoutModal');
+const checkoutContainer = document.getElementById('checkoutContainer');
 const checkoutLoader = document.getElementById('checkoutLoader');
 let checkoutLoaderTimeout = null;
 
 function showCheckoutLoader() {
   if (!checkoutLoader) return;
-  checkoutLoader.classList.add('show');
+  checkoutLoader.classList.remove('hide');
   clearTimeout(checkoutLoaderTimeout);
-  // Safety net: if Paddle never fires a "loaded" event for some reason
+  // Safety net: if Paddle never fires "checkout.loaded" for some reason
   // (slow network, blocked script, etc.), don't leave the user staring at
   // our overlay forever — hide it after a few seconds regardless.
   checkoutLoaderTimeout = setTimeout(hideCheckoutLoader, 6000);
@@ -298,9 +314,30 @@ function showCheckoutLoader() {
 
 function hideCheckoutLoader() {
   if (!checkoutLoader) return;
-  checkoutLoader.classList.remove('show');
+  checkoutLoader.classList.add('hide');
   clearTimeout(checkoutLoaderTimeout);
 }
+
+function openCheckoutModal() {
+  if (!checkoutModal) return;
+  checkoutModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCheckoutModal() {
+  if (!checkoutModal) return;
+  checkoutModal.classList.remove('show');
+  document.body.style.overflow = '';
+  // Clean slate so the next checkout renders fresh rather than stacking
+  // on top of whatever Paddle already drew into this container.
+  if (checkoutContainer) checkoutContainer.innerHTML = '';
+  showCheckoutLoader(); // reset to visible+pulsing for next time
+}
+
+const checkoutModalClose = document.getElementById('checkoutModalClose');
+if (checkoutModalClose) checkoutModalClose.addEventListener('click', closeCheckoutModal);
+const checkoutModalBackdrop = document.getElementById('checkoutModalBackdrop');
+if (checkoutModalBackdrop) checkoutModalBackdrop.addEventListener('click', closeCheckoutModal);
 // confirms payment arrives asynchronously — usually within a second or two,
 // but not instantly. We poll briefly for that confirmation rather than
 // trusting the checkout popup closing as proof of payment, then open the
@@ -331,18 +368,19 @@ function openCheckout(priceId, customData, onComplete) {
     window.alert('Checkout is still loading — try again in a moment.');
     return;
   }
+  openCheckoutModal();
   showCheckoutLoader();
   Paddle.Checkout.open({
     items: [{ priceId, quantity: 1 }],
     customData: customData || undefined,
-    settings: { displayMode: 'overlay' },
     eventCallback: function (evt) {
       if (evt.name === 'checkout.loaded') {
         hideCheckoutLoader();
-      } else if (evt.name === 'checkout.error' || evt.name === 'checkout.closed') {
+      } else if (evt.name === 'checkout.error') {
         hideCheckoutLoader();
       } else if (evt.name === 'checkout.completed' && typeof onComplete === 'function') {
         onComplete();
+        closeCheckoutModal();
       }
     }
   });
