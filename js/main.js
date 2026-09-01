@@ -69,7 +69,7 @@ animateReticleScore(88); // ambient demo value on page load
 (function audienceLoop() {
   const el = document.getElementById('audienceWord');
   if (!el) return;
-  const words = ['Influencers', 'Brands', 'Businesses', 'Creators', 'Founders', 'Companies', 'Organizations', 'Public Figures'];
+  const words = ['Influencers', 'Brands', 'Businesses', 'Creators', 'Founders', 'Companies', 'Organizations', 'Websites', 'Public Figures'];
   let i = 0;
   setInterval(() => {
     el.classList.add('fade');
@@ -91,7 +91,8 @@ const formError = document.getElementById('formError');
 async function runScan(query) {
   formError.textContent = '';
   scanBtn.disabled = true;
-  scanBtn.textContent = 'Scanning…';
+  scanBtn.innerHTML =
+    '<svg class="btn-spinner" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2L22 20H2Z"/></svg>Scanning…';
 
   try {
     const res = await fetch('/api/scan', {
@@ -122,7 +123,7 @@ async function runScan(query) {
     formError.textContent = e.message || 'Something went wrong. Try again.';
   } finally {
     scanBtn.disabled = false;
-    scanBtn.textContent = 'Check My Notability →';
+    scanBtn.innerHTML = 'Check My Notability →';
   }
 }
 
@@ -150,9 +151,9 @@ function renderResult(data) {
   if (engineEl) {
     if (data.engine === 'live') {
       engineEl.textContent = '● LIVE SCAN — REAL DATA';
-      engineEl.style.background = 'rgba(0,242,254,0.14)';
-      engineEl.style.color = '#00F2FE';
-      engineEl.style.border = '1px solid rgba(0,242,254,0.4)';
+      engineEl.style.background = 'rgba(57,255,20,0.14)';
+      engineEl.style.color = '#39FF14';
+      engineEl.style.border = '1px solid rgba(57,255,20,0.4)';
     } else if (data.engine === 'mock-fallback') {
       engineEl.textContent = '● MOCK — LIVE PIPELINE ERRORED, CHECK KEYS';
       engineEl.style.background = 'rgba(255,92,122,0.14)';
