@@ -498,30 +498,63 @@ footer .frow a:hover{color:var(--text-dim);}
 .merged-list li{font-size:13.5px; color:var(--text-dim); line-height:1.6;}
 .merged-list li b{color:var(--text); font-weight:600;}
 
-/* ---------- BRANDED CHECKOUT LOADING OVERLAY ---------- */
-.kiver-checkout-loader{
-  position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center;
-  background:rgba(8,8,11,0.72); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-  padding:20px;
+/* ---------- BRANDED CHECKOUT MODAL (inline Paddle checkout embedded here) ---------- */
+.kiver-checkout-modal{
+  position:fixed; inset:0; z-index:300; display:none; align-items:flex-end; justify-content:center;
 }
-.kiver-checkout-loader.show{display:flex;}
-.kcl-card{
-  background:var(--card); border:1px solid var(--line); border-radius:22px;
-  padding:40px 34px; text-align:center; max-width:300px; width:100%;
-  box-shadow:0 24px 60px rgba(0,0,0,0.45);
+.kiver-checkout-modal.show{display:flex;}
+@media (min-width:640px){
+  .kiver-checkout-modal{align-items:center;}
 }
+.kcm-backdrop{
+  position:absolute; inset:0; background:rgba(8,8,11,0.72);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+}
+.kcm-panel{
+  position:relative; background:var(--card); width:100%; max-width:460px;
+  border-radius:20px 20px 0 0; max-height:92vh; overflow:hidden;
+  display:flex; flex-direction:column; box-shadow:0 24px 60px rgba(0,0,0,0.5);
+}
+@media (min-width:640px){
+  .kcm-panel{border-radius:20px; margin:20px;}
+}
+.kcm-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 18px; border-bottom:1px solid var(--line); flex:none;
+}
+.kcm-brand{display:flex; align-items:center; gap:9px; font-family:var(--display); font-weight:700; font-size:16px; color:var(--text);}
+.kcm-brand .mark{width:18px; height:18px; border-radius:5px; background:var(--grad-cv); position:relative; flex:none;}
+.kcm-brand .mark::after{content:''; position:absolute; inset:4px; border-radius:3px; background:var(--card);}
+.kcm-close{
+  width:30px; height:30px; border-radius:50%; border:none; background:var(--base-raise);
+  color:var(--text-dim); font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background .2s ease, color .2s ease;
+}
+.kcm-close:hover{background:var(--card-hi); color:var(--text);}
+.kcm-body{position:relative; overflow-y:auto; flex:1; min-height:260px;}
+.checkoutContainer{width:100%; min-height:300px;}
+
+/* The loader sits ON TOP of the checkout container as an overlay, rather
+   than swapping the container's own content in and out — so it never
+   fights with however Paddle chooses to render into that div. */
+.kcl-overlay{
+  position:absolute; inset:0; z-index:2; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; background:var(--card);
+  padding:40px 24px; text-align:center; transition:opacity .25s ease;
+}
+.kcl-overlay.hide{opacity:0; pointer-events:none;}
 .kcl-icon{
-  width:60px; height:60px; border-radius:16px; background:var(--grad-cv);
-  display:flex; align-items:center; justify-content:center; margin:0 auto 20px;
+  width:56px; height:56px; border-radius:16px; background:var(--grad-cv);
+  display:flex; align-items:center; justify-content:center; margin:0 auto 18px;
   animation:kclPulse 1.7s ease-in-out infinite;
 }
-.kcl-icon svg{width:28px; height:28px;}
+.kcl-icon svg{width:26px; height:26px;}
 @keyframes kclPulse{
   0%, 100%{transform:scale(1); box-shadow:0 0 0 0 rgba(139,92,246,0.35);}
   50%{transform:scale(1.05); box-shadow:0 0 0 14px rgba(139,92,246,0);}
 }
-.kcl-title{font-family:var(--display); font-weight:700; font-size:17px; color:var(--text); margin-bottom:6px;}
-.kcl-sub{font-family:var(--body); font-size:13px; color:var(--text-dim); line-height:1.5;}
+.kcl-title{font-family:var(--display); font-weight:700; font-size:16px; color:var(--text); margin-bottom:5px;}
+.kcl-sub{font-family:var(--body); font-size:12.5px; color:var(--text-dim); line-height:1.5;}
 
 /* ---------- DECORATIVE SOCIAL PROOF ROW ---------- */
 .proof-row{display:flex; justify-content:flex-start; align-items:center; margin:24px 0 0; pointer-events:none;}
