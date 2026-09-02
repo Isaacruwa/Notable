@@ -249,6 +249,15 @@ function renderResult(data) {
   const shareLabel = document.getElementById('shareLabel');
   if (shareLabel) shareLabel.textContent = 'BUILT TO SHARE';
 
+  currentCardData = {
+    query: data.query,
+    overallScore: data.overallScore,
+    tier: data.tier,
+    mentionsFound: data.mentionsFound,
+    independentMentions: data.independentMentions,
+    matchConfidence: data.matchConfidence
+  };
+
   const shareHandleEl = document.getElementById('shareHandle');
   if (data.shareSlug) {
     currentShareUrl = buildShareUrl(data.shareSlug);
@@ -266,9 +275,149 @@ function renderResult(data) {
 // ---------- Share link handling ----------
 let currentShareUrl = null;
 let currentSlug = null;
+let currentCardData = null;
 
 function buildShareUrl(slug) {
   return `${window.location.origin}/?s=${slug}`;
+}
+
+// ---------- Render the share card as a real downloadable/shareable PNG ----------
+function slugifyForFilename(str) {
+  return str.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'entity';
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+async function generateShareCardBlob(data) {
+  if (document.fonts && document.fonts.ready) {
+    try {
+      await document.fonts.ready;
+    } catch (e) {
+      /* fall through and draw with whatever fonts are available */
+    }
+  }
+
+  const W = 1080;
+  const H = 1080;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // Base — deliberately kept dark regardless of site theme, so the shared
+  // image always reads as a premium, consistent artifact.
+  ctx.fillStyle = '#0D0D11';
+  ctx.fillRect(0, 0, W, H);
+
+  const glow1 = ctx.createRadialGradient(W * 0.15, H * 0.05, 0, W * 0.15, H * 0.05, W * 0.6);
+  glow1.addColorStop(0, 'rgba(139,92,246,0.18)');
+  glow1.addColorStop(1, 'rgba(139,92,246,0)');
+  ctx.fillStyle = glow1;
+  ctx.fillRect(0, 0, W, H);
+
+  const glow2 = ctx.createRadialGradient(W * 0.9, H * 0.15, 0, W * 0.9, H * 0.15, W * 0.55);
+  glow2.addColorStop(0, 'rgba(236,72,153,0.14)');
+  glow2.addColorStop(1, 'rgba(236,72,153,0)');
+  ctx.fillStyle = glow2;
+  ctx.fillRect(0, 0, W, H);
+
+  // Kiver logo mark, top-left
+  const markGrad = ctx.createLinearGradient(70, 70, 130, 130);
+  markGrad.addColorStop(0, '#8B5CF6');
+  markGrad.addColorStop(1, '#EC4899');
+  ctx.fillStyle = markGrad;
+  roundRect(ctx, 70, 70, 60, 60, 16);
+  ctx.fill();
+  ctx.fillStyle = '#0D0D11';
+  roundRect(ctx, 88, 88, 24, 24, 7);
+  ctx.fill();
+
+  ctx.fillStyle = '#F4F4F7';
+  ctx.font = "700 44px 'Space Grotesk', sans-serif";
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Kiver', 146, 100);
+
+  // Entity name
+  ctx.fillStyle = '#9A9AAA';
+  ctx.font = "600 26px 'JetBrains Mono', 'IBM Plex Mono', monospace";
+  ctx.textBaseline = 'alphabetic';
+  const name = data.query.length > 26 ? data.query.slice(0, 24) + '…' : data.query;
+  ctx.fillText(name.toUpperCase(), 70, 260);
+
+  // Big score, gradient text
+  const scoreText = String(data.overallScore);
+  ctx.font = "800 320px 'Space Grotesk', sans-serif";
+  const scoreGrad = ctx.createLinearGradient(60, 0, 620, 0);
+  scoreGrad.addColorStop(0, '#8B5CF6');
+  scoreGrad.addColorStop(1, '#EC4899');
+  ctx.fillStyle = scoreGrad;
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillText(scoreText, 65, 560);
+
+  const scoreWidth = ctx.measureText(scoreText).width;
+  ctx.fillStyle = '#5C5C6B';
+  ctx.font = "600 46px 'JetBrains Mono', 'IBM Plex Mono', monospace";
+  ctx.fillText('/100', 65 + scoreWidth + 14, 560);
+
+  // Tier
+  ctx.fillStyle = '#FFC857';
+  ctx.font = "700 34px 'JetBrains Mono', 'IBM Plex Mono', monospace";
+  ctx.fillText(String(data.tier).toUpperCase(), 70, 630);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(70, 700);
+  ctx.lineTo(W - 70, 700);
+  ctx.stroke();
+
+  // Stats row
+  const stats = [
+    [String(data.mentionsFound), 'MENTIONS'],
+    [String(data.independentMentions), 'INDEPENDENT'],
+    [data.matchConfidence + '%', 'MATCH']
+  ];
+  const statW = (W - 140) / 3;
+  stats.forEach((s, i) => {
+    const x = 70 + i * statW;
+    ctx.fillStyle = '#F4F4F7';
+    ctx.font = "700 48px 'Space Grotesk', sans-serif";
+    ctx.fillText(s[0], x, 780);
+    ctx.fillStyle = '#5C5C6B';
+    ctx.font = "500 22px 'JetBrains Mono', 'IBM Plex Mono', monospace";
+    ctx.fillText(s[1], x, 815);
+  });
+
+  // Footer — getkiver.com, deliberately the most prominent thing at the bottom
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  ctx.beginPath();
+  ctx.moveTo(70, 900);
+  ctx.lineTo(W - 70, 900);
+  ctx.stroke();
+
+  ctx.fillStyle = '#9A9AAA';
+  ctx.font = "500 26px 'JetBrains Mono', 'IBM Plex Mono', monospace";
+  ctx.fillText('CHECK YOUR OWN SCORE FREE AT', 70, 960);
+
+  const domainGrad = ctx.createLinearGradient(70, 0, 500, 0);
+  domainGrad.addColorStop(0, '#8B5CF6');
+  domainGrad.addColorStop(1, '#EC4899');
+  ctx.fillStyle = domainGrad;
+  ctx.font = "800 56px 'Space Grotesk', sans-serif";
+  ctx.fillText('getkiver.com', 70, 1015);
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob), 'image/png');
+  });
 }
 
 // ---------- Paddle checkout ----------
@@ -423,7 +572,10 @@ const copyLinkBtn = document.getElementById('copyLinkBtn');
 if (copyLinkBtn) {
   copyLinkBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    if (!currentShareUrl) return;
+    if (!currentShareUrl) {
+      requireScanFirst();
+      return;
+    }
     try {
       await navigator.clipboard.writeText(currentShareUrl);
       const original = copyLinkBtn.textContent;
@@ -436,24 +588,89 @@ if (copyLinkBtn) {
   });
 }
 
+function requireScanFirst() {
+  document.getElementById('scanInput').focus();
+  document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+}
+
+const downloadCardBtn = document.getElementById('downloadCardBtn');
+if (downloadCardBtn) {
+  downloadCardBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!currentCardData) {
+      requireScanFirst();
+      return;
+    }
+    const original = downloadCardBtn.textContent;
+    downloadCardBtn.textContent = 'GENERATING…';
+    try {
+      const blob = await generateShareCardBlob(currentCardData);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `kiver-${slugifyForFilename(currentCardData.query)}-score.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch (err) {
+      window.alert('Could not generate the card image right now. Try again in a moment.');
+    } finally {
+      downloadCardBtn.textContent = original;
+    }
+  });
+}
+
 const shareBtn = document.getElementById('shareBtn');
 if (shareBtn) {
   shareBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    if (!currentShareUrl) return;
-    if (navigator.share) {
-      try {
+    if (!currentShareUrl || !currentCardData) {
+      requireScanFirst();
+      return;
+    }
+
+    const original = shareBtn.textContent;
+    shareBtn.textContent = 'PREPARING…';
+
+    try {
+      const blob = await generateShareCardBlob(currentCardData);
+      const file = new File(
+        [blob],
+        `kiver-${slugifyForFilename(currentCardData.query)}-score.png`,
+        { type: 'image/png' }
+      );
+
+      // Share the actual photo AND the link together, when the device
+      // supports sharing files (most modern mobile browsers do).
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: 'My Kiver Notability Score',
+          text: `I scored ${currentCardData.overallScore}/100 on Kiver. Check yours free:`,
+          url: currentShareUrl,
+          files: [file]
+        });
+      } else if (navigator.share) {
+        // Device can share, but not files — share the link, still useful.
         await navigator.share({ title: 'My Kiver Notability Score', url: currentShareUrl });
-      } catch (err) {
-        /* user cancelled the share sheet — no action needed */
+      } else {
+        // No native share sheet available at all — fall back to copying
+        // the link, and offer the image as a direct download instead.
+        await navigator.clipboard.writeText(currentShareUrl).catch(() => {});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `kiver-${slugifyForFilename(currentCardData.query)}-score.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+        window.alert('Link copied, and your score card image is downloading.');
       }
-    } else {
-      try {
-        await navigator.clipboard.writeText(currentShareUrl);
-        window.alert('Link copied: ' + currentShareUrl);
-      } catch (err) {
-        window.prompt('Copy this link:', currentShareUrl);
-      }
+    } catch (err) {
+      /* user cancelled the share sheet, or sharing failed — no action needed */
+    } finally {
+      shareBtn.textContent = original;
     }
   });
 }
