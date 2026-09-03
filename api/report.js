@@ -9,12 +9,14 @@
 // so it runs reliably in a lightweight serverless function without needing
 // Chromium or any special deployment configuration.
 //
-// NOTE: this endpoint is now gated behind confirmed payment (see
-// isSlugPaid below), which is only ever set by the verified webhook in
-// api/webhook.js — never by anything the browser claims.
+// NOTE: this endpoint is gated behind confirmed payment (see isSlugPaid
+// below, only ever set by the verified webhook in api/webhook.js — never by
+// anything the browser claims), OR a logged-in session that's an admin or
+// has been granted free premium access (see lib/auth.js / premium_grants).
 
 const PDFDocument = require('pdfkit');
-const { getScanBySlug, isSlugPaid } = require('../lib/db');
+const { getScanBySlug, isSlugPaid, hasPremiumGrant } = require('../lib/db');
+const { getSessionEmail, isAdminEmail } = require('../lib/auth');
 
 const COLORS = {
   primary: '#8B5CF6',
@@ -70,6 +72,17 @@ module.exports = async function handler(req, res) {
   let paid = false;
   try {
     paid = await isSlugPaid(String(slug));
+
+    // Admins and comped ("premium grant") accounts bypass per-report
+    // payment entirely — checked second, only if the direct purchase check
+    // came back false, to avoid an unnecessary session lookup on the
+    // common paid-normally path.
+    if (!paid) {
+      const sessionEmail = await getSessionEmail(req).catch(() => null);
+      if (sessionEmail && (isAdminEmail(sessionEmail) || (await hasPremiumGrant(sessionEmail)))) {
+        paid = true;
+      }
+    }
   } catch (err) {
     console.error('Payment check failed:', err.message);
     return res.status(500).json({ error: 'Could not verify payment right now. Try again shortly.' });
