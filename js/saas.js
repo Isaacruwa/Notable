@@ -1,19 +1,19 @@
 // js/saas.js
 //
 // Progressive enhancement for the SaaS Leaderboard pages
-// (server-rendered by api/saas-index.js and api/saas-page.js) plus
-// the submission form on submit-saas.html. The pages already show
-// real content with JS off — this just makes them interactive.
+// (server-rendered by api/saas-page.js) plus the submission form on
+// submit-saas.html. The pages already show real content with JS
+// off — this just makes them interactive.
 
 (function () {
   function onUpvoteClick(btn) {
     if (btn.dataset.busy === '1') return;
     btn.dataset.busy = '1';
     const slug = btn.dataset.slug;
-    fetch('/api/saas-upvote', {
+    fetch('/api/saas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug })
+      body: JSON.stringify({ action: 'upvote', slug })
     })
       .then((r) => r.json())
       .then((data) => {
@@ -48,6 +48,7 @@
     resultBox.innerHTML = '';
 
     const payload = {
+      action: 'submit',
       name: form.name.value.trim(),
       websiteUrl: form.websiteUrl.value.trim(),
       tagline: form.tagline.value.trim(),
@@ -57,7 +58,7 @@
       submitterEmail: form.submitterEmail.value.trim()
     };
 
-    fetch('/api/saas-submit', {
+    fetch('/api/saas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
