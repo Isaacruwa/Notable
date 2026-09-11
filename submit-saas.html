@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit your SaaS — Kiver Leaderboard</title>
+<meta name="description" content="List your SaaS on the Kiver Leaderboard. Free, score-based ranking for products launched 2025 or later — no pay-to-play.">
+<link rel="canonical" href="https://www.getkiver.com/submit-saas.html">
+<link rel="stylesheet" href="/css/saas.css">
+</head>
+<body>
+<header class="saas-header">
+  <a href="/" class="saas-brand">Kiver</a>
+  <nav class="saas-nav">
+    <a href="/saas">Leaderboard</a>
+    <a href="/submit-saas.html" class="saas-nav-active">Submit your SaaS</a>
+  </nav>
+</header>
+<main class="saas-main">
+  <h1>Submit your SaaS</h1>
+  <p>Free listing for any SaaS launched 2025 or later. We scan your public presence and give you an entry score &mdash; from there, real upvotes are the only thing that moves your position.</p>
+
+  <form id="saas-submit-form" class="saas-form">
+    <label>Product name
+      <input type="text" name="name" required maxlength="120" placeholder="Acme">
+    </label>
+    <label>Website URL
+      <input type="url" name="websiteUrl" required placeholder="https://acme.com">
+    </label>
+    <label>Tagline
+      <input type="text" name="tagline" maxlength="160" placeholder="One line on what it does">
+    </label>
+    <label>Description
+      <textarea name="description" maxlength="2000" placeholder="What does it do, who's it for?"></textarea>
+    </label>
+    <label>Category
+      <select name="category">
+        <option value="">Select a category</option>
+        <option value="ai">AI</option>
+        <option value="productivity">Productivity</option>
+        <option value="developer-tools">Developer Tools</option>
+        <option value="marketing">Marketing</option>
+        <option value="finance">Finance</option>
+        <option value="design">Design</option>
+        <option value="other">Other</option>
+      </select>
+    </label>
+    <label>Launch year
+      <input type="number" name="launchYear" min="2025" max="2030" required placeholder="2025">
+    </label>
+    <label>Your email (for listing updates, not shown publicly)
+      <input type="email" name="submitterEmail" placeholder="you@acme.com">
+    </label>
+    <button type="submit" class="saas-submit-btn">Submit &amp; get scored</button>
+  </form>
+  <div id="saas-form-result" class="saas-form-result"></div>
+</main>
+<footer class="saas-footer">
+  <p><a href="/saas">&larr; Back to the leaderboard</a></p>
+</footer>
+<script src="/js/saas.js" defer></script>
+</body>
+</html>

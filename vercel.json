@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/saas", "destination": "/api/saas-index" },
+    { "source": "/saas/:slug", "destination": "/api/saas-page?slug=:slug" }
+  ]
+}
