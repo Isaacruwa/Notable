@@ -121,9 +121,8 @@ a{color:inherit; text-decoration:none;}
 /* ---------- NAV ---------- */
 nav{
   position:sticky; top:0; z-index:50;
-  background:rgba(26,15,7,0.82);
-  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(217,99,27,0.35);
+  background:transparent;
+  border-bottom:none;
 }
 nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
 .logo{font-family:var(--display); font-weight:700; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; color:#fff;}
