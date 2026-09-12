@@ -40,7 +40,8 @@
   }
 
   // Top 3 Scans widget (homepage only) — every scanned SaaS lands on
-  // the leaderboard, ranked by score; this just teasers the top 3.
+  // the leaderboard, ranked by score; this teasers the top 3 using
+  // the exact same row markup/styling as the real /saas leaderboard.
   function renderTop3Scans() {
     const grid = document.getElementById('top3ScansGrid');
     if (!grid) return;
@@ -49,34 +50,29 @@
       .then((data) => {
         const listings = data.listings || [];
         if (!listings.length) {
-          grid.innerHTML = '<p class="top3scans-empty">No SaaS scanned yet — <a href="/submit-saas.html">be the first</a>.</p>';
+          grid.innerHTML = '<li class="saas-empty">No SaaS scanned yet — <a href="/submit-saas.html">be the first</a>.</li>';
           return;
         }
         grid.innerHTML = listings
-          .map((l, i) => {
-            const tierClass = l.tier === 'Elite' || l.tier === 'Strong' ? 'tier-strong'
-              : l.tier === 'Rising' ? 'tier-dev' : 'tier-est';
-            return `
-        <a class="pcard" href="/saas/${escapeHtml(l.slug)}">
-          <span class="top3scans-rank">${i + 1}</span>
-          <div class="row1">
-            <div class="avatar" style="background:linear-gradient(135deg,#4FACFE,#00F2FE)"></div>
-            <div>
-              <div class="name">${escapeHtml(l.name)}</div>
-              <div class="tag">${escapeHtml((l.category || 'SAAS').toUpperCase())}</div>
-            </div>
-          </div>
-          <div class="bar-bg"><div class="bar-fg" style="width:${l.baseScore}%"></div></div>
-          <div class="foot">
-            <span class="val">${l.baseScore}%</span>
-            <span class="tier ${tierClass}">${escapeHtml(l.tier.toUpperCase())}</span>
-          </div>
-        </a>`;
-          })
+          .map((l, i) => `
+    <li class="saas-row" data-slug="${escapeHtml(l.slug)}">
+      <span class="saas-position">${i + 1}</span>
+      <img class="saas-logo" src="${escapeHtml(l.logoUrl || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+      <a class="saas-name-link" href="/saas/${escapeHtml(l.slug)}">
+        <span class="saas-name">${escapeHtml(l.name)}</span>
+        <span class="saas-tagline">${escapeHtml(l.tagline || '')}</span>
+      </a>
+      <span class="saas-tier saas-tier-${escapeHtml((l.tier || 'new').toLowerCase())}">${escapeHtml(l.tier)}</span>
+      <span class="saas-score">${l.baseScore}%</span>
+      <button class="saas-upvote" data-slug="${escapeHtml(l.slug)}" aria-label="Upvote ${escapeHtml(l.name)}">
+        <span class="saas-upvote-arrow">&#9650;</span>
+        <span class="saas-upvote-count">${l.upvotes}</span>
+      </button>
+    </li>`)
           .join('');
       })
       .catch(() => {
-        grid.innerHTML = '<p class="top3scans-empty">Could not load the leaderboard right now.</p>';
+        grid.innerHTML = '<li class="saas-empty">Could not load the leaderboard right now.</li>';
       });
   }
   renderTop3Scans();
@@ -99,6 +95,7 @@
       action: 'submit',
       name: form.name.value.trim(),
       websiteUrl: form.websiteUrl.value.trim(),
+      logoUrl: form.logoUrl.value.trim(),
       tagline: form.tagline.value.trim(),
       description: form.description.value.trim(),
       category: form.category.value,

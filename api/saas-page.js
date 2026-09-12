@@ -49,6 +49,7 @@ async function renderIndex(req, res) {
           return `
     <li class="saas-row" data-slug="${escapeHtml(r.slug)}">
       <span class="saas-position">${position}</span>
+      <img class="saas-logo" src="${escapeHtml(r.logo_url || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
       <a class="saas-name-link" href="/saas/${escapeHtml(r.slug)}">
         <span class="saas-name">${escapeHtml(r.name)}</span>
         <span class="saas-tagline">${escapeHtml(r.tagline || '')}</span>
@@ -166,6 +167,7 @@ async function renderDetail(req, res, slug) {
 <main class="saas-main saas-detail">
   <div class="saas-detail-top">
     ${position ? `<span class="saas-position-big">#${position}</span>` : ''}
+    ${listing.logo_url ? `<img class="saas-logo saas-logo-big" src="${escapeHtml(listing.logo_url)}" alt="" onerror="this.style.visibility='hidden'">` : ''}
     <div>
       <h1>${escapeHtml(listing.name)}</h1>
       <p class="saas-tagline">${escapeHtml(listing.tagline || '')}</p>

@@ -15,8 +15,8 @@
   --saas-ink: #1c1c22;
   --saas-ink-soft: #55555f;
   --saas-ink-faint: #8b8b96;
-  --saas-accent: #22314d;
-  --saas-accent-soft: #eef1f6;
+  --saas-accent: #d9631b;
+  --saas-accent-soft: #fbeee4;
   --saas-tier-elite: #1c1c22;
   --saas-tier-strong: #3d3d47;
   --saas-tier-rising: #6b6b76;
@@ -60,7 +60,7 @@ body:has(.saas-header) {
 .saas-list { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .saas-row {
   display: grid;
-  grid-template-columns: 36px 1fr auto auto auto;
+  grid-template-columns: 36px 40px 1fr auto auto auto;
   align-items: center;
   gap: 14px;
   background: var(--saas-box);
@@ -69,6 +69,8 @@ body:has(.saas-header) {
   padding: 14px 16px;
 }
 .saas-position { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; color: var(--saas-ink-faint); font-size: 1.1rem; }
+.saas-logo { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: #fff; border: 1px solid var(--saas-box-border); flex: none; }
+.saas-logo-big { width: 64px; height: 64px; border-radius: 8px; }
 .saas-name-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; min-width: 0; }
 .saas-name { font-weight: 600; color: var(--saas-ink); }
 .saas-tagline { font-size: 0.85rem; color: var(--saas-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -126,7 +128,31 @@ body:has(.saas-header) {
 .saas-form-error { color: #9b2c2c; font-size: 0.9rem; margin: 0; }
 
 @media (max-width: 640px) {
-  .saas-row { grid-template-columns: 28px 1fr auto; }
+  .saas-row { grid-template-columns: 28px 32px 1fr auto; }
   .saas-tier, .saas-score { display: none; }
   .saas-detail-top { flex-direction: column; }
 }
+
+/* ---------- TOP 3 SCANS PANEL (homepage teaser) ---------- */
+/* A white, mathbook-styled inset on the otherwise-dark homepage —
+   same list/row styling as the real /saas leaderboard, so the
+   teaser and the real thing look like one system. */
+.top3-panel {
+  background-color: var(--saas-bg);
+  background-image:
+    linear-gradient(var(--saas-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--saas-grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-radius: 14px;
+  border: 1px solid var(--saas-box-border);
+  padding: 36px 24px;
+}
+.top3-panel .scanseq-head { text-align: center; max-width: 600px; margin: 0 auto 24px; }
+.top3-panel .eyebrow { color: var(--saas-accent) !important; }
+.top3-panel .eyebrow::before { background: var(--saas-accent) !important; }
+.top3-panel h2 { color: var(--saas-ink); }
+.top3-panel p { color: var(--saas-ink-soft); }
+.top3-panel .saas-list { max-width: 640px; margin: 0 auto; }
+.top3scans-actions { display: flex; gap: 18px; align-items: center; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+.top3scans-submit { color: var(--saas-ink-soft); font-size: 14px; text-decoration: none; }
+.top3scans-submit:hover { color: var(--saas-accent); }

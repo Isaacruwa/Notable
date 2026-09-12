@@ -33,6 +33,18 @@ function isValidUrl(value) {
   }
 }
 
+// Logo is a must-have on every listing. If the submitter didn't give
+// one directly, pull the site's favicon as a real logo image rather
+// than leaving the listing generic.
+function faviconFor(websiteUrl) {
+  try {
+    const domain = new URL(websiteUrl).hostname;
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  } catch {
+    return null;
+  }
+}
+
 function parseCookies(req) {
   const header = req.headers?.cookie || '';
   const out = {};
@@ -73,6 +85,7 @@ async function handleSubmit(req, res) {
   const category = String(body.category || '').trim().slice(0, 60) || null;
   const launchYear = parseInt(body.launchYear, 10);
   const submitterEmail = String(body.submitterEmail || '').trim().slice(0, 200) || null;
+  const submittedLogoUrl = String(body.logoUrl || '').trim();
 
   if (!name || name.length < 2) {
     return res.status(400).json({ error: 'Give your SaaS a name.' });
@@ -121,6 +134,7 @@ async function handleSubmit(req, res) {
   }
 
   const tier = tierFor(baseScore);
+  const logoUrl = (isValidUrl(submittedLogoUrl) && submittedLogoUrl) || faviconFor(websiteUrl);
 
   try {
     const slug = await createSaasListing({
@@ -133,7 +147,8 @@ async function handleSubmit(req, res) {
       submitterEmail,
       baseScore,
       tier,
-      engine
+      engine,
+      logoUrl
     });
     return res.status(201).json({ slug, baseScore, tier, url: `/saas/${slug}` });
   } catch (err) {
@@ -182,6 +197,7 @@ async function handleLeaderboard(req, res) {
       baseScore: r.base_score,
       tier: r.tier,
       upvotes: r.upvotes,
+      logoUrl: r.logo_url,
       rankScore: Math.round(Number(r.rank_score) * 10) / 10
     }));
     return res.status(200).json({ listings, total, limit, offset });
