@@ -609,3 +609,16 @@ footer .frow a:hover{color:var(--text-dim);}
   transition:opacity .35s ease, transform .35s ease; opacity:1; transform:translateY(0);
 }
 .audience-loop .word.fade{opacity:0; transform:translateY(6px);}
+
+/* ---------- TOP 3 SCANS (SaaS Leaderboard teaser, homepage) ---------- */
+.top3scans-grid{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:8px; min-height:150px;}
+.top3scans-grid .pcard{position:relative; width:220px; text-decoration:none; color:inherit; display:block;}
+.top3scans-rank{
+  position:absolute; top:-10px; left:-10px; width:26px; height:26px; border-radius:50%;
+  background:var(--grad-cv); color:#04141A; font-family:var(--mono); font-weight:700; font-size:12.5px;
+  display:flex; align-items:center; justify-content:center; z-index:1;
+}
+.top3scans-empty{color:var(--text-faint); font-family:var(--mono); font-size:13px; text-align:center; padding:24px; width:100%;}
+.top3scans-actions{display:flex; gap:18px; align-items:center; justify-content:center; margin-top:28px; flex-wrap:wrap;}
+.top3scans-submit{color:var(--text-dim); font-size:14px; text-decoration:none;}
+.top3scans-submit:hover{color:var(--cyan-text);}

@@ -81,6 +81,7 @@
       <a href="#metrics">Scoring</a>
       <a href="#pricing">Pricing</a>
       <a href="/guide.html">Guide</a>
+      <a href="/saas">Leaderboard</a>
     </div>
     <a class="navcta" href="#top">Check My Notability</a>
   </div>
@@ -195,39 +196,18 @@
 <section class="scanseq" id="scan">
   <div class="wrap">
     <div class="scanseq-head">
-      <span class="eyebrow">LIVE ENGINE</span>
-      <h2>Watch the scan happen</h2>
-      <p>Every result is built from real, evidenced signals — not a guess. This is what runs behind every score.</p>
+      <span class="eyebrow">TOP 3 RIGHT NOW</span>
+      <h2>The SaaS Leaderboard</h2>
+      <p>Every SaaS that gets scanned lands here, ranked purely by score and upvotes — nobody pays for a better position. These are today's top 3.</p>
     </div>
 
-    <div class="rig">
-      <div class="rig-inner">
-        <div class="rig-badge"><span class="dot"></span>ANALYZING</div>
-        <div class="rig-conf">MATCH_CONFIDENCE<br><b>94.2%</b></div>
-        <div class="mention-counter">MENTIONS_INDEXED<br><span class="n">1,204</span></div>
+    <div class="top3scans-grid" id="top3ScansGrid">
+      <p class="top3scans-empty">Loading the leaderboard…</p>
+    </div>
 
-        <div class="radar-ring"></div>
-        <div class="radar-ring r2"></div>
-        <div class="radar-ring r3"></div>
-        <div class="radar-sweep"></div>
-
-        <div class="reticle">
-          <div class="crosshair"></div>
-          <div class="score">0<sub>/100</sub></div>
-          <div class="caption">Notability Score</div>
-        </div>
-
-        <div class="carousel-track-wrap">
-          <div class="carousel-track" id="carouselTrack"></div>
-        </div>
-
-        <div class="log-stream">
-          <span>&gt; SEARCHING_PRESS_ARCHIVES...</span>
-          <span>&gt; INDEXING_SOCIAL_FOOTPRINT...</span>
-          <span>&gt; CROSS_REFERENCING_ENTITIES...</span>
-          <span>&gt; DEDUPING_SYNDICATED_SOURCES...</span>
-        </div>
-      </div>
+    <div class="top3scans-actions">
+      <a class="btn-primary" href="/saas">See the full leaderboard &rarr;</a>
+      <a class="top3scans-submit" href="/submit-saas.html">Submit your SaaS</a>
     </div>
   </div>
 </section>
@@ -430,6 +410,7 @@
 
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script src="/js/main.js"></script>
+<script src="/js/saas.js" defer></script>
 <script src="/js/theme.js"></script>
 </body>
 </html>
