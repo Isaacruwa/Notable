@@ -8,12 +8,12 @@
   --text:#F4F4F7;
   --text-dim:#9A9AAA;
   --text-faint:#5C5C6B;
-  --cyan:#D9631B;
-  --violet:#D9631B;
-  --gold:#D9631B;
+  --cyan:#38BDF8;
+  --violet:#38BDF8;
+  --gold:#38BDF8;
   --danger:#FF5C7A;
-  --grad-cv: #D9631B;
-  --grad-vg: #D9631B;
+  --grad-cv: #38BDF8;
+  --grad-vg: #38BDF8;
   --radius: 18px;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
   --display: 'Space Grotesk', sans-serif;
@@ -41,10 +41,10 @@
   --text-faint:#8B8B95;
   --danger:#D6294B;
 
-  --cyan-text:#B4530F;
-  --violet-text:#B4530F;
-  --gold-text:#B4530F;
-  --grad-cv-text: #B4530F;
+  --cyan-text:#0284C7;
+  --violet-text:#0284C7;
+  --gold-text:#0284C7;
+  --grad-cv-text: #0284C7;
 }
 
 [data-theme="light"] .glass{
