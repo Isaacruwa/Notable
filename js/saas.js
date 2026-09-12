@@ -53,11 +53,14 @@
           grid.innerHTML = '<li class="saas-empty">No SaaS scanned yet — <a href="/submit-saas.html">be the first</a>.</li>';
           return;
         }
+        const rankClasses = ['rank-badge-diamond', 'rank-badge-gold', 'rank-badge-silver'];
         grid.innerHTML = listings
           .map((l, i) => `
     <li class="saas-row" data-slug="${escapeHtml(l.slug)}">
-      <span class="saas-position">${i + 1}</span>
-      <img class="saas-logo" src="${escapeHtml(l.logoUrl || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+      <span class="saas-logo-wrap">
+        <img class="saas-logo" src="${escapeHtml(l.logoUrl || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+        <span class="rank-badge ${rankClasses[i] || 'rank-badge-silver'}">&#9733;</span>
+      </span>
       <a class="saas-name-link" href="/saas/${escapeHtml(l.slug)}">
         <span class="saas-name">${escapeHtml(l.name)}</span>
         <span class="saas-tagline">${escapeHtml(l.tagline || '')}</span>

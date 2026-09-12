@@ -1,3 +1,31 @@
+// ---------- Nav menu (mobile + desktop dropdown) ----------
+(function navMenu() {
+  const btn = document.getElementById('navMenuBtn');
+  const panel = document.getElementById('navMenuPanel');
+  if (!btn || !panel) return;
+
+  function close() {
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+  function toggle() {
+    const open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggle();
+  });
+  document.addEventListener('click', (e) => {
+    if (!panel.contains(e.target) && e.target !== btn) close();
+  });
+  panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+})();
+
 
 // ---------- Audience word loop ----------
 (function audienceLoop() {

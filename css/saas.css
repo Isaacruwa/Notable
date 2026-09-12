@@ -28,7 +28,7 @@ body:has(.saas-header) {
   background-image:
     linear-gradient(var(--saas-grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--saas-grid-line) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-size: 56px 56px;
   color: var(--saas-ink);
   font-family: 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
@@ -47,7 +47,7 @@ body:has(.saas-header) {
 .saas-nav a { margin-left: 24px; color: var(--saas-ink-soft); text-decoration: none; font-size: 0.95rem; }
 .saas-nav a:hover, .saas-nav-active { color: var(--saas-accent) !important; }
 
-.saas-main { max-width: 980px; margin: 0 auto; padding: 40px 24px 80px; }
+.saas-main { max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
 
 .saas-intro h1 { font-size: 2rem; margin-bottom: 8px; }
 .saas-intro p { color: var(--saas-ink-soft); line-height: 1.5; max-width: 60ch; }
@@ -57,42 +57,53 @@ body:has(.saas-header) {
   border-radius: 3px; font-weight: 600; font-size: 0.9rem;
 }
 
-.saas-list { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
+.saas-list { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .saas-row {
   display: grid;
-  grid-template-columns: 64px 80px 1fr auto auto auto;
+  grid-template-columns: 26px 32px 1fr auto auto auto;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
   background: var(--saas-box);
   border: 1px solid var(--saas-box-border);
-  border-radius: 8px;
-  padding: 28px 32px;
+  border-radius: 6px;
+  padding: 10px 12px;
 }
-.saas-position { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; color: var(--saas-ink-faint); font-size: 2rem; }
-.saas-logo { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; background: #fff; border: 1px solid var(--saas-box-border); flex: none; }
-.saas-logo-big { width: 120px; height: 120px; border-radius: 14px; }
-.saas-name-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; min-width: 0; gap: 4px; }
-.saas-name { font-weight: 700; color: var(--saas-ink); font-size: 1.3rem; }
-.saas-tagline { font-size: 1rem; color: var(--saas-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.saas-position { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; color: var(--saas-ink-faint); font-size: 0.95rem; }
+.saas-logo-wrap { position: relative; display: inline-flex; flex: none; }
+.saas-logo { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; background: #fff; border: 1px solid var(--saas-box-border); flex: none; }
+.saas-logo-big { width: 56px; height: 56px; border-radius: 10px; }
+.saas-name-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; min-width: 0; }
+.saas-name { font-weight: 600; color: var(--saas-ink); font-size: 0.95rem; }
+.saas-tagline { font-size: 0.78rem; color: var(--saas-ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.saas-tier { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 6px 14px; border-radius: 5px; background: var(--saas-accent-soft); color: var(--saas-accent); white-space: nowrap; }
+.saas-tier { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; background: var(--saas-accent-soft); color: var(--saas-accent); white-space: nowrap; }
 .saas-tier-elite { color: #fff; background: var(--saas-tier-elite); }
 .saas-tier-strong { color: #fff; background: var(--saas-tier-strong); }
 .saas-tier-rising { color: #fff; background: var(--saas-tier-rising); }
 .saas-tier-new { color: #fff; background: var(--saas-tier-new); }
 
-.saas-score { font-family: Georgia, serif; font-weight: 700; color: var(--saas-ink); font-size: 1.4rem; }
+.saas-score { font-family: Georgia, serif; font-weight: 700; color: var(--saas-ink); font-size: 0.95rem; }
 
 .saas-upvote {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
   background: var(--saas-bg); border: 1px solid var(--saas-box-border);
-  border-radius: 8px; padding: 12px 20px; cursor: pointer; font-size: 1rem;
+  border-radius: 5px; padding: 5px 9px; cursor: pointer; font-size: 0.7rem;
   color: var(--saas-ink-soft);
 }
 .saas-upvote:hover { border-color: var(--saas-accent); color: var(--saas-accent); }
 .saas-upvote.voted { border-color: var(--saas-accent); color: var(--saas-accent); background: var(--saas-accent-soft); }
-.saas-upvote-arrow { font-size: 1.2rem; line-height: 1; }
-.saas-upvote-big { padding: 20px 30px; font-size: 1.2rem; }
+.saas-upvote-arrow { font-size: 0.78rem; line-height: 1; }
+.saas-upvote-big { padding: 11px 16px; font-size: 0.85rem; }
+
+/* Rank badge (diamond/gold/silver) — homepage teaser only, replaces numbering */
+.rank-badge {
+  position: absolute; top: -5px; right: -5px; width: 15px; height: 15px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 8px; color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3); font-weight: 700; line-height: 1;
+}
+.rank-badge-diamond { background: #4FC3E8; }
+.rank-badge-gold { background: #E3B23C; }
+.rank-badge-silver { background: #B6B6C0; }
 
 .saas-empty { list-style: none; padding: 32px; text-align: center; color: var(--saas-ink-soft); border: 1px dashed var(--saas-box-border); border-radius: 4px; }
 .saas-empty a { color: var(--saas-accent); }
@@ -104,8 +115,8 @@ body:has(.saas-header) {
 .saas-footer a { color: inherit; }
 
 /* Detail page */
-.saas-detail-top { display: flex; gap: 28px; align-items: flex-start; }
-.saas-position-big { font-family: Georgia, serif; font-size: 3.2rem; font-weight: 700; color: var(--saas-ink-faint); }
+.saas-detail-top { display: flex; gap: 20px; align-items: flex-start; }
+.saas-position-big { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 700; color: var(--saas-ink-faint); }
 .saas-meta-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
 .saas-score-badge, .saas-category, .saas-year { font-size: 0.8rem; color: var(--saas-ink-soft); background: var(--saas-box); border: 1px solid var(--saas-box-border); padding: 3px 9px; border-radius: 3px; }
 .saas-description { margin-top: 24px; line-height: 1.6; color: var(--saas-ink-soft); }
@@ -128,7 +139,7 @@ body:has(.saas-header) {
 .saas-form-error { color: #9b2c2c; font-size: 0.9rem; margin: 0; }
 
 @media (max-width: 640px) {
-  .saas-row { grid-template-columns: 44px 56px 1fr auto; padding: 20px; gap: 16px; }
+  .saas-row { grid-template-columns: 20px 26px 1fr auto; padding: 8px 10px; gap: 8px; }
   .saas-tier, .saas-score { display: none; }
   .saas-detail-top { flex-direction: column; }
 }
@@ -142,7 +153,7 @@ body:has(.saas-header) {
   background-image:
     linear-gradient(var(--saas-grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--saas-grid-line) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-size: 56px 56px;
   border-radius: 14px;
   border: 1px solid var(--saas-box-border);
   padding: 36px 24px;
@@ -156,3 +167,18 @@ body:has(.saas-header) {
 .top3scans-actions { display: flex; gap: 18px; align-items: center; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
 .top3scans-submit { color: var(--saas-ink-soft); font-size: 14px; text-decoration: none; }
 .top3scans-submit:hover { color: var(--saas-accent); }
+
+
+/* ---------- Homepage Top 3 teaser: extra compact + rank badge instead of numbering ---------- */
+.top3-panel .saas-row { grid-template-columns: 32px 1fr auto auto auto; padding: 8px 10px; gap: 8px; }
+.top3-panel .saas-position { display: none; }
+.top3-panel .saas-logo { width: 30px; height: 30px; }
+.top3-panel .saas-name { font-size: 0.85rem; }
+.top3-panel .saas-tagline { font-size: 0.7rem; }
+.top3-panel .saas-tier { font-size: 0.6rem; padding: 2px 6px; }
+.top3-panel .saas-score { font-size: 0.82rem; }
+.top3-panel .saas-upvote { padding: 4px 7px; font-size: 0.62rem; }
+@media (max-width: 640px) {
+  .top3-panel .saas-row { grid-template-columns: 26px 1fr auto; }
+  .top3-panel .saas-tier, .top3-panel .saas-score { display: none; }
+}
