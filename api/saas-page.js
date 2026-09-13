@@ -88,13 +88,28 @@ async function renderIndex(req, res) {
   };
 
   const bodyHtml = `
-<header class="saas-header">
-  <a href="/" class="saas-brand">Kiver</a>
-  <nav class="saas-nav">
-    <a href="/saas" class="saas-nav-active">Leaderboard</a>
-    <a href="/submit-saas.html">Submit your SaaS</a>
-  </nav>
-</header>
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="mark"></span>Kiver</div>
+    <div class="nav-menu">
+      <button class="nav-menu-btn" id="navMenuBtn" type="button" aria-haspopup="true" aria-expanded="false">
+        Menu
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-menu-panel" id="navMenuPanel">
+        <a href="/submit-saas.html" class="nav-menu-primary">Submit your SaaS</a>
+        <a href="/saas">Leaderboard</a>
+        <div class="nav-menu-divider"></div>
+        <a href="/#scan">How it works</a>
+        <a href="/#metrics">Scoring</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/guide.html">Guide</a>
+        <div class="nav-menu-divider"></div>
+        <a href="/login.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+</nav>
 <main class="saas-main">
   <section class="saas-intro">
     <h1>The SaaS Leaderboard</h1>
@@ -104,8 +119,21 @@ async function renderIndex(req, res) {
   <ol class="saas-list">${rowsHtml}</ol>
   ${pagerHtml}
 </main>
-<footer class="saas-footer">
-  <p>Position is score-based. Nobody pays to rank higher. <a href="/">Powered by Kiver</a></p>
+<footer>
+  <div class="wrap">
+    <p class="fnote">Kiver produces an independent, analytical score based on observable public signals. It is not affiliated with, endorsed by, or an official metric of Google, Meta, Instagram, OpenAI, Wikipedia, or any other platform.</p>
+    <div class="frow">
+      <span>&copy; 2026 Kiver</span>
+      <div style="display:flex; gap:18px; flex-wrap:wrap;">
+        <a href="/#metrics">Methodology</a>
+        <a href="/guide.html">Guide</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/refund.html">Refunds</a>
+        <a href="mailto:support@getkiver.com">Support</a>
+      </div>
+    </div>
+  </div>
 </footer>`;
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -157,13 +185,28 @@ async function renderDetail(req, res, slug) {
   };
 
   const bodyHtml = `
-<header class="saas-header">
-  <a href="/" class="saas-brand">Kiver</a>
-  <nav class="saas-nav">
-    <a href="/saas">Leaderboard</a>
-    <a href="/submit-saas.html">Submit your SaaS</a>
-  </nav>
-</header>
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="mark"></span>Kiver</div>
+    <div class="nav-menu">
+      <button class="nav-menu-btn" id="navMenuBtn" type="button" aria-haspopup="true" aria-expanded="false">
+        Menu
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="nav-menu-panel" id="navMenuPanel">
+        <a href="/submit-saas.html" class="nav-menu-primary">Submit your SaaS</a>
+        <a href="/saas">Leaderboard</a>
+        <div class="nav-menu-divider"></div>
+        <a href="/#scan">How it works</a>
+        <a href="/#metrics">Scoring</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/guide.html">Guide</a>
+        <div class="nav-menu-divider"></div>
+        <a href="/login.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+</nav>
 <main class="saas-main saas-detail">
   <div class="saas-detail-top">
     ${position ? `<span class="saas-position-big">#${position}</span>` : ''}
@@ -192,8 +235,21 @@ async function renderDetail(req, res, slug) {
 
   <p class="saas-fineprint">Notability score of ${listing.base_score}% set the entry point. Upvotes moved it the rest of the way &mdash; this position was earned, not bought.</p>
 </main>
-<footer class="saas-footer">
-  <p><a href="/saas">&larr; Back to the leaderboard</a></p>
+<footer>
+  <div class="wrap">
+    <p class="fnote">Kiver produces an independent, analytical score based on observable public signals. It is not affiliated with, endorsed by, or an official metric of Google, Meta, Instagram, OpenAI, Wikipedia, or any other platform.</p>
+    <div class="frow">
+      <span>&copy; 2026 Kiver</span>
+      <div style="display:flex; gap:18px; flex-wrap:wrap;">
+        <a href="/#metrics">Methodology</a>
+        <a href="/guide.html">Guide</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/refund.html">Refunds</a>
+        <a href="mailto:support@getkiver.com">Support</a>
+      </div>
+    </div>
+  </div>
 </footer>`;
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
