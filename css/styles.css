@@ -125,7 +125,7 @@ nav{
   border-bottom:none;
 }
 nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
-.logo{font-family:var(--display); font-weight:700; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; color:#fff;}
+.logo{font-family:var(--display); font-weight:700; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; color:var(--cyan);}
 .logo .mark{width:20px; height:20px; border-radius:6px; background:var(--grad-cv); position:relative; flex:none;}
 .logo .mark::after{content:''; position:absolute; inset:5px; border-radius:3px; background:var(--base);}
 .nav-menu{position:relative;}
