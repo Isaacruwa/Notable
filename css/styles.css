@@ -138,8 +138,9 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .nav-menu-btn[aria-expanded="true"] svg{transform:rotate(180deg);}
 .nav-menu-panel{
   display:none; position:absolute; top:calc(100% + 10px); right:0; min-width:220px;
+  max-height:calc(100vh - 90px); overflow-y:auto;
   background:var(--card); border:1px solid var(--line-hi); border-radius:12px; padding:8px;
-  box-shadow:0 12px 40px rgba(0,0,0,0.35); flex-direction:column; gap:2px; z-index:60;
+  box-shadow:0 12px 40px rgba(0,0,0,0.35); flex-direction:column; gap:2px; z-index:200;
 }
 .nav-menu-panel.open{display:flex;}
 .nav-menu-panel a{padding:10px 12px; border-radius:8px; font-size:14px; color:var(--text-dim); text-decoration:none;}
@@ -147,6 +148,8 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .nav-menu-panel a.nav-menu-primary{color:#fff; background:var(--grad-cv); font-weight:600;}
 .nav-menu-panel a.nav-menu-primary:hover{opacity:0.9;}
 .nav-menu-divider{height:1px; background:var(--line); margin:6px 4px;}
+
+#scan, #metrics, #pricing { scroll-margin-top: 90px; }
 
 /* ---------- HERO ---------- */
 .hero{padding:56px 0 40px; text-align:center; position:relative;}
