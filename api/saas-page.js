@@ -49,13 +49,17 @@ async function renderIndex(req, res) {
           return `
     <li class="saas-row" data-slug="${escapeHtml(r.slug)}">
       <span class="saas-position">${position}</span>
-      <img class="saas-logo" src="${escapeHtml(r.logo_url || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+      <span class="saas-logo-wrap">
+        <img class="saas-logo" src="${escapeHtml(r.logo_url || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
+      </span>
       <a class="saas-name-link" href="/saas/${escapeHtml(r.slug)}">
         <span class="saas-name">${escapeHtml(r.name)}</span>
         <span class="saas-tagline">${escapeHtml(r.tagline || '')}</span>
       </a>
-      <span class="saas-tier saas-tier-${escapeHtml((r.tier || 'new').toLowerCase())}">${escapeHtml(r.tier)}</span>
-      <span class="saas-score">${r.base_score}%</span>
+      <span class="saas-meta">
+        <span class="saas-tier saas-tier-${escapeHtml((r.tier || 'new').toLowerCase())}">${escapeHtml(r.tier)}</span>
+        <span class="saas-score">${r.base_score}%</span>
+      </span>
       <button class="saas-upvote" data-slug="${escapeHtml(r.slug)}" aria-label="Upvote ${escapeHtml(r.name)}">
         <span class="saas-upvote-arrow">&#9650;</span>
         <span class="saas-upvote-count">${r.upvotes}</span>

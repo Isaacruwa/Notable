@@ -65,8 +65,10 @@
         <span class="saas-name">${escapeHtml(l.name)}</span>
         <span class="saas-tagline">${escapeHtml(l.tagline || '')}</span>
       </a>
-      <span class="saas-tier saas-tier-${escapeHtml((l.tier || 'new').toLowerCase())}">${escapeHtml(l.tier)}</span>
-      <span class="saas-score">${l.baseScore}%</span>
+      <span class="saas-meta">
+        <span class="saas-tier saas-tier-${escapeHtml((l.tier || 'new').toLowerCase())}">${escapeHtml(l.tier)}</span>
+        <span class="saas-score">${l.baseScore}%</span>
+      </span>
       <button class="saas-upvote" data-slug="${escapeHtml(l.slug)}" aria-label="Upvote ${escapeHtml(l.name)}">
         <span class="saas-upvote-arrow">&#9650;</span>
         <span class="saas-upvote-count">${l.upvotes}</span>
