@@ -8,12 +8,12 @@
   --text:#F4F4F7;
   --text-dim:#9A9AAA;
   --text-faint:#5C5C6B;
-  --cyan:#38BDF8;
-  --violet:#38BDF8;
-  --gold:#38BDF8;
+  --cyan:#0284C7;
+  --violet:#0284C7;
+  --gold:#0284C7;
   --danger:#FF5C7A;
-  --grad-cv: #38BDF8;
-  --grad-vg: #38BDF8;
+  --grad-cv: #0284C7;
+  --grad-vg: #0284C7;
   --radius: 18px;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
   --display: 'Space Grotesk', sans-serif;
@@ -41,10 +41,10 @@
   --text-faint:#8B8B95;
   --danger:#D6294B;
 
-  --cyan-text:#0284C7;
-  --violet-text:#0284C7;
-  --gold-text:#0284C7;
-  --grad-cv-text: #0284C7;
+  --cyan-text:#075985;
+  --violet-text:#075985;
+  --gold-text:#075985;
+  --grad-cv-text: #075985;
 }
 
 [data-theme="light"] .glass{
@@ -115,8 +115,7 @@ nav{
 }
 nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
 .logo{font-family:var(--display); font-weight:700; font-size:19px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; color:var(--cyan);}
-.logo .mark{width:20px; height:20px; border-radius:6px; background:var(--grad-cv); position:relative; flex:none;}
-.logo .mark::after{content:''; position:absolute; inset:5px; border-radius:3px; background:var(--base);}
+.logo .mark{width:24px; height:24px; border-radius:6px; object-fit:cover; flex:none; display:block;}
 .nav-menu{position:relative;}
 .nav-menu-btn{
   display:flex; align-items:center; gap:6px;
