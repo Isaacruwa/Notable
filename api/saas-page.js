@@ -18,6 +18,17 @@ const { escapeHtml, pageShell } = require('../lib/render');
 const PAGE_SIZE = 25;
 const SITE = 'https://www.getkiver.com';
 
+const CATEGORIES = [
+  { value: '', label: 'All' },
+  { value: 'ai', label: 'AI' },
+  { value: 'productivity', label: 'Productivity' },
+  { value: 'developer-tools', label: 'Developer Tools' },
+  { value: 'marketing', label: 'Marketing' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'design', label: 'Design' },
+  { value: 'other', label: 'Other' }
+];
+
 async function renderIndex(req, res) {
   const category = req.query?.category ? String(req.query.category).slice(0, 60) : undefined;
   const page = Math.max(1, parseInt(req.query?.page, 10) || 1);
@@ -57,6 +68,7 @@ async function renderIndex(req, res) {
         <span class="saas-tagline">${escapeHtml(r.tagline || '')}</span>
       </a>
       <span class="saas-meta">
+        ${r.category ? `<span class="saas-category-chip">${escapeHtml(r.category)}</span>` : ''}
         <span class="saas-tier saas-tier-${escapeHtml((r.tier || 'new').toLowerCase())}">${escapeHtml(r.tier)}</span>
         <span class="saas-score">${r.base_score}%</span>
       </span>
@@ -118,8 +130,16 @@ async function renderIndex(req, res) {
   <section class="saas-intro">
     <h1>The SaaS Leaderboard</h1>
     <p>Ranked by an independent notability score, not by who paid the most. Every product launched 2025 or later is welcome. Upvotes can move a listing from position 300 to position 1 &mdash; score just sets where it starts.</p>
+    <p class="saas-stats">${total} SaaS ranked${category ? ` in ${escapeHtml(CATEGORIES.find((c) => c.value === category)?.label || category)}` : ''}</p>
     <a class="saas-cta" href="/submit-saas.html">Submit your SaaS &rarr;</a>
   </section>
+  <div class="saas-filters">
+    ${CATEGORIES.map((c) => {
+      const active = c.value === (category || '');
+      const href = c.value ? `/saas?category=${encodeURIComponent(c.value)}` : '/saas';
+      return `<a href="${href}" class="saas-filter-pill${active ? ' active' : ''}">${escapeHtml(c.label)}</a>`;
+    }).join('')}
+  </div>
   <ol class="saas-list">${rowsHtml}</ol>
   ${pagerHtml}
 </main>
