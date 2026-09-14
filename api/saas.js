@@ -17,7 +17,9 @@ const {
   getSaasListingByUrl,
   upvoteSaasListing,
   listSaasLeaderboard,
-  countSaasListings
+  countSaasListings,
+  submitSaasReview,
+  createSaasComment
 } = require('../lib/db');
 const { tierFor, clampScore } = require('../lib/rank');
 
@@ -176,6 +178,57 @@ async function handleUpvote(req, res) {
   }
 }
 
+async function handleReview(req, res) {
+  const slug = String(req.body?.slug || '').trim();
+  const rating = parseInt(req.body?.rating, 10);
+  const body = String(req.body?.body || '').trim().slice(0, 500) || null;
+
+  if (!slug) {
+    return res.status(400).json({ error: 'Missing slug.' });
+  }
+  if (!rating || rating < 1 || rating > 5) {
+    return res.status(400).json({ error: 'Rating must be 1-5 stars.' });
+  }
+
+  const voterId = getOrSetVoterId(req, res);
+  const voterHash = voterHashFor(req, voterId);
+
+  try {
+    const stats = await submitSaasReview(slug, voterHash, rating, body);
+    if (!stats) {
+      return res.status(404).json({ error: 'Listing not found.' });
+    }
+    return res.status(200).json(stats);
+  } catch (err) {
+    console.error('Review failed:', err.message);
+    return res.status(500).json({ error: 'Could not save your review right now.' });
+  }
+}
+
+async function handleComment(req, res) {
+  const slug = String(req.body?.slug || '').trim();
+  const authorName = String(req.body?.authorName || '').trim().slice(0, 60) || 'Anonymous';
+  const body = String(req.body?.body || '').trim().slice(0, 1000);
+
+  if (!slug) {
+    return res.status(400).json({ error: 'Missing slug.' });
+  }
+  if (!body || body.length < 2) {
+    return res.status(400).json({ error: 'Comment is empty.' });
+  }
+
+  try {
+    const comment = await createSaasComment(slug, authorName, body);
+    if (!comment) {
+      return res.status(404).json({ error: 'Listing not found.' });
+    }
+    return res.status(201).json({ comment });
+  } catch (err) {
+    console.error('Comment failed:', err.message);
+    return res.status(500).json({ error: 'Could not post your comment right now.' });
+  }
+}
+
 async function handleLeaderboard(req, res) {
   const category = req.query?.category ? String(req.query.category) : undefined;
   const limit = Math.min(100, Math.max(1, parseInt(req.query?.limit, 10) || 50));
@@ -215,6 +268,8 @@ module.exports = async function handler(req, res) {
     const action = req.body?.action;
     if (action === 'submit') return handleSubmit(req, res);
     if (action === 'upvote') return handleUpvote(req, res);
+    if (action === 'review') return handleReview(req, res);
+    if (action === 'comment') return handleComment(req, res);
     return res.status(400).json({ error: 'Unknown action.' });
   }
   res.setHeader('Allow', ['GET', 'POST']);
