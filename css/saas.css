@@ -123,6 +123,32 @@
 .saas-visit { background: var(--grad-cv); color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; }
 .saas-fineprint { margin-top: 20px; font-size: 0.82rem; color: var(--text-faint); }
 
+.saas-rating-summary { margin-top: 8px; font-size: 0.95rem; color: var(--text-dim); letter-spacing: 1px; }
+.saas-rating-summary span { margin-left: 6px; font-size: 0.82rem; letter-spacing: normal; color: var(--text-faint); }
+
+.saas-section-heading { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); font-size: 1.2rem; }
+.saas-section-count { color: var(--text-faint); font-weight: 400; font-size: 0.9rem; }
+
+.saas-star-input { display: flex; gap: 4px; }
+.saas-star-btn { background: none; border: none; cursor: pointer; font-size: 1.6rem; color: var(--text-faint); line-height: 1; padding: 2px; }
+.saas-star-btn:hover { color: var(--cyan-text); }
+
+.saas-review-form, .saas-comment-form {
+  display: flex; flex-direction: column; gap: 12px; margin-top: 16px; max-width: 480px;
+}
+.saas-review-form textarea, .saas-comment-form textarea, .saas-comment-form input {
+  font: inherit; padding: 10px 12px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--card); color: var(--text); resize: vertical; min-height: 70px;
+}
+.saas-comment-form input { min-height: auto; resize: none; }
+
+.saas-review-list, .saas-comment-list { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.saas-review-item, .saas-comment-item { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.saas-review-stars { color: var(--text); letter-spacing: 1px; font-size: 0.95rem; margin-bottom: 6px; }
+.saas-review-item p, .saas-comment-item p { margin: 0; color: var(--text-dim); line-height: 1.5; font-size: 0.9rem; }
+.saas-comment-author { font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 4px; }
+.saas-empty-inline { list-style: none; color: var(--text-faint); font-size: 0.88rem; padding: 8px 0; }
+
 .saas-form { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; max-width: 480px; }
 .saas-form label { font-size: 0.85rem; font-weight: 600; color: var(--text-dim); display: flex; flex-direction: column; gap: 6px; }
 .saas-form input, .saas-form textarea, .saas-form select {

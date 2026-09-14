@@ -159,4 +159,107 @@
         submitBtn.textContent = 'Submit & get scored';
       });
   });
+
+  // Star rating input (listing detail page)
+  const starInput = document.getElementById('saasStarInput');
+  if (starInput) {
+    const ratingValue = document.getElementById('saasRatingValue');
+    const stars = Array.from(starInput.querySelectorAll('.saas-star-btn'));
+    function paintStars(n) {
+      stars.forEach((s) => {
+        s.textContent = Number(s.dataset.value) <= n ? '★' : '☆';
+      });
+    }
+    stars.forEach((s) => {
+      s.addEventListener('click', () => {
+        const v = Number(s.dataset.value);
+        ratingValue.value = v;
+        paintStars(v);
+      });
+    });
+  }
+
+  // Review form (listing detail page)
+  const reviewForm = document.getElementById('saasReviewForm');
+  if (reviewForm) {
+    const reviewResult = document.getElementById('saasReviewResult');
+    reviewForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rating = Number(document.getElementById('saasRatingValue').value);
+      if (!rating) {
+        reviewResult.innerHTML = '<p class="saas-form-error">Pick a star rating first.</p>';
+        return;
+      }
+      const btn = reviewForm.querySelector('.saas-submit-btn');
+      btn.disabled = true;
+      fetch('/api/saas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'review',
+          slug: reviewForm.dataset.slug,
+          rating,
+          body: reviewForm.body.value.trim()
+        })
+      })
+        .then((r) => r.json().then((data) => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+          if (!ok) {
+            reviewResult.innerHTML = `<p class="saas-form-error">${data.error || 'Something went wrong.'}</p>`;
+            return;
+          }
+          reviewResult.innerHTML = '<p>Thanks for the review!</p>';
+          setTimeout(() => window.location.reload(), 900);
+        })
+        .catch(() => {
+          reviewResult.innerHTML = '<p class="saas-form-error">Network error — try again.</p>';
+        })
+        .finally(() => {
+          btn.disabled = false;
+        });
+    });
+  }
+
+  // Comment form (listing detail page)
+  const commentForm = document.getElementById('saasCommentForm');
+  if (commentForm) {
+    const commentResult = document.getElementById('saasCommentResult');
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = commentForm.querySelector('.saas-submit-btn');
+      btn.disabled = true;
+      fetch('/api/saas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'comment',
+          slug: commentForm.dataset.slug,
+          authorName: commentForm.authorName.value.trim(),
+          body: commentForm.body.value.trim()
+        })
+      })
+        .then((r) => r.json().then((data) => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+          if (!ok) {
+            commentResult.innerHTML = `<p class="saas-form-error">${data.error || 'Something went wrong.'}</p>`;
+            return;
+          }
+          const list = document.getElementById('saasCommentList');
+          const empty = list.querySelector('.saas-empty-inline');
+          if (empty) empty.remove();
+          const li = document.createElement('li');
+          li.className = 'saas-comment-item';
+          li.innerHTML = `<div class="saas-comment-author">${escapeHtml(data.comment.author_name)}</div><p>${escapeHtml(data.comment.body)}</p>`;
+          list.appendChild(li);
+          commentForm.reset();
+          commentResult.innerHTML = '';
+        })
+        .catch(() => {
+          commentResult.innerHTML = '<p class="saas-form-error">Network error — try again.</p>';
+        })
+        .finally(() => {
+          btn.disabled = false;
+        });
+    });
+  }
 })();

@@ -11,7 +11,10 @@ const {
   listSaasLeaderboard,
   countSaasListings,
   getSaasListingBySlug,
-  getSaasListingPosition
+  getSaasListingPosition,
+  getSaasReviewStats,
+  listSaasReviews,
+  listSaasComments
 } = require('../lib/db');
 const { escapeHtml, pageShell } = require('../lib/render');
 
@@ -220,10 +223,18 @@ async function renderDetail(req, res, slug) {
   }
 
   let position = null;
+  let reviewStats = { average: 0, count: 0 };
+  let reviews = [];
+  let comments = [];
   try {
-    position = await getSaasListingPosition(listing.slug);
+    [position, reviewStats, reviews, comments] = await Promise.all([
+      getSaasListingPosition(listing.slug),
+      getSaasReviewStats(listing.slug),
+      listSaasReviews(listing.slug),
+      listSaasComments(listing.slug)
+    ]);
   } catch (err) {
-    console.error('Position lookup failed (non-fatal):', err.message);
+    console.error('Position/review/comment lookup failed (non-fatal):', err.message);
   }
 
   const canonical = `${SITE}/saas/${escapeHtml(slug)}`;
@@ -235,7 +246,12 @@ async function renderDetail(req, res, slug) {
     description: listing.description || listing.tagline || undefined,
     url: listing.website_url,
     applicationCategory: listing.category || undefined,
-    datePublished: listing.launch_year ? `${listing.launch_year}` : undefined
+    datePublished: listing.launch_year ? `${listing.launch_year}` : undefined,
+    aggregateRating: reviewStats.count > 0 ? {
+      '@type': 'AggregateRating',
+      ratingValue: reviewStats.average,
+      reviewCount: reviewStats.count
+    } : undefined
   };
 
   let domain = '';
@@ -284,6 +300,7 @@ async function renderDetail(req, res, slug) {
         <span class="saas-score-badge">${listing.base_score}% notability</span>
         <span class="saas-score-bar-wrap"><span class="saas-score-bar-fill" style="width:${listing.base_score}%"></span></span>
       </div>
+      ${reviewStats.count > 0 ? `<div class="saas-rating-summary">${'&#9733;'.repeat(Math.round(reviewStats.average))}${'&#9734;'.repeat(5 - Math.round(reviewStats.average))} <span>${reviewStats.average} (${reviewStats.count} review${reviewStats.count === 1 ? '' : 's'})</span></div>` : ''}
     </div>
   </div>
 
@@ -302,6 +319,51 @@ async function renderDetail(req, res, slug) {
   </div>
 
   <p class="saas-fineprint">Notability score of ${listing.base_score}% set the entry point. Upvotes moved it the rest of the way &mdash; this position was earned, not bought.</p>
+
+  <section class="saas-reviews" id="reviews">
+    <h2 class="saas-section-heading">Reviews${reviewStats.count > 0 ? ` <span class="saas-section-count">(${reviewStats.count})</span>` : ''}</h2>
+
+    <form class="saas-review-form" id="saasReviewForm" data-slug="${escapeHtml(listing.slug)}">
+      <div class="saas-star-input" id="saasStarInput" role="radiogroup" aria-label="Rating">
+        ${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="saas-star-btn" data-value="${n}" aria-label="${n} star${n === 1 ? '' : 's'}">&#9734;</button>`).join('')}
+        <input type="hidden" name="rating" id="saasRatingValue" value="0">
+      </div>
+      <textarea name="body" maxlength="500" placeholder="Optional — what's your experience with ${escapeHtml(listing.name)}?"></textarea>
+      <button type="submit" class="saas-submit-btn">Leave a review</button>
+      <div class="saas-form-result" id="saasReviewResult"></div>
+    </form>
+
+    <ul class="saas-review-list">
+      ${reviews.length
+        ? reviews.map((r) => `
+      <li class="saas-review-item">
+        <div class="saas-review-stars">${'&#9733;'.repeat(r.rating)}${'&#9734;'.repeat(5 - r.rating)}</div>
+        ${r.body ? `<p>${escapeHtml(r.body)}</p>` : ''}
+      </li>`).join('')
+        : `<li class="saas-empty-inline">No written reviews yet.</li>`}
+    </ul>
+  </section>
+
+  <section class="saas-comments" id="comments">
+    <h2 class="saas-section-heading">Discussion${comments.length ? ` <span class="saas-section-count">(${comments.length})</span>` : ''}</h2>
+
+    <form class="saas-comment-form" id="saasCommentForm" data-slug="${escapeHtml(listing.slug)}">
+      <input type="text" name="authorName" maxlength="60" placeholder="Your name (optional)">
+      <textarea name="body" maxlength="1000" placeholder="Ask a question or share a thought about ${escapeHtml(listing.name)}&hellip;" required></textarea>
+      <button type="submit" class="saas-submit-btn">Post comment</button>
+      <div class="saas-form-result" id="saasCommentResult"></div>
+    </form>
+
+    <ul class="saas-comment-list" id="saasCommentList">
+      ${comments.length
+        ? comments.map((c) => `
+      <li class="saas-comment-item">
+        <div class="saas-comment-author">${escapeHtml(c.author_name)}</div>
+        <p>${escapeHtml(c.body)}</p>
+      </li>`).join('')
+        : `<li class="saas-empty-inline">No comments yet &mdash; be the first.</li>`}
+    </ul>
+  </section>
 </main>
 <footer>
   <div class="wrap">
