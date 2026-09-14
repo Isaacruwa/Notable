@@ -140,7 +140,7 @@ nav .wrap{display:flex; align-items:center; justify-content:space-between; heigh
 .trust-strip .stat .lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--text-faint); text-transform:uppercase; margin-top:2px;}
 
 .stats-ticker-wrap{
-  margin-top:52px; padding-top:30px; border-top:1px solid var(--line);
+  margin-top:36px; padding-top:22px; border-top:1px solid var(--line);
   overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
   mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
@@ -535,6 +535,7 @@ footer .frow a:hover{color:var(--text-dim);}
 
 /* ---------- DECORATIVE SOCIAL PROOF ROW ---------- */
 .proof-row{display:flex; justify-content:flex-start; align-items:center; margin:24px 0 0; pointer-events:none;}
+.proof-caption{margin-left:14px; font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--text-faint);}
 .proof-avatar{
   position:relative; width:42px; height:42px; border-radius:50%;
   border:2px solid #fff; box-shadow:0 3px 10px rgba(0,0,0,0.28);
