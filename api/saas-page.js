@@ -142,6 +142,25 @@ async function renderIndex(req, res) {
   </div>
   <ol class="saas-list">${rowsHtml}</ol>
   ${pagerHtml}
+
+  <section class="saas-why">
+    <h2>Why list on Kiver</h2>
+    <div class="saas-why-grid">
+      <div class="saas-why-item">
+        <h3>No pay-to-play</h3>
+        <p>Position comes from an independent notability score plus real upvotes &mdash; never a fee.</p>
+      </div>
+      <div class="saas-why-item">
+        <h3>A real backlink</h3>
+        <p>Every listing is a fully server-rendered, crawlable page with a genuine outbound link to your site.</p>
+      </div>
+      <div class="saas-why-item">
+        <h3>Built for new SaaS</h3>
+        <p>Open to anything launched 2025 or later &mdash; a fresh board, not a decade-old incumbent list.</p>
+      </div>
+    </div>
+    <a class="saas-cta" href="/submit-saas.html">Submit your SaaS &rarr;</a>
+  </section>
 </main>
 <footer>
   <div class="wrap">

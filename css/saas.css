@@ -87,6 +87,12 @@
 .saas-pager { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; font-size: 0.9rem; color: var(--text-dim); }
 .saas-pager a { color: var(--cyan-text); text-decoration: none; }
 
+.saas-why { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); text-align: center; }
+.saas-why h2 { font-size: 1.3rem; margin-bottom: 24px; }
+.saas-why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; text-align: left; margin-bottom: 28px; }
+.saas-why-item h3 { font-size: 0.92rem; margin: 0 0 6px; color: var(--text); }
+.saas-why-item p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; margin: 0; }
+
 .saas-detail-top { display: flex; gap: 20px; align-items: flex-start; }
 .saas-position-big { font-family: var(--mono); font-size: 1.8rem; font-weight: 700; color: var(--text-faint); }
 .saas-meta-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
