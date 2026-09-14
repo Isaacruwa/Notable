@@ -325,6 +325,7 @@ async function renderDetail(req, res, slug) {
     title: `${listing.name} — ${listing.tagline || 'SaaS Leaderboard'} | Kiver`,
     description: (listing.description || listing.tagline || `${listing.name} on the Kiver SaaS Leaderboard.`).slice(0, 155),
     canonical,
+    ogImage: listing.logo_url || undefined,
     jsonLd,
     bodyHtml
   }));
