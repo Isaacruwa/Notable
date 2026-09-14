@@ -72,7 +72,7 @@
   function renderTop3Scans() {
     const grid = document.getElementById('top3ScansGrid');
     if (!grid) return;
-    fetch('/api/saas?limit=3')
+    fetch('/api/saas?limit=5')
       .then((r) => r.json())
       .then((data) => {
         const listings = data.listings || [];
@@ -86,7 +86,7 @@
     <li class="saas-row" data-slug="${escapeHtml(l.slug)}">
       <span class="saas-logo-wrap">
         <img class="saas-logo" src="${escapeHtml(l.logoUrl || '')}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">
-        <span class="rank-badge ${rankClasses[i] || 'rank-badge-silver'}">&#9733;</span>
+        ${rankClasses[i] ? `<span class="rank-badge ${rankClasses[i]}">&#9733;</span>` : ''}
       </span>
       <a class="saas-name-link" href="/saas/${escapeHtml(l.slug)}">
         <span class="saas-name">${escapeHtml(l.name)}</span>
