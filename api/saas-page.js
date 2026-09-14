@@ -31,6 +31,7 @@ const CATEGORIES = [
 
 async function renderIndex(req, res) {
   const category = req.query?.category ? String(req.query.category).slice(0, 60) : undefined;
+  const sort = req.query?.sort === 'new' ? 'new' : 'top';
   const page = Math.max(1, parseInt(req.query?.page, 10) || 1);
   const offset = (page - 1) * PAGE_SIZE;
 
@@ -38,19 +39,22 @@ async function renderIndex(req, res) {
   let total = 0;
   try {
     [rows, total] = await Promise.all([
-      listSaasLeaderboard({ category, limit: PAGE_SIZE, offset }),
+      listSaasLeaderboard({ category, limit: PAGE_SIZE, offset, sort }),
       countSaasListings(category)
     ]);
   } catch (err) {
     console.error('Leaderboard render failed:', err.message);
   }
 
-  const qs = (p) => {
+  const qs = (p, overrides = {}) => {
     const params = new URLSearchParams();
-    if (category) params.set('category', category);
+    const c = overrides.category !== undefined ? overrides.category : category;
+    const s = overrides.sort !== undefined ? overrides.sort : sort;
+    if (c) params.set('category', c);
+    if (s === 'new') params.set('sort', 'new');
     if (p > 1) params.set('page', String(p));
-    const s = params.toString();
-    return s ? `/saas?${s}` : '/saas';
+    const str = params.toString();
+    return str ? `/saas?${str}` : '/saas';
   };
 
   const rowsHtml = rows.length
@@ -134,11 +138,16 @@ async function renderIndex(req, res) {
     <a class="saas-cta" href="/submit-saas.html">Submit your SaaS &rarr;</a>
   </section>
   <div class="saas-filters">
-    ${CATEGORIES.map((c) => {
-      const active = c.value === (category || '');
-      const href = c.value ? `/saas?category=${encodeURIComponent(c.value)}` : '/saas';
-      return `<a href="${href}" class="saas-filter-pill${active ? ' active' : ''}">${escapeHtml(c.label)}</a>`;
-    }).join('')}
+    <div class="saas-filter-group">
+      ${CATEGORIES.map((c) => {
+        const active = c.value === (category || '');
+        return `<a href="${qs(1, { category: c.value })}" class="saas-filter-pill${active ? ' active' : ''}">${escapeHtml(c.label)}</a>`;
+      }).join('')}
+    </div>
+    <div class="saas-sort-group">
+      <a href="${qs(1, { sort: 'top' })}" class="saas-sort-pill${sort === 'top' ? ' active' : ''}">Top Ranked</a>
+      <a href="${qs(1, { sort: 'new' })}" class="saas-sort-pill${sort === 'new' ? ' active' : ''}">Newest</a>
+    </div>
   </div>
   <ol class="saas-list">${rowsHtml}</ol>
   ${pagerHtml}
