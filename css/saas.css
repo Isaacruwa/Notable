@@ -18,7 +18,14 @@
 }
 .saas-stats { color: var(--text-faint); font-size: 0.85rem; margin-top: 10px; }
 
-.saas-filters { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 24px; }
+.saas-search {
+  display: block; width: 100%; max-width: 360px; margin-top: 24px;
+  font: inherit; font-size: 0.88rem; padding: 10px 14px; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--card); color: var(--text);
+}
+.saas-search:focus { outline: none; border-color: var(--cyan); }
+
+.saas-filters { display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 16px; }
 .saas-filter-group, .saas-sort-group { display: flex; gap: 8px; flex-wrap: wrap; }
 .saas-filter-pill {
   font-size: 0.82rem; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line);

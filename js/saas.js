@@ -33,6 +33,33 @@
     if (btn) onUpvoteClick(btn);
   });
 
+  // Live search — filters the rows already on the page (name + tagline).
+  // Only covers this page's results, not the whole database; that's fine
+  // for the volumes this leaderboard has right now.
+  const searchInput = document.getElementById('saasSearchInput');
+  if (searchInput) {
+    const rows = Array.from(document.querySelectorAll('.saas-list:not(.saas-list-top3) .saas-row'));
+    const emptyMsg = document.createElement('li');
+    emptyMsg.className = 'saas-empty';
+    emptyMsg.textContent = 'No listings on this page match your search.';
+    emptyMsg.style.display = 'none';
+    const list = document.querySelector('.saas-list:not(.saas-list-top3)');
+    if (list) list.appendChild(emptyMsg);
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      let anyVisible = false;
+      rows.forEach((row) => {
+        const name = row.querySelector('.saas-name')?.textContent.toLowerCase() || '';
+        const tagline = row.querySelector('.saas-tagline')?.textContent.toLowerCase() || '';
+        const match = !q || name.includes(q) || tagline.includes(q);
+        row.style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      emptyMsg.style.display = q && !anyVisible ? '' : 'none';
+    });
+  }
+
   function escapeHtml(str) {
     return String(str == null ? '' : str).replace(/[&<>"']/g, (c) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'

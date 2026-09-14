@@ -137,6 +137,8 @@ async function renderIndex(req, res) {
     <p class="saas-stats">${total} SaaS ranked${category ? ` in ${escapeHtml(CATEGORIES.find((c) => c.value === category)?.label || category)}` : ''}</p>
     <a class="saas-cta" href="/submit-saas.html">Submit your SaaS &rarr;</a>
   </section>
+  <input type="search" id="saasSearchInput" class="saas-search" placeholder="Search this page's listings by name or tagline&hellip;" aria-label="Search listings">
+
   <div class="saas-filters">
     <div class="saas-filter-group">
       ${CATEGORIES.map((c) => {
