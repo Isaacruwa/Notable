@@ -136,7 +136,7 @@
 .saas-form-result { margin-top: 4px; padding: 16px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); }
 .saas-form-error { color: var(--danger); font-size: 0.9rem; margin: 0; }
 
-.top3scans-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 24px; }
+.top3scans-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 24px; }
 .saas-cta-secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
 .saas-cta-secondary:hover { border-color: var(--cyan); color: var(--cyan-text); }
 
