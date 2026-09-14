@@ -208,6 +208,12 @@ async function renderDetail(req, res, slug) {
     datePublished: listing.launch_year ? `${listing.launch_year}` : undefined
   };
 
+  let domain = '';
+  try { domain = new URL(listing.website_url).hostname.replace(/^www\./, ''); } catch {}
+
+  const aboutText = listing.description
+    || `${escapeHtml(listing.name)} is a${listing.category ? ` ${escapeHtml(listing.category)}` : ''} SaaS product${listing.launch_year ? `, launched in ${listing.launch_year}` : ''}. ${escapeHtml(listing.tagline || '')}`.trim();
+
   const bodyHtml = `
 <nav>
   <div class="wrap">
@@ -232,6 +238,7 @@ async function renderDetail(req, res, slug) {
   </div>
 </nav>
 <main class="saas-main saas-detail">
+  <a class="saas-breadcrumb" href="/saas">&larr; All listings</a>
   <div class="saas-detail-top">
     ${position ? `<span class="saas-position-big">#${position}</span>` : ''}
     ${listing.logo_url ? `<img class="saas-logo saas-logo-big" src="${escapeHtml(listing.logo_url)}" alt="" onerror="this.style.visibility='hidden'">` : ''}
@@ -240,17 +247,24 @@ async function renderDetail(req, res, slug) {
       <p class="saas-tagline">${escapeHtml(listing.tagline || '')}</p>
       <div class="saas-meta-row">
         <span class="saas-tier saas-tier-${escapeHtml((listing.tier || 'new').toLowerCase())}">${escapeHtml(listing.tier)}</span>
-        <span class="saas-score-badge">${listing.base_score}% notability</span>
         ${listing.category ? `<span class="saas-category">${escapeHtml(listing.category)}</span>` : ''}
-        ${listing.launch_year ? `<span class="saas-year">${listing.launch_year}</span>` : ''}
+        ${listing.launch_year ? `<span class="saas-year">Launched ${listing.launch_year}</span>` : ''}
+      </div>
+      <div class="saas-score-block">
+        <span class="saas-score-badge">${listing.base_score}% notability</span>
+        <span class="saas-score-bar-wrap"><span class="saas-score-bar-fill" style="width:${listing.base_score}%"></span></span>
       </div>
     </div>
   </div>
 
-  ${listing.description ? `<p class="saas-description">${escapeHtml(listing.description)}</p>` : ''}
+  <h2 class="saas-about-heading">About ${escapeHtml(listing.name)}</h2>
+  <p class="saas-description">${aboutText}</p>
 
   <div class="saas-detail-actions">
-    <a class="saas-visit" href="${escapeHtml(listing.website_url)}" target="_blank" rel="noopener">Visit ${escapeHtml(listing.name)} &#8599;</a>
+    <div>
+      <a class="saas-visit" href="${escapeHtml(listing.website_url)}" target="_blank" rel="noopener">Visit ${escapeHtml(listing.name)} &#8599;</a>
+      ${domain ? `<span class="saas-domain-caption">${escapeHtml(domain)}</span>` : ''}
+    </div>
     <button class="saas-upvote saas-upvote-big" data-slug="${escapeHtml(listing.slug)}" aria-label="Upvote ${escapeHtml(listing.name)}">
       <span class="saas-upvote-arrow">&#9650;</span>
       <span class="saas-upvote-count">${listing.upvotes}</span>

@@ -91,7 +91,14 @@
 .saas-position-big { font-family: var(--mono); font-size: 1.8rem; font-weight: 700; color: var(--text-faint); }
 .saas-meta-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
 .saas-score-badge, .saas-category, .saas-year { font-size: 0.8rem; color: var(--text-dim); background: var(--base-raise); padding: 3px 9px; border-radius: 6px; }
-.saas-description { margin-top: 24px; line-height: 1.6; color: var(--text-dim); }
+.saas-breadcrumb { display: inline-block; margin-bottom: 20px; color: var(--text-dim); font-size: 0.85rem; text-decoration: none; }
+.saas-breadcrumb:hover { color: var(--cyan-text); }
+.saas-score-block { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.saas-score-bar-wrap { width: 140px; height: 6px; border-radius: 999px; background: var(--base-raise); overflow: hidden; }
+.saas-score-bar-fill { display: block; height: 100%; background: var(--grad-cv); border-radius: 999px; }
+.saas-about-heading { margin-top: 28px; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.saas-description { margin-top: 8px; line-height: 1.6; color: var(--text-dim); }
+.saas-domain-caption { display: block; margin-top: 6px; font-size: 0.78rem; color: var(--text-faint); }
 .saas-detail-actions { display: flex; gap: 14px; align-items: center; margin-top: 28px; flex-wrap: wrap; }
 .saas-visit { background: var(--grad-cv); color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 8px; font-weight: 600; }
 .saas-fineprint { margin-top: 20px; font-size: 0.82rem; color: var(--text-faint); }
