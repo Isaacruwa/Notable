@@ -73,7 +73,7 @@ async function renderIndex(req, res) {
       </a>
       <span class="saas-meta">
         ${r.category ? `<span class="saas-category-chip">${escapeHtml(r.category)}</span>` : ''}
-        <span class="saas-tier saas-tier-${escapeHtml((r.tier || 'new').toLowerCase())}">${escapeHtml(r.tier)}</span>
+        <span class="saas-tier saas-tier-${escapeHtml((r.tier || 'new').toLowerCase())}">${r.tier === 'Elite' ? '&#9733; ' : ''}${escapeHtml(r.tier)}</span>
         <span class="saas-score">${r.base_score}%</span>
       </span>
       <button class="saas-upvote" data-slug="${escapeHtml(r.slug)}" aria-label="Upvote ${escapeHtml(r.name)}">
@@ -274,7 +274,7 @@ async function renderDetail(req, res, slug) {
       <h1>${escapeHtml(listing.name)}</h1>
       <p class="saas-tagline">${escapeHtml(listing.tagline || '')}</p>
       <div class="saas-meta-row">
-        <span class="saas-tier saas-tier-${escapeHtml((listing.tier || 'new').toLowerCase())}">${escapeHtml(listing.tier)}</span>
+        <span class="saas-tier saas-tier-${escapeHtml((listing.tier || 'new').toLowerCase())}">${listing.tier === 'Elite' ? '&#9733; ' : ''}${escapeHtml(listing.tier)}</span>
         ${listing.category ? `<span class="saas-category">${escapeHtml(listing.category)}</span>` : ''}
         ${listing.launch_year ? `<span class="saas-year">Launched ${listing.launch_year}</span>` : ''}
       </div>

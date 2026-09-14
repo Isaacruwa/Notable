@@ -61,7 +61,7 @@
 .saas-meta { flex: none; display: flex; align-items: center; gap: 12px; }
 
 .saas-tier { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
-.saas-tier-elite { color: #fff; background: var(--text); }
+.saas-tier-elite { color: #fff; background: var(--text); box-shadow: 0 0 0 2px var(--base-raise), 0 0 0 3px var(--text); }
 .saas-tier-strong { color: #fff; background: var(--text-dim); }
 .saas-tier-rising { color: var(--text); background: var(--base-raise); border: 1px solid var(--line); }
 .saas-tier-new { color: var(--text-faint); background: var(--base-raise); border: 1px solid var(--line); }
