@@ -493,8 +493,17 @@ const buyReportBtn = document.getElementById('buyReportBtn');
 if (buyReportBtn) {
   buyReportBtn.addEventListener('click', () => {
     if (!currentSlug) {
-      document.getElementById('scanInput').focus();
-      document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+      // Report purchases are tied to a specific scan. If there's no
+      // scan on this page (e.g. this button lives on the standalone
+      // pricing page), send the person to the homepage to run one
+      // instead of assuming #scanInput exists here.
+      const scanInputEl = document.getElementById('scanInput');
+      if (scanInputEl) {
+        scanInputEl.focus();
+        document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = '/#top';
+      }
       return;
     }
     openCheckout(PRICE_REPORT, { slug: currentSlug, product: 'report' }, () => {
@@ -542,8 +551,13 @@ if (copyLinkBtn) {
 }
 
 function requireScanFirst() {
-  document.getElementById('scanInput').focus();
-  document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+  const scanInputEl = document.getElementById('scanInput');
+  if (scanInputEl) {
+    scanInputEl.focus();
+    document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    window.location.href = '/#top';
+  }
 }
 
 const downloadCardBtn = document.getElementById('downloadCardBtn');

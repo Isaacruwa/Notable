@@ -125,7 +125,7 @@ async function renderIndex(req, res) {
         <div class="nav-menu-divider"></div>
         <a href="/#scan">How it works</a>
         <a href="/#metrics">Scoring</a>
-        <a href="/#pricing">Pricing</a>
+        <a href="/pricing.html">Pricing</a>
         <a href="/guide.html">Guide</a>
         <div class="nav-menu-divider"></div>
         <a href="/login.html">Sign in</a>
@@ -275,7 +275,7 @@ async function renderDetail(req, res, slug) {
         <div class="nav-menu-divider"></div>
         <a href="/#scan">How it works</a>
         <a href="/#metrics">Scoring</a>
-        <a href="/#pricing">Pricing</a>
+        <a href="/pricing.html">Pricing</a>
         <a href="/guide.html">Guide</a>
         <div class="nav-menu-divider"></div>
         <a href="/login.html">Sign in</a>
