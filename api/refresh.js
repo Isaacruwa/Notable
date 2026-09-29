@@ -1,0 +1,1 @@
+const db=require("../lib/db"),b=require("../lib/bots");module.exports=async(req,res)=>{if(process.env.CRON_SECRET&&req.headers.authorization!=="Bearer "+process.env.CRON_SECRET)return res.status(401).end();const xs=await db.stale();let n=0;for(const x of xs){try{await db.refresh(x.id,await b.fetchBot(x.telegram_url));n++}catch(e){}}res.json({checked:xs.length,updated:n})}

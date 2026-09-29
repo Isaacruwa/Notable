@@ -1,6 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/saas", "destination": "/api/saas-page" },
-    { "source": "/saas/:slug", "destination": "/api/saas-page?slug=:slug" }
-  ]
-}
+{"rewrites":[{"source":"/directory","destination":"/api/directory"},{"source":"/category/:category","destination":"/api/directory?category=:category"},{"source":"/bot/:slug","destination":"/api/bot?slug=:slug"},{"source":"/submit","destination":"/submit.html"},{"source":"/sitemap.xml","destination":"/api/sitemap"},{"source":"/robots.txt","destination":"/api/robots"}],"crons":[{"path":"/api/refresh","schedule":"0 */6 * * *"}]}

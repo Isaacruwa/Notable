@@ -1,0 +1,1 @@
+module.exports=async(req,res)=>{const o=(req.headers["x-forwarded-proto"]||"https")+"://"+req.headers.host;res.setHeader("Content-Type","text/plain");res.end("User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /login.html\n\nSitemap: "+o+"/sitemap.xml\n")}
