@@ -1,0 +1,2 @@
+const {neon}=require("@neondatabase/serverless"),a=require("../lib/auth");
+module.exports=async(req,res)=>{try{const email=await a.email(req);if(!email)return res.status(401).json({error:"Sign in required."});const sql=neon(process.env.DATABASE_URL);const bots=await sql("SELECT slug,name,telegram_username,telegram_url,upvotes,created_at FROM bot_listings WHERE owner_email=$1 ORDER BY created_at DESC",[email]);res.json({email,bots})}catch(e){res.status(500).json({error:"Could not load your account."})}}
