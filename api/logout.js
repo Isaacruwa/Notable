@@ -1,1 +1,1 @@
-const a=require("../lib/auth");module.exports=async(req,res)=>{a.logout(req,res);res.setHeader("Cache-Control","no-store");res.json({loggedOut:true})};
+const a=require("../lib/auth");module.exports=async(req,res)=>{try{await a.logout(req,res);res.setHeader("Cache-Control","no-store");res.json({loggedOut:true})}catch(e){res.status(500).json({error:"Could not sign you out right now."})}};
