@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /login.html
+
+Sitemap: https://getkiver.com/sitemap.xml
