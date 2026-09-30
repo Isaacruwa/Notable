@@ -9,13 +9,14 @@ module.exports=async(req,res)=>{
    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return res.status(200).json({message:RESET_MESSAGE});
    const d=await a.requestPasswordReset(email);
    if(!d?.token)return res.status(200).json({message:RESET_MESSAGE});
-   const key=String(process.env.RESEND_API_KEY||"").trim();
+   const key=String(process.env.BREVO_API_KEY||"").trim();
    if(!key)throw Object.assign(new Error("We couldn’t send the reset email right now. Please try again in a few minutes."),{status:503});
    const resetUrl="https://getkiver.com/reset-password.html?email="+encodeURIComponent(email)+"&token="+encodeURIComponent(d.token);
-   const rr=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"content-type":"application/json","authorization":"Bearer "+key},body:JSON.stringify({
-    from:process.env.RESEND_FROM||"Kiver <noreply@getkiver.com>",
-    to:[email],
-    template:{id:"510c543b-ee2d-4e6f-8dee-a8447bc5a125",variables:{RESET_URL:resetUrl,EXPIRY_MINUTES:30}}
+   const rr=await fetch("https://api.brevo.com/v3/smtp/email",{method:"POST",headers:{"content-type":"application/json","accept":"application/json","api-key":key},body:JSON.stringify({
+    sender:{name:"Kiver",email:"noreply@getkiver.com"},
+    to:[{email}],
+    subject:"Reset your Kiver password",
+    htmlContent:"<div style=\"font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:32px\"><h2>Reset your Kiver password</h2><p>We received a request to reset your Kiver password.</p><p><a href=\""+resetUrl+"\" style=\"display:inline-block;padding:12px 20px;background:#111;color:#fff;text-decoration:none;border-radius:6px\">Reset Password</a></p><p>This link expires in 30 minutes.</p><p>If you did not request this, you can ignore this email.</p></div>"
    })});
    if(!rr.ok){console.error("Password reset email delivery failed:",await rr.text().catch(()=>""));throw Object.assign(new Error("We couldn’t send the reset email right now. Please try again in a few minutes."),{status:503})}
    return res.status(200).json({message:RESET_MESSAGE});
