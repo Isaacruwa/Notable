@@ -23,6 +23,11 @@ module.exports=async(req,res)=>{
    if(!saved)return res.status(404).json({error:"That listing was not found in your account."});
    return res.json({bot:saved});
   }
+  if(x.action==="edit"){
+   const saved=await db.editOwned(x.slug,e,{description:x.description,about:x.about,websiteUrl:x.websiteUrl});
+   if(!saved)return res.status(404).json({error:"That listing was not found in your account."});
+   return res.json({bot:saved});
+  }
   if(x.action==="upvote")return res.json(await db.vote(x.slug,b.voter(req)));
   res.status(400).json({error:"Unknown action."})
  }catch(err){res.status(400).json({error:err.message||"Request failed."})}
