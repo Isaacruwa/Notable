@@ -1,1 +1,29 @@
-{"name":"Kiver \u2014 Telegram Tool Marketplace","short_name":"Kiver","description":"Discover and launch Telegram bots and Mini Apps.","start_url":"/","scope":"/","display":"standalone","background_color":"#ffffff","theme_color":"#ffffff","icons":[{"src":"/kiver-logo-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"/kiver-logo.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}
+{
+  "name": "Kiver",
+  "short_name": "Kiver",
+  "description": "Discover and launch Telegram bots and Mini Apps.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/kiver-logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/kiver-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "/",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ]
+}
