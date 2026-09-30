@@ -1,1 +1,1 @@
-const a=require("../lib/auth");module.exports=async(req,res)=>{await a.logout(req,res);res.json({loggedOut:true})}
+const a=require("../lib/auth");module.exports=async(req,res)=>{a.logout(req,res);res.setHeader("Cache-Control","no-store");res.json({loggedOut:true})};
