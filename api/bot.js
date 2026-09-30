@@ -2,7 +2,7 @@ const db=require("../lib/db");
 const E=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 function renderDescription(s){
  const lines=String(s||"").replace(/\r/g,"").split("\n"),list=[];let out="";
- const flush=()=>{if(list.length){out+="<ul class="description-list">"+list.map(x=>"<li>"+E(x)+"</li>").join("")+"</ul>";list.length=0}};
+ const flush=()=>{if(list.length){out+='<ul class="description-list">'+list.map(x=>"<li>"+E(x)+"</li>").join("")+"</ul>";list.length=0}};
  for(const raw of lines){const line=raw.trim();if(!line){flush();continue}if(/^[-•*]\s+/.test(line)){list.push(line.replace(/^[-•*]\s+/,""));continue}flush();out+="<p>"+E(line)+"</p>"}flush();return out||"<p>Telegram tool.</p>";
 }
 
