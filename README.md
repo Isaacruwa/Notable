@@ -21,3 +21,5 @@ Vercel serverless functions, Neon Postgres and vanilla HTML/CSS/JavaScript.
 Required: `DATABASE_URL`.
 
 Optional: `CRON_SECRET` to protect the scheduled metadata refresh endpoint.
+
+Password reset email delivery uses the Production `BREVO_API_KEY` environment variable.
