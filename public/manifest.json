@@ -36,5 +36,13 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "categories": [
+    "productivity",
+    "social",
+    "utilities"
   ]
 }
