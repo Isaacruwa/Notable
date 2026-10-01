@@ -28,7 +28,7 @@ module.exports=async(req,res)=>{
   const bytes=Buffer.from(await image.arrayBuffer());
   if(bytes.length>8*1024*1024)return res.status(413).end("Bot image too large");
   res.setHeader("Content-Type",type);
-  res.setHeader("Cache-Control","public, s-maxage=86400, stale-while-revalidate=604800");
+  res.setHeader("Cache-Control","public, s-maxage=86400, stale-while-revalidate=31536000");
   res.setHeader("X-Content-Type-Options","nosniff");
   res.end(bytes);
  }catch(e){res.status(502).end("Bot image unavailable");}
