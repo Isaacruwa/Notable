@@ -1,4 +1,4 @@
-const META = /<meta\\b[^>]*>/gi;
+const META = /<meta\b[^>]*>/gi;
 
 function decode(value) {
   return String(value || "")
@@ -8,7 +8,7 @@ function decode(value) {
     .replace(/&lt;/gi, "<")
     .replace(/&gt;/gi, ">")
     .replace(/&#x([0-9a-f]+);/gi, (_, x) => String.fromCharCode(parseInt(x, 16)))
-    .replace(/&#(\\d+);/g, (_, x) => String.fromCharCode(Number(x)));
+    .replace(/&#(\d+);/g, (_, x) => String.fromCharCode(Number(x)));
 }
 
 function metaImage(html) {
@@ -16,7 +16,7 @@ function metaImage(html) {
   while ((match = META.exec(html))) {
     const attrs = {};
     let attr;
-    const attrRe = /([\\w:-]+)\\s*=([\"'])(.*?)\\2/gi;
+    const attrRe = /([\w:-]+)\s*=([\"'])(.*?)\2/gi;
     while ((attr = attrRe.exec(match[0]))) {
       attrs[attr[1].toLowerCase()] = decode(attr[3]);
     }
@@ -37,10 +37,6 @@ function validUsername(value) {
   return /^[A-Za-z0-9_]{5,32}$/.test(String(value || ""));
 }
 
-// BotFather's official public Telegram page currently exposes its profile
-// image through Telegram's CDN. Keep this as a last-resort fallback so the
-// official listing does not break if Telegram's page metadata is temporarily
-// unavailable or changes shape.
 const FALLBACK_IMAGES = {
   botfather:
     "https://cdn1.telesco.pe/file/dlMoubOmXmr2lyJLQE31w7FFLZG7adilSMyai_c9gvxWl2TihRajrQRk9x3S-JWGW8v8lTN3qA2ODePSKaBTjn6y4d57bM6zLxZGvZCUGiiXwILfmff5aryTx_bfSpM55BuuMH-OsUdiTsIig4UsjOFAEa6AUw0irbOvzyB2u6w5ZVyou0oE3BEPue26XSm26LgClFNWqiKeVAbuzUVTlcIUIq46D2OHkM678Tu0c34Iu4YMOYu--W9xpexXvfl9YW_db3zJkacpRtT1RNHVQAa1VYxbUbktAZNkUW197koIAC_21eGWhyVk_t-ge7aIFoBASxhrnCbsb6oLOVOTPg.jpg"
@@ -83,9 +79,7 @@ module.exports = async (req, res) => {
       if (page.ok) {
         imageUrl = metaImage(await page.text());
       }
-    } catch (_) {
-      // Use the known fallback below when Telegram's public page is unavailable.
-    }
+    } catch (_) {}
 
     if (!imageUrl) imageUrl = fallbackUrl;
     if (!imageUrl) return res.status(404).end("Bot image unavailable");
@@ -103,7 +97,7 @@ module.exports = async (req, res) => {
     }
 
     const type = image.headers.get("content-type") || "image/jpeg";
-    if (!/^image\\//i.test(type)) {
+    if (!/^image\//i.test(type)) {
       return res.status(502).end("Invalid bot image");
     }
 
