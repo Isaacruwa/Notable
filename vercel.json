@@ -1,1 +1,110 @@
-{"rewrites":[{"source":"/","destination":"/api/home"},{"source":"/directory","destination":"/api/directory"},{"source":"/category/:category","destination":"/api/directory?category=:category"},{"source":"/bot/:slug","destination":"/api/bot?slug=:slug"},{"source":"/submit","destination":"/submit.html"},{"source":"/account","destination":"/account.html"},{"source":"/admin","destination":"/admin.html"},{"source":"/sitemap.xml","destination":"/api/sitemap"}],"crons":[{"path":"/api/refresh","schedule":"0 0 * * *"}],"headers":[{"source":"/manifest.json","headers":[{"key":"Content-Type","value":"application/manifest+json"},{"key":"Cache-Control","value":"no-cache, no-store, must-revalidate"}]},{"source":"/sw.js","headers":[{"key":"Content-Type","value":"application/javascript; charset=utf-8"},{"key":"Cache-Control","value":"no-cache, no-store, must-revalidate"}]}]}
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/home"
+    },
+    {
+      "source": "/directory",
+      "destination": "/api/directory"
+    },
+    {
+      "source": "/category/:category",
+      "destination": "/api/directory?category=:category"
+    },
+    {
+      "source": "/bot/:slug",
+      "destination": "/api/bot?slug=:slug"
+    },
+    {
+      "source": "/submit",
+      "destination": "/submit.html"
+    },
+    {
+      "source": "/account",
+      "destination": "/account.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/public/manifest.json"
+    },
+    {
+      "source": "/sw.js",
+      "destination": "/public/sw.js"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/public/favicon.ico"
+    },
+    {
+      "source": "/favicon.svg",
+      "destination": "/public/favicon.svg"
+    },
+    {
+      "source": "/favicon-32.png",
+      "destination": "/public/favicon-32.png"
+    },
+    {
+      "source": "/favicon-48.png",
+      "destination": "/public/favicon-48.png"
+    },
+    {
+      "source": "/icon-192.png",
+      "destination": "/public/icon-192.png"
+    },
+    {
+      "source": "/icon-512.png",
+      "destination": "/public/icon-512.png"
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "destination": "/public/apple-touch-icon.png"
+    },
+    {
+      "source": "/kiver-logo.png",
+      "destination": "/public/kiver-logo.png"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/refresh",
+      "schedule": "0 0 * * *"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ]
+}
