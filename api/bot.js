@@ -12,7 +12,7 @@ module.exports=async(req,res)=>{
  const c=await db.reviews(b.slug),related=(await db.list({category:b.category,sort:"top",limit:5})).filter(x=>x.slug!==b.slug).slice(0,4);
  const origin=(req.headers["x-forwarded-proto"]||"https")+"://"+req.headers.host,url=origin+"/bot/"+b.slug;
  const type=b.kind||"Bot",about=b.about||"",description=b.description||about||"Telegram tool",bodyDescription=(b.description&&String(b.description).trim()!==about.trim())?b.description:"";
- const relatedHtml=related.map(x=>`<a class="compact-card" href="/bot/${encodeURIComponent(x.slug)}"><div class="compact-avatar">${x.image_url?'<img src="'+E(x.image_url)+'" alt="">':E((x.name||"B").charAt(0))}</div><div><b>${E(x.name)}</b><p>${E(x.description||x.about||"Telegram tool")}</p><small>↑ ${x.upvotes||0} · ${E(x.category||"Other")}</small></div></a>`).join("");
+ const relatedHtml=related.map(x=>`<a class="compact-card" href="/bot/${encodeURIComponent(x.slug)}"><div class="compact-avatar">${imageSrc(x)?'<img src="'+E(imageSrc(x))+'" alt="">':E((x.name||"B").charAt(0))}</div><div><b>${E(x.name)}</b><p>${E(x.description||x.about||"Telegram tool")}</p><small>↑ ${x.upvotes||0} · ${E(x.category||"Other")}</small></div></a>`).join("");
  const reviews=(c.reviews||[]).map(r=>`<article class="review-card"><div class="stars">${"★".repeat(Math.max(0,Math.min(5,Number(r.rating)||0)))}</div><p>${E(r.body)}</p><small>Community review</small></article>`).join("");
  const comments=(c.comments||[]).map(x=>`<article class="comment-card"><p>${E(x.body)}</p><small>Community discussion</small></article>`).join("");
  const website=b.website_url?`<a class="outline-button" href="${E(b.website_url)}" target="_blank" rel="noopener noreferrer">Visit website ↗</a>`:"";
