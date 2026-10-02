@@ -20,7 +20,7 @@
   var q=input.value.trim(),my=++seq;
   msg("");
   if(!q){showPreview(null);return}
-  api("GET","/api/claim?q="+encodeURIComponent(q)).then(function(r){if(my===seq)showPreview(r)}).catch(function(e){if(my!==seq)return;showPreview(null);msg(e.message)});
+  api("GET","/api/bots?action=claimLookup&q="+encodeURIComponent(q)).then(function(r){if(my===seq)showPreview(r)}).catch(function(e){if(my!==seq)return;showPreview(null);msg(e.message)});
  }
  input.addEventListener("input",function(){clearTimeout(timer);timer=setTimeout(lookup,450)});
  input.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();clearTimeout(timer);lookup()}});
@@ -29,7 +29,7 @@
   var q=input.value.trim();
   if(!q){msg("Enter your bot's username or link first.");return}
   busy=true;btn.disabled=true;msg("Checking the bot's About on Telegram…");
-  api("POST","/api/claim",{q:q}).then(function(r){
+  api("POST","/api/bots",{action:"claim",q:q}).then(function(r){
    msg("Verified. "+(r.name||"The bot")+" is now in your account.",true);
    setTimeout(function(){window.location.href="/account"},1200);
   }).catch(function(e){msg(e.message);busy=false;btn.disabled=current?current.state!=="open":false});
