@@ -46,7 +46,7 @@ function metaImage(html) {
 }
 
 function validUsername(value) {
-  return /^[A-Za-z0-9_]{5,32}$/.test(String(value || ""));
+  return /^[A-Za-z0-9_]{4,32}$/.test(String(value || ""));
 }
 
 async function fetchOk(url, accept, ms) {
