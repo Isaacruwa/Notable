@@ -13,6 +13,9 @@ module.exports=async(req,res)=>{
   if(req.method==="GET"){
    if(req.query.action==="preview"){if(!e)return res.status(401).json({error:"Sign in to submit a bot."});const x=await b.fetchBot(req.query.url),o=await db.byUser(x.telegramUsername,t);return res.json({bot:x,alreadyListed:!!o,slug:o?.slug})}
    if(req.query.action==="claimLookup"){if(!e)return res.status(401).json({error:"Sign in to claim a bot."});return res.json(await claimCall("lookup",{q:String(req.query.q||"")},t))}
+   if(req.query.action==="reviews"){res.setHeader("Cache-Control","no-store");const r=await db.reviews(String(req.query.slug||""));if(!r)return res.status(404).json({error:"Listing not found."});return res.json(r)}
+   if(req.query.action==="myReview"){if(!e)return res.status(401).json({error:"Sign in first."});res.setHeader("Cache-Control","no-store");return res.json((await db.myReview(String(req.query.slug||""),t))||{review:null,isOwner:false})}
+   if(req.query.action==="checkUsername"){res.setHeader("Cache-Control","no-store");return res.json(await db.checkUsername(String(req.query.username||""),t))}
    return res.json({bots:await db.list(req.query,t)});
   }
   if(!e)return res.status(401).json({error:"Sign in first."});
@@ -22,6 +25,9 @@ module.exports=async(req,res)=>{
   if(x.action==="edit"){const saved=await db.editOwned(x.slug,e,{description:x.description,about:x.about,websiteUrl:x.websiteUrl,category:x.category},t);if(!saved)return res.status(404).json({error:"That listing was not found in your account."});return res.json({bot:saved})}
   if(x.action==="claim")return res.json(await claimCall("claim",{q:String(x.q||x.slug||"")},t));
   if(x.action==="upvote")return res.json(await db.vote(x.slug,b.voter(req),t));
+  if(x.action==="review")return res.json(await db.addReview({slug:String(x.slug||""),rating:Number(x.rating),body:String(x.body||"")},t));
+  if(x.action==="deleteReview")return res.json(await db.deleteReview(String(x.slug||""),t));
+  if(x.action==="setUsername")return res.json(await db.setUsername(String(x.username||""),t));
   res.status(400).json({error:"Unknown action."})
  }catch(err){res.status(400).json({error:err.message||"Request failed."})}
 };

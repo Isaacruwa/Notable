@@ -1,1 +1,1 @@
-const a=require("../lib/auth");module.exports=async(req,res)=>{res.setHeader("Cache-Control","no-store");const e=await a.email(req);res.json(e?{loggedIn:true,email:e}:{loggedIn:false})};
+const a=require("../lib/auth");module.exports=async(req,res)=>{res.setHeader("Cache-Control","no-store");const p=await a.profile(req);res.json(p?{loggedIn:true,email:p.email,username:p.username,verified:p.verified}:{loggedIn:false})};
