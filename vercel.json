@@ -5,6 +5,14 @@
       "destination": "/api/home"
     },
     {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
       "source": "/directory",
       "destination": "/api/directory"
     },
