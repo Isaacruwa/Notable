@@ -7,7 +7,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const ORIGIN = (process.env.SITE_ORIGIN || "https://getkiver.com").replace(/\/$/, "");
+const ORIGIN = (process.env.SITE_ORIGIN || "https://www.getkiver.com").replace(/\/$/, "");
 const posts = JSON.parse(fs.readFileSync(path.join(ROOT, "blog-src", "posts.json"), "utf8"))
   .sort((a, b) => (a.published < b.published ? 1 : -1));
 const bySlug = Object.fromEntries(posts.map((p) => [p.slug, p]));
