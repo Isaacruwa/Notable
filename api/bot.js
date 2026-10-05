@@ -8,6 +8,7 @@ function renderDescription(s){
 }
 
 module.exports=async(req,res)=>{
+ if(req.query.user)return require("../lib/profile-page")(req,res);
  const b=await db.getBot(req.query.slug);if(!b)return res.status(404).end("Bot not found");
  const c=await db.reviews(b.slug),related=(await db.list({category:b.category,sort:"top",limit:5})).filter(x=>x.slug!==b.slug).slice(0,4);
  const origin=(req.headers["x-forwarded-proto"]||"https")+"://"+req.headers.host,url=origin+"/bot/"+b.slug;
