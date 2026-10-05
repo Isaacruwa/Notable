@@ -64,3 +64,38 @@
 .profile-tag{font-size:11px;font-weight:800;color:#0b6bb3;background:#e8f3fc;border-radius:999px;padding:3px 9px}
 .form-status.ok{color:#1a7f37}
 @media(max-width:560px){.review-count{margin-left:0;width:100%}.star-btn{font-size:34px;padding:2px 4px}.username-form input{min-width:0;width:100%}}
+
+/* Profiles and paid verification */
+.pf-head{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.pf-avatar{width:72px;height:72px;flex:0 0 72px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px;font-weight:800;background:#6964ff;transition:background .15s}
+.pf-avatar-lg{width:104px;height:104px;flex-basis:104px;font-size:44px}
+.pf-c-violet{background:#6964ff}.pf-c-blue{background:#2f80ed}.pf-c-teal{background:#0ea5a4}.pf-c-green{background:#2f9e44}.pf-c-amber{background:#e8a200}.pf-c-orange{background:#e8590c}.pf-c-rose{background:#e64980}.pf-c-slate{background:#475569}
+.pf-head-copy{display:grid;gap:4px;min-width:0}
+.pf-name{display:flex;align-items:center;gap:7px;font-size:22px;letter-spacing:-.03em;flex-wrap:wrap}
+.pf-sub{color:#77736d;font-size:14px}
+.pf-stats{display:flex;gap:16px;flex-wrap:wrap;color:#66645f;font-size:14px;margin-top:2px}
+.pf-stats b{color:#171717}
+.pf-form,.pf-block{border-top:1px solid #ece9e3;padding-top:20px;margin-top:6px;display:grid;gap:10px}
+.pf-form h3,.pf-block h3{margin:0;font-size:17px;letter-spacing:-.02em}
+.pf-form label{font-weight:750;font-size:13px;display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.pf-count{font-weight:600;color:#99958d}
+.pf-form input,.pf-form textarea{width:100%;box-sizing:border-box;border:1px solid #d9d5ce;border-radius:10px;padding:12px 14px;font:inherit;font-size:15px;color:#171717;background:#fff}
+.pf-form textarea{resize:vertical;min-height:84px}
+.pf-form input:focus,.pf-form textarea:focus{outline:none;border-color:#6964ff;box-shadow:0 0 0 3px rgba(105,100,255,.15)}
+.pf-swatches{display:flex;gap:10px;flex-wrap:wrap}
+.pf-swatch{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #d9d5ce;cursor:pointer;padding:0}
+.pf-swatch.on{box-shadow:0 0 0 2px #171717}
+.pf-form .dark-button,.pf-verify .dark-button{justify-self:start;border:0;cursor:pointer}
+.pf-verify .dark-button:disabled{opacity:.5;cursor:not-allowed}
+.pf-verify{background:#faf9f7;border:1px solid #e5e2dc;border-radius:14px;padding:20px;margin-top:14px}
+.pf-verify.on{background:#f1f8ff;border-color:#cfe6fb}
+.pf-verify-head{display:flex;align-items:center;gap:8px}
+.pf-benefits{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px;line-height:1.5}
+.pf-price{margin:0;font-size:15px}
+.pf-hero{display:flex;align-items:center;gap:26px;padding:28px 0 34px;flex-wrap:wrap}
+.pf-hero-copy{display:grid;gap:8px;min-width:0;flex:1}
+.pf-hero h1{margin:0;display:flex;align-items:center;gap:9px;font-size:clamp(30px,5vw,44px);letter-spacing:-.045em;flex-wrap:wrap}
+.pf-handle{color:#77736d;font-size:16px}
+.pf-bio{margin:0;font-size:17px;line-height:1.6;max-width:640px}
+.pf-verified-note{margin:0;color:#0b6bb3;font-weight:700;font-size:14px}
+@media(max-width:620px){.pf-avatar-lg{width:80px;height:80px;flex-basis:80px;font-size:34px}.pf-hero{gap:18px}}
