@@ -3,7 +3,6 @@
   "use strict";
   var body = document.getElementById("profileBody");
   if (!body) return;
-  var PRICE = "pri_01m4444hd5gatkgd89njpsqfd7";
   var PENDING = "kiver_verify_pending";
   var STYLES = ["violet", "blue", "teal", "green", "amber", "orange", "rose", "slate"];
   var BADGE = '<svg class="verified-badge user-verified" viewBox="0 0 18 18" width="18" height="18" role="img" aria-label="Verified user" xmlns="http://www.w3.org/2000/svg"><title>Verified</title><polygon fill="#0099FD" points="9,16 7.1,16.9 5.8,15.2 3.7,15.1 3.4,13 1.5,12 2.2,9.9 1.1,8.2 2.6,6.7 2.4,4.6 4.5,4 5.3,2 7.4,2.4 9,1.1 10.7,2.4 12.7,2 13.6,4 15.6,4.6 15.5,6.7 17,8.2 15.9,9.9 16.5,12 14.7,13 14.3,15.1 12.2,15.2 10.9,16.9"/><polygon fill="#FFFFFF" points="13.1,7.3 12.2,6.5 8.1,10.6 5.9,8.5 5,9.4 8,12.4"/></svg>';
@@ -73,7 +72,6 @@
     return '<div class="pf-block pf-verify"><span class="eyebrow">VERIFIED PROFILE</span><h3>Get your blue verified badge</h3>' +
       '<ul class="pf-benefits"><li>Blue badge next to your @username on every review you post</li><li>A public profile page at getkiver.com/u/you that search engines can index</li><li>More trust from the people reading your reviews and tools</li></ul>' +
       '<p class="pf-price"><b>3-day free trial</b>, then <b>$19/year</b>. Cancel anytime.</p>' +
-      '<label class="payment-consent"><input id="pfConsent" type="checkbox"><span>I agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and <a href="/refund.html" target="_blank" rel="noopener">Refund Policy</a>.</span></label>' +
       '<button class="dark-button" id="pfVerifyBtn" type="button"' + (needUser ? " disabled" : "") + '>Start free trial <span>\u2192</span></button>' +
       (needUser ? '<p class="muted">Choose a username above first.</p>' : "") + '<p class="form-status" id="pfVerifyStatus" role="status"></p></div>';
   }
@@ -129,19 +127,9 @@
 
     var vb = body.querySelector("#pfVerifyBtn");
     if (vb) vb.addEventListener("click", function () {
-      var consent = body.querySelector("#pfConsent");
-      if (!consent.checked) { note("pfVerifyStatus", "Please accept the Terms and Refund Policy before continuing."); return; }
-      if (typeof window.kiverInitPaddle !== "function") { note("pfVerifyStatus", "Payments are still loading. Please try again in a moment."); return; }
-      vb.disabled = true; note("pfVerifyStatus", "");
-      window.kiverInitPaddle().then(function () {
-        window.Paddle.Checkout.open({
-          items: [{ priceId: PRICE, quantity: 1 }],
-          customer: { email: pf.email },
-          customData: { type: "user_verification", owner_email: pf.email },
-          settings: { displayMode: "overlay", theme: "light" }
-        });
-        vb.disabled = false;
-      }).catch(function (e) { vb.disabled = false; note("pfVerifyStatus", e && e.message ? e.message : "Payments are not available right now."); });
+      if (typeof window.kiverOpenVerify !== "function") { note("pfVerifyStatus", "Payments are still loading. Please try again in a moment."); return; }
+      note("pfVerifyStatus", "");
+      window.kiverOpenVerify(pf.username);
     });
   }
 
