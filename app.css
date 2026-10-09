@@ -105,3 +105,11 @@
 .payment-perks{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:9px;font-size:14px;color:#3d3b37}
 .payment-perks li{display:flex;gap:9px;align-items:flex-start;line-height:1.45}
 .payment-perks li:before{content:"\2713";color:#0b6bb3;font-weight:800}
+
+/* Show/hide password button */
+.pw-field{position:relative;display:block}
+.pw-field>input{padding-right:48px}
+.pw-field>input::-ms-reveal,.pw-field>input::-ms-clear{display:none}
+.pw-toggle{position:absolute;top:50%;right:5px;transform:translateY(-50%);width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:9px;background:transparent;color:#77736d;cursor:pointer;padding:0}
+.pw-toggle:hover,.pw-toggle.on{color:#171717}
+.pw-toggle:focus-visible{outline:2px solid #171717;outline-offset:-2px}
