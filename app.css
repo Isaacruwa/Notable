@@ -113,3 +113,11 @@
 .pw-toggle{position:absolute;top:50%;right:5px;transform:translateY(-50%);width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:9px;background:transparent;color:#77736d;cursor:pointer;padding:0}
 .pw-toggle:hover,.pw-toggle.on{color:#171717}
 .pw-toggle:focus-visible{outline:2px solid #171717;outline-offset:-2px}
+
+/* Live listing count under the hero */
+.live-stat{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:fit-content;max-width:calc(100% - 36px);margin:4px auto 40px;padding:16px 28px;border:1px solid #e7e5e0;border-radius:18px;background:#faf9f7}
+.live-stat .live-dot{margin:0;animation:kiverBreathe 2.4s ease-in-out infinite}
+.live-stat strong{font-size:34px;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.live-stat-label{color:#4a4741;font-weight:650;font-size:15px}
+.live-stat .text-link{font-size:14px}
+@media(max-width:620px){.live-stat{padding:14px 18px;gap:8px 10px;margin-bottom:28px}.live-stat strong{font-size:28px}}
