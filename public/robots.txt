@@ -8,6 +8,7 @@ User-agent: ChatGPT-User
 User-agent: Claude-User
 User-agent: Claude-Web
 User-agent: Perplexity-User
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /api/image
 Disallow: /api/
 Disallow: /admin
@@ -30,6 +31,8 @@ User-agent: cohere-ai
 User-agent: meta-externalagent
 User-agent: FacebookBot
 User-agent: Diffbot
+User-agent: Bytespider
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /api/image
 Disallow: /api/
 Disallow: /admin
@@ -40,12 +43,9 @@ Disallow: /reset-password.html
 Disallow: /announcement-queue.html
 Allow: /
 
-# Blocked: aggressive crawler that ignores crawl limits
-User-agent: Bytespider
-Disallow: /
-
 # Everyone else
 User-agent: *
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /api/image
 Disallow: /api/
 Disallow: /admin
