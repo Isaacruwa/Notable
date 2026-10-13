@@ -1,6 +1,13 @@
+# robots.txt for Kiver (https://www.getkiver.com), per RFC 9309
 User-agent: *
 Allow: /
+Allow: /api/image
 Disallow: /api/
+Disallow: /admin
+Disallow: /account
 Disallow: /login.html
+Disallow: /forgot-password.html
+Disallow: /reset-password.html
+Disallow: /announcement-queue.html
 
-Sitemap: https://getkiver.com/sitemap.xml
+Sitemap: https://www.getkiver.com/sitemap.xml
