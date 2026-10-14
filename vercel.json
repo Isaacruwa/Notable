@@ -2,147 +2,19 @@
   "rewrites": [
     {
       "source": "/",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/"
-    },
-    {
-      "source": "/directory",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/directory"
-    },
-    {
-      "source": "/bot/:slug",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/bot/:slug"
-    },
-    {
-      "source": "/u/:username",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/u/:username"
-    },
-    {
-      "source": "/blog",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/blog"
-    },
-    {
-      "source": "/blog/:slug",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/blog/:slug"
-    },
-    {
-      "source": "/category/:cat",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/category/:cat"
-    },
-    {
-      "source": "/submit",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/submit"
-    },
-    {
-      "source": "/privacy.html",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/privacy.html"
-    },
-    {
-      "source": "/terms.html",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/terms.html"
-    },
-    {
-      "source": "/refund.html",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/refund.html"
-    },
-    {
-      "source": "/cookie.html",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/markdown.*"
-        }
-      ],
-      "destination": "/api/home?md=1&p=/cookie.html"
-    },
-    {
-      "source": "/",
       "destination": "/api/home"
     },
     {
       "source": "/blog",
-      "destination": "/blog/index.html"
+      "destination": "/blog-pages/index.html"
     },
     {
       "source": "/blog/:slug",
-      "destination": "/blog/:slug/index.html"
+      "destination": "/blog-pages/:slug.html"
+    },
+    {
+      "source": "/blog/:slug/",
+      "destination": "/blog-pages/:slug.html"
     },
     {
       "source": "/directory",
