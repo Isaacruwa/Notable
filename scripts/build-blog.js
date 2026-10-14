@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Static blog generator for Kiver.
 // Usage: node scripts/build-blog.js
-// Reads blog-src/posts.json and writes blog/index.html, blog/<slug>/index.html,
+// Reads blog-src/posts.json and writes blog-pages/index.html, blog-pages/<slug>.html,
 // rss.xml and lib/blog-posts.json (used by api/sitemap.js).
 const fs = require("fs");
 const path = require("path");
@@ -66,7 +66,7 @@ for (const p of posts) {
   const extra = `<meta property="article:published_time" content="${p.published}"><meta property="article:modified_time" content="${p.updated}"><meta property="article:section" content="${esc(p.category)}">`;
   const html = head({ title: p.seoTitle || p.title, desc: p.description, url, image, imageAlt: p.coverAlt, type: "article", extraMeta: extra }) +
 `<body>${header(true)}<main class="blog-main"><article class="post"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span aria-current="page">${esc(p.category)}</span></nav><header class="post-head"><span class="eyebrow">${esc(p.category.toUpperCase())} · ${p.readMins} MIN READ</span><h1>${esc(p.title)}</h1><p class="post-meta">Published ${esc(fmt(p.published))}${p.updated !== p.published ? " · Updated " + esc(fmt(p.updated)) : ""} · By the Kiver team</p></header><img class="post-cover" src="/blog/img/${esc(p.cover)}" alt="${esc(p.coverAlt)}" width="1200" height="630" fetchpriority="high">${tocHtml}<div class="post-body">${p.body}${faqHtml}</div>${cta}</article>${relatedHtml}</main>${footer}<script src="/app.js?v=11" defer></script>${ld(ldArticle)}${ld(ldCrumbs)}${ldFaq}</body></html>`;
-  write(`blog/${p.slug}/index.html`, html);
+  write(`blog-pages/${p.slug}.html`, html);
 }
 
 // ---- Blog index ----
@@ -83,7 +83,7 @@ for (const p of posts) {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: ORIGIN + "/" }, { "@type": "ListItem", position: 2, name: "Blog", item: url }],
   })}</body></html>`;
-  write("blog/index.html", html);
+  write("blog-pages/index.html", html);
 }
 
 // ---- RSS ----
