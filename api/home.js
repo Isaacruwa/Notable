@@ -2,6 +2,7 @@ const db=require("../lib/db");
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const imageSrc=b=>b&&b.telegram_username?"/api/image?u="+encodeURIComponent(b.telegram_username):"";
 module.exports=async(req,res)=>{
+ if(req.query.md)return require("../lib/markdown-page")(req,res);
  const origin=(req.headers["x-forwarded-proto"]||"https")+"://"+req.headers.host;
  if(req.query.stats){try{const s=await require("../lib/profile").stats();res.setHeader("Cache-Control","s-maxage=30, stale-while-revalidate=60");return res.json({listings:s.listings})}catch{return res.status(503).json({error:"unavailable"})}}
  const total=await require("../lib/profile").stats().then(s=>s.listings).catch(()=>null);
