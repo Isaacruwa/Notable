@@ -121,3 +121,19 @@
 .live-stat-label{color:#4a4741;font-weight:650;font-size:15px}
 .live-stat .text-link{font-size:14px}
 @media(max-width:620px){.live-stat{padding:14px 18px;gap:8px 10px;margin-bottom:28px}.live-stat strong{font-size:28px}}
+
+/* Post-listing upsell */
+.upsell-body{padding:24px 18px 6px}
+.upsell-body h2{font-size:29px;line-height:1.05;letter-spacing:-.05em;margin:6px 0 10px}
+.upsell-lead{color:#77736d;margin:0 0 16px;font-size:15px;line-height:1.5}
+.upsell-offer{display:flex;align-items:center;justify-content:space-between;gap:16px;border:2px solid #6964ff;background:#f6f5ff;border-radius:14px;padding:16px;margin:4px 0}
+.upsell-offer>div{display:grid;gap:4px}
+.upsell-offer b{font-size:15px}
+.upsell-offer small{font-size:12px;color:#77736d;line-height:1.4}
+.upsell-offer>strong{font-size:26px;white-space:nowrap;letter-spacing:-.03em}
+.upsell-offer>strong span{font-size:12px;color:#77736d;font-weight:600}
+.upsell-tag{justify-self:start;background:#6964ff;color:#fff;font-size:9px;font-weight:850;letter-spacing:.1em;padding:3px 8px;border-radius:99px}
+.upsell-cta{width:100%;justify-content:center;margin-top:14px;cursor:pointer;border:0;font:inherit;font-weight:750}
+.upsell-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0 14px}
+.upsell-link{border:0;background:transparent;padding:0;font:inherit;font-size:12px;font-weight:800;color:#6964ff;cursor:pointer}
+.upsell-link.upsell-skip{color:#77736d}
