@@ -123,17 +123,31 @@
 @media(max-width:620px){.live-stat{padding:14px 18px;gap:8px 10px;margin-bottom:28px}.live-stat strong{font-size:28px}}
 
 /* Post-listing upsell */
-.upsell-body{padding:24px 18px 6px}
-.upsell-body h2{font-size:29px;line-height:1.05;letter-spacing:-.05em;margin:6px 0 10px}
-.upsell-lead{color:#77736d;margin:0 0 16px;font-size:15px;line-height:1.5}
-.upsell-offer{display:flex;align-items:center;justify-content:space-between;gap:16px;border:2px solid #6964ff;background:#f6f5ff;border-radius:14px;padding:16px;margin:4px 0}
-.upsell-offer>div{display:grid;gap:4px}
-.upsell-offer b{font-size:15px}
-.upsell-offer small{font-size:12px;color:#77736d;line-height:1.4}
-.upsell-offer>strong{font-size:26px;white-space:nowrap;letter-spacing:-.03em}
-.upsell-offer>strong span{font-size:12px;color:#77736d;font-weight:600}
-.upsell-tag{justify-self:start;background:#6964ff;color:#fff;font-size:9px;font-weight:850;letter-spacing:.1em;padding:3px 8px;border-radius:99px}
-.upsell-cta{width:100%;justify-content:center;margin-top:14px;cursor:pointer;border:0;font:inherit;font-weight:750}
-.upsell-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0 14px}
-.upsell-link{border:0;background:transparent;padding:0;font:inherit;font-size:12px;font-weight:800;color:#6964ff;cursor:pointer}
-.upsell-link.upsell-skip{color:#77736d}
+.upsell-body{padding:22px 20px 4px}
+.upsell-body h2{font-size:26px;line-height:1.08;letter-spacing:-.04em;margin:6px 0 8px}
+.upsell-lead{color:#77736d;margin:0 0 12px;font-size:14px;line-height:1.45}
+.upsell-timer{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff7e6;border:1px solid #f1d9a6;color:#7a5a12;border-radius:10px;padding:8px 12px;margin:0 0 12px;font-size:12px;font-weight:700}
+.upsell-timer[hidden]{display:none}
+.upsell-timer b{font-variant-numeric:tabular-nums;font-size:15px;letter-spacing:.02em;color:#4d3705}
+.upsell-plans{display:grid;gap:8px;margin:0 0 12px}
+.upsell-plan{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;background:#fff;border:1.5px solid #dedbd5;border-radius:12px;padding:12px 14px;font:inherit;cursor:pointer}
+.upsell-plan.on{border-color:#6964ff;background:#f6f5ff;box-shadow:0 0 0 3px rgba(105,100,255,.12)}
+.upsell-plan>span{display:grid;gap:3px}
+.upsell-plan b{font-size:14px}
+.upsell-plan small{font-size:12px;color:#77736d;line-height:1.35}
+.upsell-plan>strong{font-size:20px;white-space:nowrap;letter-spacing:-.03em}
+.upsell-plan>strong em{font-style:normal;font-size:11px;color:#77736d;font-weight:600}
+.upsell-tag{justify-self:start;font-style:normal;background:#6964ff;color:#fff;font-size:9px;font-weight:850;letter-spacing:.1em;padding:3px 8px;border-radius:99px}
+.upsell-perks{margin:0 0 4px;font-size:13px;gap:6px}
+.upsell-cta{width:100%;justify-content:center;margin-top:12px;cursor:pointer;border:0;font:inherit;font-weight:750}
+.upsell-links{display:flex;justify-content:center;padding:10px 0 12px}
+.upsell-link{border:0;background:transparent;padding:0;font:inherit;font-size:12px;font-weight:800;color:#77736d;cursor:pointer}
+.upsell-dialog{width:min(460px,calc(100% - 24px))}
+.upsell-dialog .payment-brandbar{padding:11px 16px}
+.upsell-dialog .payment-footer-note{padding:10px 20px}
+/* Compact checkout when opened from the upsell */
+#paddleModal[data-from="upsell"] .payment-shell,#paddleModal[data-from="upsell"].payment-modal .payment-shell{width:min(440px,calc(100% - 24px))}
+#paddleModal[data-from="upsell"] .payment-brandbar{padding:11px 16px}
+#paddleModal[data-from="upsell"] .payment-shell>#paymentCheckout,#paddleModal[data-from="upsell"] .payment-shell>#paymentStatus{margin-left:16px;margin-right:16px}
+#paddleModal[data-from="upsell"] #kiver-paddle-checkout{min-height:440px}
+#paddleModal[data-from="upsell"] .payment-footer-note{padding:10px 16px}
