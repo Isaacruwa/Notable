@@ -223,6 +223,10 @@
     {
       "source": "/kiver-logo.png",
       "destination": "/public/kiver-logo.png"
+    },
+    {
+      "source": "/og-image.png",
+      "destination": "/public/og-image.png"
     }
   ],
   "crons": [
