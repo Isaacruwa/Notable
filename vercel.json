@@ -157,6 +157,10 @@
       "destination": "/api/directory?category=:category"
     },
     {
+      "source": "/best/:slug",
+      "destination": "/api/collection?slug=:slug"
+    },
+    {
       "source": "/bot/:slug",
       "destination": "/api/bot?slug=:slug"
     },

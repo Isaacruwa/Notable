@@ -1,4 +1,4 @@
-const db=require("../lib/db"),prof=require("../lib/profile");
+const db=require("../lib/db"),prof=require("../lib/profile"),COLS=require("../lib/collections");
 const PAGES=["/","/blog","/directory","/category/ai","/category/productivity","/category/utilities","/category/finance","/category/games","/category/media","/category/community","/category/education","/category/other","/submit","/privacy.html","/terms.html","/refund.html","/cookie.html"];
 const iso=d=>{try{return new Date(d).toISOString()}catch{return null}};
 module.exports=async(req,res)=>{
@@ -9,6 +9,7 @@ module.exports=async(req,res)=>{
  const vu=await prof.verifiedUsernames().catch(()=>[]);
  let x='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
  PAGES.forEach(v=>x+="<url><loc>"+o+v+"</loc></url>");
+ COLS.forEach(c=>x+="<url><loc>"+o+"/best/"+c.slug+"</loc></url>");
  b.forEach(v=>{const m=v.updated_at?iso(v.updated_at):null;x+="<url><loc>"+o+"/bot/"+encodeURIComponent(v.slug)+"</loc>"+(m?"<lastmod>"+m+"</lastmod>":"")+"</url>"});
  vu.forEach(u=>x+="<url><loc>"+o+"/u/"+encodeURIComponent(u)+"</loc></url>");
  require("../lib/blog-posts.json").forEach(v=>x+="<url><loc>"+o+"/blog/"+v.slug+"</loc><lastmod>"+v.updated+"</lastmod></url>");
