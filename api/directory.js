@@ -3,6 +3,7 @@ const seo=require("../lib/seo"),COLS=require("../lib/collections");
 const E=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const imageSrc=b=>b&&b.telegram_username?"/api/image?u="+encodeURIComponent(b.telegram_username):"";
 module.exports=async(req,res)=>{
+ if(req.query.collection)return require("../lib/collection-page")(req,res);
  const q=String(req.query.q||"").trim(),cat=String(req.query.category||"").trim(),sort=req.query.sort==="new"?"new":"top",offset=Math.max(0,Number(req.query.offset)||0);
  const bots=await db.list({q,category:cat,sort,limit:24,offset});
  const origin=(req.headers["x-forwarded-proto"]||"https")+"://"+req.headers.host;

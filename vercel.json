@@ -158,7 +158,7 @@
     },
     {
       "source": "/best/:slug",
-      "destination": "/api/collection?slug=:slug"
+      "destination": "/api/directory?collection=:slug"
     },
     {
       "source": "/bot/:slug",
