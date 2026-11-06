@@ -153,3 +153,4 @@
 #paddleModal[data-from="upsell"] .payment-footer-note{padding:10px 16px}
 .payment-or{display:flex;align-items:center;gap:10px;margin:14px 0 10px;color:#85817a;font-size:12px;font-weight:700}.payment-or:before,.payment-or:after{content:"";flex:1;border-top:1px solid #e7e5df}
 .upsell-stars{margin-top:14px;text-align:center}.upsell-stars>span{display:block;font-size:12px;font-weight:700;color:#77736d;margin-bottom:8px}.upsell-stars-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.upsell-stars-row button{border:1.5px solid #dedbd5;background:#fff;border-radius:10px;padding:10px 8px;font:inherit;font-size:13px;font-weight:750;cursor:pointer}.upsell-stars-row button:hover{border-color:#6964ff;background:#f6f5ff}.upsell-stars-row button:disabled{opacity:.6;cursor:wait}
+.upsell-stars-sub{grid-column:1/-1;border-color:#6964ff!important;background:#f6f5ff!important}.payment-plan strong small{font-size:11px;color:#77736d;font-weight:600}
