@@ -154,3 +154,19 @@
 .payment-or{display:flex;align-items:center;gap:10px;margin:14px 0 10px;color:#85817a;font-size:12px;font-weight:700}.payment-or:before,.payment-or:after{content:"";flex:1;border-top:1px solid #e7e5df}
 .upsell-stars{margin-top:14px;text-align:center}.upsell-stars>span{display:block;font-size:12px;font-weight:700;color:#77736d;margin-bottom:8px}.upsell-stars-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.upsell-stars-row button{border:1.5px solid #dedbd5;background:#fff;border-radius:10px;padding:10px 8px;font:inherit;font-size:13px;font-weight:750;cursor:pointer}.upsell-stars-row button:hover{border-color:#6964ff;background:#f6f5ff}.upsell-stars-row button:disabled{opacity:.6;cursor:wait}
 .upsell-stars-sub{grid-column:1/-1;border-color:#6964ff!important;background:#f6f5ff!important}.payment-plan strong small{font-size:11px;color:#77736d;font-weight:600}
+/* Telegram Stars option: compact and collapsed so the Paddle plans keep their layout */
+.stars-box{margin-top:14px;border:1px solid #e7e5df;border-radius:12px;padding:0 14px}
+.stars-box summary{cursor:pointer;list-style:none;padding:12px 0;font-size:13px;font-weight:750;color:#4a46d4;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stars-box summary::-webkit-details-marker{display:none}
+.stars-box summary:after{content:"+";font-size:18px;line-height:1;font-weight:600}
+.stars-box[open] summary:after{content:"\2013"}
+.stars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-bottom:10px}
+.stars-grid button{border:1.5px solid #dedbd5;background:#fff;border-radius:10px;padding:10px 4px;font:inherit;display:grid;gap:2px;text-align:center;cursor:pointer;color:#171717}
+.stars-grid button:hover{border-color:#6964ff;background:#f6f5ff}
+.stars-grid button:disabled{opacity:.6;cursor:wait}
+.stars-grid b{font-size:13px}.stars-grid span{font-size:12px;color:#4b4943;font-weight:700}
+.stars-grid .stars-sub{border-color:#6964ff;background:#f6f5ff}
+.stars-note{margin:0 0 12px;font-size:11.5px;color:#77736d;line-height:1.4}
+/* If the plan list is ever taller than the screen, scroll it instead of cutting it off */
+#paymentPlanPicker{max-height:calc(90vh - 74px);overflow-y:auto}
+.upsell-body{max-height:calc(90vh - 130px);overflow-y:auto}
