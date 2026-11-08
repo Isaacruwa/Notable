@@ -9,19 +9,60 @@ function renderDescription(s){
 }
 
 
+const FAQ_STOP={
+ de:"der die das und ist nicht mit für auf ein eine zu den von im sie ich du wir auch bei oder wie dein deine dem sich als nur".split(" "),
+ es:"el la los las y es de que en un una para con por se su del al más como tu tus muy este esta".split(" "),
+ fr:"le la les et est de des un une pour avec dans sur pas que qui votre vous ce au du en sont plus".split(" "),
+ pt:"o a os as e é de do da dos das um uma para com em que não por seu sua você como mais muito este".split(" "),
+ tr:"ve bir bu için ile da de çok daha olarak mi en ne gibi her değil sen ya veya olan".split(" "),
+ id:"dan yang di untuk dengan ini itu dari ke pada adalah anda kamu bisa tidak akan atau juga".split(" "),
+ en:"the and is to of for with a in on your you it that this are be can".split(" ")
+};
+function faqLang(s){
+ try{
+  const t=String(s||"").replace(/https?:\/\/\S+/g," ").replace(/[@#]\w+/g," ");
+  const letters=t.match(/\p{L}/gu)||[];if(letters.length<12)return"en";
+  const cnt=re=>(t.match(re)||[]).length;
+  const arab=cnt(/[\u0600-\u06FF]/g),cyr=cnt(/[\u0400-\u04FF]/g);
+  if(arab/letters.length>0.3)return/[پچژگکی]/.test(t)?"fa":"ar";
+  if(cyr/letters.length>0.3)return/[іїєґІЇЄҐ]/.test(t)?"uk":"ru";
+  const lat=cnt(/[A-Za-zÀ-ÿĞğİıŞş]/g);if(lat/letters.length<0.7)return null;
+  const words=t.toLowerCase().match(/\p{L}+/gu)||[];if(words.length<5)return"en";
+  const sc={};for(const k in FAQ_STOP){const set=new Set(FAQ_STOP[k]);sc[k]=words.filter(w=>set.has(w)).length}
+  const ranked=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]);const best=ranked[0],second=sc[ranked[1]];
+  if(best==="en"||sc[best]<3||sc[best]<1.5*second||sc[best]<=sc.en)return(sc.en<2&&words.length>=8)?null:"en";
+  return best;
+ }catch(e){return"en"}
+}
+const FAQ_T={
+ en:{h:"Frequently asked questions about {n}",qw:"What is {n}?",qu:"How do I use {n}?",au:"Tap Open in Telegram on this page to launch {n} (@{u}) inside Telegram, then follow its prompts to get started.",qs:"What do users say about {n}?",as:"{n} has an average rating of {avg} out of 5 from {c} on Kiver. Read the community reviews above for details.",a0:"There are no reviews of {n} on Kiver yet. Try it in Telegram and be the first to leave one.",qa:"What are alternatives to {n}?",aa:"Similar Telegram tools on Kiver include {list}. Scroll down to the related tools to compare them.",r1:"1 review",rn:"{c} reviews"},
+ ru:{h:"Частые вопросы о {n}",qw:"Что такое {n}?",qu:"Как пользоваться {n}?",au:"Нажмите кнопку «Open in Telegram» на этой странице, чтобы открыть {n} (@{u}) в Telegram, и следуйте подсказкам.",qs:"Что говорят пользователи о {n}?",as:"Средняя оценка {n} на Kiver — {avg} из 5 (отзывов: {c}). Подробности — в отзывах сообщества выше.",a0:"У {n} на Kiver пока нет отзывов. Попробуйте в Telegram и оставьте первый отзыв.",qa:"Какие есть альтернативы {n}?",aa:"Похожие Telegram-инструменты на Kiver: {list}. Прокрутите страницу вниз, чтобы сравнить их."},
+ uk:{h:"Поширені запитання про {n}",qw:"Що таке {n}?",qu:"Як користуватися {n}?",au:"Натисніть кнопку «Open in Telegram» на цій сторінці, щоб відкрити {n} (@{u}) у Telegram, і дотримуйтесь підказок.",qs:"Що кажуть користувачі про {n}?",as:"Середня оцінка {n} на Kiver — {avg} із 5 (відгуків: {c}). Деталі — у відгуках спільноти вище.",a0:"У {n} на Kiver поки немає відгуків. Спробуйте в Telegram і залиште перший відгук.",qa:"Які є альтернативи {n}?",aa:"Схожі Telegram-інструменти на Kiver: {list}. Прокрутіть сторінку вниз, щоб порівняти їх."},
+ de:{h:"Häufige Fragen zu {n}",qw:"Was ist {n}?",qu:"Wie benutze ich {n}?",au:"Tippe auf dieser Seite auf „Open in Telegram“, um {n} (@{u}) in Telegram zu starten, und folge den Anweisungen.",qs:"Was sagen Nutzer über {n}?",as:"{n} hat auf Kiver eine durchschnittliche Bewertung von {avg} von 5 (Bewertungen: {c}). Details findest du oben in den Community-Bewertungen.",a0:"Für {n} gibt es auf Kiver noch keine Bewertungen. Probiere es in Telegram aus und schreibe die erste.",qa:"Welche Alternativen gibt es zu {n}?",aa:"Ähnliche Telegram-Tools auf Kiver sind {list}. Scrolle nach unten, um sie zu vergleichen."},
+ es:{h:"Preguntas frecuentes sobre {n}",qw:"¿Qué es {n}?",qu:"¿Cómo uso {n}?",au:"Toca «Open in Telegram» en esta página para abrir {n} (@{u}) en Telegram y sigue sus indicaciones.",qs:"¿Qué opinan los usuarios de {n}?",as:"{n} tiene una valoración media de {avg} sobre 5 en Kiver (reseñas: {c}). Consulta las reseñas de la comunidad más arriba.",a0:"{n} aún no tiene reseñas en Kiver. Pruébalo en Telegram y sé el primero en dejar una.",qa:"¿Qué alternativas hay a {n}?",aa:"Herramientas de Telegram similares en Kiver: {list}. Baja por la página para compararlas."},
+ fr:{h:"Questions fréquentes sur {n}",qw:"Qu’est-ce que {n} ?",qu:"Comment utiliser {n} ?",au:"Appuyez sur « Open in Telegram » sur cette page pour lancer {n} (@{u}) dans Telegram, puis suivez les instructions.",qs:"Que disent les utilisateurs de {n} ?",as:"{n} a une note moyenne de {avg} sur 5 sur Kiver (avis : {c}). Consultez les avis de la communauté ci-dessus.",a0:"{n} n’a pas encore d’avis sur Kiver. Essayez-le dans Telegram et laissez le premier.",qa:"Quelles sont les alternatives à {n} ?",aa:"Des outils Telegram similaires sur Kiver : {list}. Faites défiler la page pour les comparer."},
+ pt:{h:"Perguntas frequentes sobre {n}",qw:"O que é {n}?",qu:"Como usar {n}?",au:"Toque em «Open in Telegram» nesta página para abrir {n} (@{u}) no Telegram e siga as instruções.",qs:"O que os usuários dizem sobre {n}?",as:"{n} tem uma avaliação média de {avg} de 5 no Kiver (avaliações: {c}). Veja as avaliações da comunidade acima.",a0:"{n} ainda não tem avaliações no Kiver. Experimente no Telegram e seja o primeiro a avaliar.",qa:"Quais são as alternativas a {n}?",aa:"Ferramentas de Telegram semelhantes no Kiver: {list}. Role a página para compará-las."},
+ tr:{h:"{n} hakkında sık sorulan sorular",qw:"{n} nedir?",qu:"{n} nasıl kullanılır?",au:"Bu sayfadaki «Open in Telegram» düğmesine dokun, {n} (@{u}) Telegram’da açılsın ve yönergeleri izle.",qs:"Kullanıcılar {n} hakkında ne diyor?",as:"{n}, Kiver’da 5 üzerinden {avg} ortalama puana sahip (yorum sayısı: {c}). Ayrıntılar için yukarıdaki topluluk yorumlarına bak.",a0:"{n} için Kiver’da henüz yorum yok. Telegram’da dene ve ilk yorumu sen yaz.",qa:"{n} için alternatifler neler?",aa:"Kiver’daki benzer Telegram araçları: {list}. Karşılaştırmak için sayfayı aşağı kaydır."},
+ id:{h:"Pertanyaan umum tentang {n}",qw:"Apa itu {n}?",qu:"Bagaimana cara menggunakan {n}?",au:"Ketuk «Open in Telegram» di halaman ini untuk membuka {n} (@{u}) di Telegram, lalu ikuti petunjuknya.",qs:"Apa kata pengguna tentang {n}?",as:"{n} memiliki rating rata-rata {avg} dari 5 di Kiver (ulasan: {c}). Lihat ulasan komunitas di atas untuk detailnya.",a0:"{n} belum memiliki ulasan di Kiver. Cobalah di Telegram dan jadilah yang pertama memberi ulasan.",qa:"Apa alternatif untuk {n}?",aa:"Alat Telegram serupa di Kiver: {list}. Gulir ke bawah untuk membandingkannya."},
+ fa:{h:"سؤالات متداول درباره {n}",qw:"{n} چیست؟",qu:"چطور از {n} استفاده کنم؟",au:"در همین صفحه روی دکمه «Open in Telegram» بزنید تا {n} (@{u}) در تلگرام باز شود و سپس راهنمای آن را دنبال کنید.",qs:"کاربران درباره {n} چه می‌گویند؟",as:"میانگین امتیاز {n} در Kiver برابر {avg} از 5 است (تعداد نظرات: {c}). برای جزئیات، نظرات کاربران را در بالا ببینید.",a0:"هنوز نظری درباره {n} در Kiver ثبت نشده است. آن را در تلگرام امتحان کنید و اولین نظر را بنویسید.",qa:"جایگزین‌های {n} کدامند؟",aa:"ابزارهای مشابه تلگرام در Kiver: {list}. برای مقایسه، صفحه را پایین بروید."},
+ ar:{h:"أسئلة شائعة حول {n}",qw:"ما هو {n}؟",qu:"كيف أستخدم {n}؟",au:"اضغط على «Open in Telegram» في هذه الصفحة لفتح {n} (@{u}) في تيليجرام ثم اتبع التعليمات.",qs:"ماذا يقول المستخدمون عن {n}؟",as:"متوسط تقييم {n} على Kiver هو {avg} من 5 (عدد المراجعات: {c}). اطلع على مراجعات المجتمع أعلاه للتفاصيل.",a0:"لا توجد مراجعات لـ {n} على Kiver حتى الآن. جرّبه على تيليجرام وكن أول من يكتب مراجعة.",qa:"ما بدائل {n}؟",aa:"أدوات تيليجرام مشابهة على Kiver: {list}. مرّر لأسفل الصفحة لمقارنتها."}
+};
 function buildFaq(b,c,related,stats,about,type,origin,E){
  try{
   const name=String(b.name||"").trim();if(!name)return{html:"",ld:""};
+  const text=String(b.description||about||"").replace(/\s+/g," ").trim();
+  const lang=faqLang(text);if(!lang)return{html:"",ld:""};const T=FAQ_T[lang]||FAQ_T.en,rtl=lang==="fa"||lang==="ar";
+  const f=(s,o)=>s.replace(/\{(\w+)\}/g,(m,k)=>o[k]!=null?o[k]:m);
+  const o={n:name,u:b.telegram_username||""};
   const qa=[];
-  const what=String(about||b.description||"").replace(/\s+/g," ").trim();
-  if(what)qa.push(["What is "+name+"?",what.length>300?what.slice(0,297).replace(/\s+\S*$/,"")+"...":what]);
-  if(b.telegram_username)qa.push(["How do I use "+name+"?","Tap Open in Telegram on this page to launch "+name+" (@"+b.telegram_username+") inside Telegram, then follow its prompts to get started."]);
-  if(stats&&stats.count){qa.push(["What do users say about "+name+"?",name+" has an average rating of "+Number(stats.average).toFixed(1)+" out of 5 from "+stats.count+(stats.count===1?" review":" reviews")+" on Kiver. Read the community reviews above for details."])}
-  else qa.push(["What do users say about "+name+"?","There are no reviews of "+name+" on Kiver yet. Try it in Telegram and be the first to leave one."]);
-  if(related&&related.length){const names=related.map(x=>x.name).filter(Boolean).slice(0,4);if(names.length)qa.push(["What are alternatives to "+name+"?","Other Telegram tools in the "+String(b.category||"same")+" category on Kiver include "+names.join(", ")+". See the More Telegram tools section below to compare them."])}
+  if(text)qa.push([f(T.qw,o),text.length>300?text.slice(0,297).replace(/\s+\S*$/,"")+"...":text]);
+  if(b.telegram_username)qa.push([f(T.qu,o),f(T.au,o)]);
+  if(stats&&stats.count){const cc=lang==="en"?(stats.count===1?T.r1:f(T.rn,{c:stats.count})):String(stats.count);qa.push([f(T.qs,o),f(T.as,{...o,avg:Number(stats.average).toFixed(1),c:cc})])}
+  else qa.push([f(T.qs,o),f(T.a0,o)]);
+  if(related&&related.length){const names=related.map(x=>x.name).filter(Boolean).slice(0,4);if(names.length)qa.push([f(T.qa,o),f(T.aa,{...o,list:names.join(", ")})])}
   if(!qa.length)return{html:"",ld:""};
-  const html='<section class="content-block faq-block"><span class="eyebrow">FAQ</span><h2>Frequently asked questions about '+E(name)+'</h2>'+qa.map(x=>"<h3>"+E(x[0])+"</h3><p>"+E(x[1])+"</p>").join("")+"</section>";
-  const ld='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":qa.map(x=>({"@type":"Question","name":x[0],"acceptedAnswer":{"@type":"Answer","text":x[1]}}))}).replace(/</g,"\\u003c")+"</script>";
+  const html='<section class="content-block faq-block" lang="'+lang+'"'+(rtl?' dir="rtl"':"")+'><span class="eyebrow">FAQ</span><h2>'+E(f(T.h,o))+"</h2>"+qa.map(x=>"<h3>"+E(x[0])+"</h3><p>"+E(x[1])+"</p>").join("")+"</section>";
+  const ld='<script type="application/ld+json">'+JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","inLanguage":lang,"mainEntity":qa.map(x=>({"@type":"Question","name":x[0],"acceptedAnswer":{"@type":"Answer","text":x[1]}}))}).replace(/</g,"\\u003c")+"</script>";
   return{html,ld};
  }catch(e){return{html:"",ld:""}}
 }
