@@ -237,8 +237,7 @@
     {
       "path": "/api/refresh",
       "schedule": "0 0 * * *"
-    },
-    {"path": "/api/indexnow", "schedule": "30 0 * * *"}
+    }
   ],
   "headers": [
     {
