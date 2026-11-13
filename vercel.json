@@ -237,6 +237,10 @@
     {
       "path": "/api/refresh",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/refresh?job=promo",
+      "schedule": "0 15 * * *"
     }
   ],
   "headers": [
